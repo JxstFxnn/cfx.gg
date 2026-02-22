@@ -104,7 +104,6 @@ body {
   width:3px;
   background:rgba(255,255,255,0.05);
   border-radius:2px; pointer-events:none;
-  /* top + height set by JS to span only .content area */
 }
 #scroll-fill {
   position:absolute; top:0; left:0; right:0;
@@ -178,9 +177,6 @@ body {
 /* ══════════════════════════════════════════
    PANELS (spectator / keybind)
 ══════════════════════════════════════════ */
-/* ══════════════════════════════════════════
-   SPECTATOR LIST — fixed top right, matches menu
-══════════════════════════════════════════ */
 #spectator-list {
   display:none;
   position:fixed; top:14px; right:14px;
@@ -225,7 +221,7 @@ body {
 .spec-dist.danger { color:rgba(255,80,80,0.7); }
 
 /* ══════════════════════════════════════════
-   KEYBIND LIST — next to menu
+   KEYBIND LIST
 ══════════════════════════════════════════ */
 #keybind-list {
   display:none; position:absolute; top:0; right:-140px;
@@ -238,7 +234,7 @@ body {
 #keybind-list.open { display:block; animation:panelIn 0.15s cubic-bezier(0.22,1,0.36,1); }
 
 /* ══════════════════════════════════════════
-   WATERMARK — small top-left corner
+   WATERMARK
 ══════════════════════════════════════════ */
 #watermark {
   display:none;
@@ -279,13 +275,7 @@ body {
   from { opacity:0; transform:translateY(-5px) scale(0.98); }
   to   { opacity:1; transform:translateY(0)    scale(1); }
 }
-.spec-dot {
-  width:4px; height:4px; border-radius:50%;
-  background:var(--accent); flex-shrink:0;
-  box-shadow:0 0 4px var(--accent-glow);
-  animation:specPulse 1.8s ease-in-out infinite;
-}
-@keyframes specPulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
+
 .kb-title {
   padding:6px 10px 5px; font-size:8px; letter-spacing:2.5px; font-weight:600;
   color:var(--accent-sep); text-transform:uppercase;
@@ -329,7 +319,6 @@ body {
   white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:170px;
 }
 
-/* ── TOGGLE ── */
 .toggle {
   width:32px; height:16px; background:#20202e; border-radius:8px;
   position:relative; border:1px solid rgba(255,255,255,0.05); flex-shrink:0;
@@ -343,7 +332,6 @@ body {
 .toggle.on { background:var(--accent-dim); border-color:var(--accent-border); }
 .toggle.on::after { left:17px; background:var(--accent); box-shadow:0 0 7px var(--accent-glow); }
 
-/* ── SLIDER ── */
 .srow { display:flex; align-items:center; gap:8px; flex-shrink:0; }
 .sval { font-size:10px; color:#888; min-width:30px; text-align:right; font-weight:500; }
 .item.selected .sval { color:var(--accent); }
@@ -357,19 +345,16 @@ body {
 }
 .item.selected .sliderthumb { box-shadow:0 0 10px var(--accent-glow); }
 
-/* ── VALUE ── */
 .ival { font-size:11px; color:#484858; font-weight:300; flex-shrink:0; white-space:nowrap; }
 .ival .ca { color:#444; font-size:10px; }
 .item.selected .ival { color:#aaa; }
 .item.selected .ival .ca { color:#777; }
 
-/* ── ARROW / BUTTON ── */
 .arr { font-size:12px; color:#444; flex-shrink:0; }
 .item.selected .arr { color:#aaa; }
 .fp { width:14px; height:14px; flex-shrink:0; opacity:0.22; transition:opacity 0.1s; }
 .item.selected .fp { opacity:0.65; }
 
-/* ── PLAYER CHECKBOX ── */
 .plr-check {
   width:18px; height:18px; border-radius:50%; flex-shrink:0;
   border:1.5px solid #252540; background:#14142a;
@@ -382,7 +367,6 @@ body {
   background:var(--accent); box-shadow:0 0 5px var(--accent-glow); display:block;
 }
 
-/* ── ONLINE TAB BAR ── */
 #online-tabs {
   display:none;
   background:#0b0b14;
@@ -408,7 +392,6 @@ body {
   box-shadow:0 0 5px var(--accent-glow);
 }
 
-/* ── SEPARATOR ── */
 .sep {
   display:flex; align-items:center; gap:10px;
   padding:9px 14px 4px; font-size:8.5px; font-weight:500;
@@ -416,7 +399,6 @@ body {
 }
 .sep::before,.sep::after { content:''; flex:1; height:1px; background:var(--accent-dim); }
 
-/* ── FOOTER ── */
 .footer-gap { height:5px; background:#07070e; }
 .footer {
   background:#0a0a12; border-top:1px solid rgba(255,255,255,0.04);
@@ -431,47 +413,37 @@ body {
 </head>
 <body>
 
-<!-- NOTIFY CONTAINER (outside menu, fixed) -->
 <div id="notify-container"></div>
 
-<!-- WATERMARK — fixed top bar -->
 <div id="watermark">
   <div class="wm-bar">
-    <!-- Icon + Brand -->
     <div class="wm-seg">
       <svg class="wm-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
         <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019z"/>
       </svg>
       <span class="wm-label">cfx.gg</span>
     </div>
-    <!-- Username -->
     <div class="wm-seg">
       <span class="wm-val">sweicon</span>
     </div>
-    <!-- User ID -->
     <div class="wm-seg">
       <span class="wm-val dim">75131</span>
     </div>
-    <!-- Date -->
     <div class="wm-seg">
       <span class="wm-val dim" id="wm-date">Jul 17 2025</span>
     </div>
-    <!-- Expiry -->
     <div class="wm-seg">
       <span class="wm-val green">Never expires</span>
     </div>
-    <!-- Build -->
     <div class="wm-seg">
       <span class="wm-val dim">Build 262119</span>
     </div>
-    <!-- Clock — pushed right -->
     <div class="wm-seg push">
       <span class="wm-time-val" id="wm-time">00:00:00</span>
     </div>
   </div>
 </div>
 
-<!-- SPECTATOR LIST — fixed top right -->
 <div id="spectator-list">
   <div class="spec-title">Spectators</div>
   <div class="spec-row" data-dist="12">
@@ -498,8 +470,10 @@ body {
 </div>
 
 <div id="wrapper">
-  <!-- SCROLL RAIL — outside #menu, positioned by JS -->
-
+  <div id="scroll-rail">
+    <div id="scroll-fill"></div>
+    <div id="scroll-diamond"></div>
+  </div>
 
   <div id="menu">
     <div id="keybind-list">
@@ -520,7 +494,6 @@ body {
       <div class="hline"></div>
     </div>
 
-    <!-- ONLINE TAB BAR: List | Safe | Risk | Vehicle -->
     <div id="online-tabs">
       <div class="otab" data-tab="-1">List</div>
       <div class="otab" data-tab="0">Safe</div>
@@ -558,13 +531,13 @@ function notify(title, msg, icon) {
     <div class="notify-msg">${msg}</div>
     <div class="notify-bar"></div>`;
   container.appendChild(n);
-  // start progress bar shrink
+  
   const bar = n.querySelector('.notify-bar');
   requestAnimationFrame(() => {
     bar.style.transition = 'width 3s linear';
     bar.style.width = '0%';
   });
-  // remove after 3s
+  
   setTimeout(() => {
     n.style.transition = 'opacity 0.25s, transform 0.25s';
     n.style.opacity = '0';
@@ -598,14 +571,10 @@ function applyTheme(name) {
 //  FINGERPRINT SVG
 // ══════════════════════════════════════════
 const FP_SVG = `<svg class="fp" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
-  <!-- core center loop -->
   <path d="M50 54 C46 54 43 51 43 47 C43 43 46 40 50 40 C54 40 57 43 57 47 C57 53 53 58 50 62 C47 66 45 72 46 78"/>
   <path d="M54 78 C55 72 57 66 59 61 C62 56 64 52 64 47 C64 39 58 33 50 33 C42 33 36 39 36 47 C36 53 38 59 43 64"/>
-  <!-- middle ring -->
   <path d="M36 68 C31 62 28 55 28 47 C28 35 38 25 50 25 C62 25 72 35 72 47 C72 55 69 62 64 68 C62 72 61 77 62 82"/>
-  <!-- outer ring -->
   <path d="M40 84 C37 79 34 73 33 67 C30 60 27 54 24 48 C22 42 22 36 24 30 C28 20 38 13 50 13 C62 13 72 20 76 30 C78 36 78 42 76 48 C74 53 72 58 71 63"/>
-  <!-- outermost arc -->
   <path d="M19 60 C16 56 14 50 14 44 C14 28 30 15 50 15"/>
   <path d="M81 60 C84 56 86 50 86 44 C86 28 70 15 50 15"/>
 </svg>`;
@@ -622,9 +591,6 @@ const sub  = (n,c)       => ({type:'sub',    name:n, children:{label:n, items:c}
 const plr  = n           => ({type:'player', name:n});
 const cfg  = (id,n)      => val(`[${id}] ${n}`, 'Load', ['Load','Overwrite','Delete']);
 
-// ══════════════════════════════════════════
-//  PLAYER ACTION MENU
-// ══════════════════════════════════════════
 function makePlayerMenu(name) {
   return { label: name, items: [
     sep("Safe"),
@@ -648,9 +614,6 @@ function makePlayerMenu(name) {
   ]};
 }
 
-// ══════════════════════════════════════════
-//  ONLINE TABS DATA
-// ══════════════════════════════════════════
 const ONLINE_PLAYERS = ['Player 1','Player 2','Player 3'];
 
 const ONLINE_TABS = {
@@ -682,14 +645,11 @@ const ONLINE_TABS = {
 };
 const ONLINE_TAB_NAMES = ['Safe','Risk','Vehicle'];
 
-// online mode state
 let onlineMode    = false;
-let onlineTab     = -1;   // -1=List, 0=Safe, 1=Risk, 2=Vehicle
+let onlineTab     = -1;
 let onlineItemIdx = 0;
 
-
 const MAIN = { label:"Main Menu", items:[
-
   sub("Self Options",[
     sub("NoClip Options",[
       tog("NoClip"), tog("NoClip Invisibility"),
@@ -718,10 +678,7 @@ const MAIN = { label:"Main Menu", items:[
       btn("Airport"), btn("Beach"), btn("Maze Bank"), btn("Mount Chiliad"),
     ]),
   ]),
-
-  // Online Options — special type, opens directly into player+tab view
   {type:'online', name:'Online Options'},
-
   sub("Visual Options",[
     sub("Player ESP",[
       tog("Self ESP"), tog("Exclude Dead"), tog("Nametags"),
@@ -748,7 +705,6 @@ const MAIN = { label:"Main Menu", items:[
       val("Health Bar Style","Default",["Default","Gradient","Flat","Outlined"]),
     ]),
   ]),
-
   sub("Combat Options",[
     tog("Fast Punch"), tog("One Punch"), tog("One Shot"),
     sub("Aimbot",[
@@ -777,7 +733,6 @@ const MAIN = { label:"Main Menu", items:[
       val("FOV Color","Red",["Red","Green","Blue","Pink","White","Yellow"]),
     ]),
   ]),
-
   sub("Weapon Options",[
     sub("Give Weapons",[
       btn("Pistol"), btn("SMG"), btn("Rifle"),
@@ -787,7 +742,6 @@ const MAIN = { label:"Main Menu", items:[
     btn("Upgrade Weapons"), btn("Refill Ammo"),
     tog("No Reload"), tog("Infinite Ammo"),
   ]),
-
   sub("Vehicle Options",[
     sub("Spawner",[
       btn("Spawn by Name"), tog("Spawn Inside Vehicle"), tog("Spoof Vehicle"),
@@ -815,7 +769,6 @@ const MAIN = { label:"Main Menu", items:[
       sldr("Control Speed",3,1,20),
     ]),
   ]),
-
   sub("Misc Options",[
     tog("Spectator List"), tog("Keybind List"),
     sub("Free Cam",[
@@ -853,7 +806,6 @@ const MAIN = { label:"Main Menu", items:[
       btn("Resource #1"), btn("Resource #2"),
     ]),
   ]),
-
   sub("Settings",[
     btn("Reset Menu"), btn("Reset Slider Values"),
     sldr("Menu Position X",0.06,0,1), sldr("Menu Position Y",0.38,0,1),
@@ -913,7 +865,6 @@ function renderOnline() {
   const tabBar = document.getElementById('online-tabs');
   tabBar.classList.add('visible');
 
-  // active tab: -1 = List, 0/1/2 = action tabs
   const isListView = onlineTab === -1;
   tabBar.querySelectorAll('.otab').forEach(t=>{
     const tv = parseInt(t.dataset.tab, 10);
@@ -973,7 +924,6 @@ function renderOnline() {
     ? `${selectedPlrs.size} / ${ONLINE_PLAYERS.length}`
     : ONLINE_TAB_NAMES[onlineTab];
 
-  // click: player toggle
   contentEl.querySelectorAll('[data-plr]').forEach(div=>{
     div.addEventListener('click',()=>{
       const i = parseInt(div.dataset.plr, 10);
@@ -984,7 +934,7 @@ function renderOnline() {
       render();
     });
   });
-  // click: action item
+  
   contentEl.querySelectorAll('[data-ovi]').forEach(div=>{
     div.addEventListener('click',()=>{
       onlineItemIdx = parseInt(div.dataset.ovi, 10);
@@ -998,13 +948,11 @@ function renderOnline() {
 }
 
 function render() {
-  // Check if we're in online mode
   if(onlineMode){
     renderOnline();
     return;
   }
 
-  // Hide tab bar
   document.getElementById('online-tabs').classList.remove('visible');
 
   const {menu,idx} = cur();
@@ -1032,7 +980,6 @@ function render() {
           :`<span class="ival">${item.val}</span>`;
         break;
       case 'sub':
-        right=`<span class="arr">»</span>`; break;
       case 'online':
         right=`<span class="arr">»</span>`; break;
       case 'player':
@@ -1079,8 +1026,12 @@ function activateOnlineItem(){
   } else {
     render();
   }
+  sendToLua('online', item.name, {
+    tab: tabName,
+    targets: Array.from(selectedPlrs),
+    value: item.val || true
+  });
 }
-
 
 function activate(item, dir) {
   if(!item) return;
@@ -1089,10 +1040,9 @@ function activate(item, dir) {
   if(item.type==='toggle'){
     toggleState[k]=!toggleState[k];
     const on=toggleState[k];
-    // Spectator / Keybind panels
     if(item.name==='Spectator List'){
       document.getElementById('spectator-list').classList.toggle('open',on);
-      if(on){ toggleState[makeKey({name:'Keybind List'}+'')]=false; document.getElementById('keybind-list').classList.remove('open'); colorSpectators(); }
+      if(on){ toggleState[makeKey({name:'Keybind List'})]=false; document.getElementById('keybind-list').classList.remove('open'); colorSpectators(); }
       notify('Spectator List', on?'Panel opened':'Panel closed', 'fa-solid fa-eye');
     }
     if(item.name==='Keybind List'){
@@ -1104,6 +1054,7 @@ function activate(item, dir) {
       document.getElementById('watermark').classList.toggle('open', on);
     }
     render();
+    sendToLua('toggle', item.name, on);
 
   } else if(item.type==='online'){
     onlineMode    = true;
@@ -1127,24 +1078,22 @@ function activate(item, dir) {
       notify('Theme', `Theme changed to ${item.val}`, 'fa-solid fa-palette');
     }
     render();
+    sendToLua('value', item.name, item.val);
 
   } else if(item.type==='button'){
     render();
+    sendToLua('button', item.name, true);
   } else {
     render();
   }
 }
 
-// ══════════════════════════════════════════
-//  SCROLL RAIL — positioned outside menu
-// ══════════════════════════════════════════
 function updateRail(){
   const vis=visItems();
   const {idx}=cur();
   const total=vis.length;
   const pct=total<=1?100:(idx/(total-1))*100;
 
-  // position rail to span only the .content element
   const menu    = document.getElementById('menu');
   const content = document.getElementById('content');
   const rail    = document.getElementById('scroll-rail');
@@ -1159,18 +1108,12 @@ function updateRail(){
   document.getElementById('scroll-diamond').style.top = pct+'%';
 }
 
-// ══════════════════════════════════════════
-//  KEYBOARD
-// ══════════════════════════════════════════
 document.addEventListener('keydown', e=>{
-
-  // ── ONLINE MODE ──
   if(onlineMode){
     const isListView = onlineTab === -1;
     const tabItems   = isListView ? [] : ONLINE_TABS[ONLINE_TAB_NAMES[onlineTab]].filter(i=>i.type!=='sep');
     const listLen    = ONLINE_PLAYERS.length;
     const actLen     = tabItems.length;
-    // all tabs including list: -1, 0, 1, 2
     const ALL_TABS   = [-1, 0, 1, 2];
 
     switch(e.key){
@@ -1178,12 +1121,10 @@ document.addEventListener('keydown', e=>{
         e.preventDefault();
         onlineItemIdx = Math.min(onlineItemIdx+1, isListView ? listLen-1 : actLen-1);
         render(); break;
-
       case 'ArrowUp':
         e.preventDefault();
         onlineItemIdx = Math.max(onlineItemIdx-1, 0);
         render(); break;
-
       case 'ArrowRight':
       case 'Enter':
         e.preventDefault();
@@ -1199,7 +1140,6 @@ document.addEventListener('keydown', e=>{
           }
         }
         render(); break;
-
       case 'ArrowLeft':
         e.preventDefault();
         if(!isListView){
@@ -1208,7 +1148,6 @@ document.addEventListener('keydown', e=>{
           else if(item&&item.type==='value'&&item.actions){ cycleVal(item,-1); render(); }
         }
         break;
-
       case 'e': case 'E':
         e.preventDefault(); {
           const ci = ALL_TABS.indexOf(onlineTab);
@@ -1216,7 +1155,6 @@ document.addEventListener('keydown', e=>{
           onlineItemIdx = 0;
           render();
         } break;
-
       case 'q': case 'Q':
         e.preventDefault(); {
           const ci = ALL_TABS.indexOf(onlineTab);
@@ -1224,7 +1162,6 @@ document.addEventListener('keydown', e=>{
           onlineItemIdx = 0;
           render();
         } break;
-
       case 'Backspace': case 'Escape':
         e.preventDefault();
         if(!isListView){ onlineTab=-1; onlineItemIdx=0; render(); }
@@ -1234,7 +1171,6 @@ document.addEventListener('keydown', e=>{
     return;
   }
 
-  // ── NORMAL MODE ──
   const vis=visItems();
   const {idx}=cur();
   const item=vis[idx];
@@ -1267,10 +1203,7 @@ document.addEventListener('keydown', e=>{
   }
 });
 
-// ══════════════════════════════════════════
-//  SPECTATOR DISTANCE COLORING
-// ══════════════════════════════════════════
-const DANGER_DIST = 10; // metres threshold
+const DANGER_DIST = 10;
 function colorSpectators(){
   document.querySelectorAll('#spectator-list .spec-row').forEach(row=>{
     const dist = parseInt(row.dataset.dist, 10);
@@ -1280,9 +1213,6 @@ function colorSpectators(){
   });
 }
 
-// ══════════════════════════════════════════
-//  LIVE CLOCK
-// ══════════════════════════════════════════
 function tickClock(){
   const el = document.getElementById('wm-time');
   if(!el) return;
@@ -1293,80 +1223,134 @@ function tickClock(){
 tickClock();
 setInterval(tickClock, 1000);
 
-window.addEventListener('load', updateRail);
-window.addEventListener('resize', updateRail);
-render();
-
 // ══════════════════════════════════════════
-//  LUA BRIDGE — sendet Menu-Events an Lua
+//  EXECUTOR BRIDGE
 // ══════════════════════════════════════════
 function sendToLua(action, name, value) {
     try {
-        const payload = JSON.stringify({ action, name, value });
-        if (typeof SendDuiMessage === 'function') SendDuiMessage(payload);
-        window.parent.postMessage({ action, name, value }, '*');
-    } catch(e) {}
+        console.log(`[UI] → ${action}: ${name} =`, value);
+        
+        // Nachricht für Executor vorbereiten
+        const message = JSON.stringify({
+            type: 'menuAction',
+            action: action,
+            name: name,
+            value: value
+        });
+        
+        // Versuche verschiedene Methoden
+        if (window.parent) {
+            window.parent.postMessage(message, '*');
+        }
+        
+        if (window.cheat && typeof window.cheat.execute === 'function') {
+            const luaCode = generateLuaCode(action, name, value);
+            window.cheat.execute(luaCode);
+        }
+        
+        // Custom Event für Debugging
+        const event = new CustomEvent('menuAction', { 
+            detail: { action, name, value } 
+        });
+        window.dispatchEvent(event);
+        
+    } catch(e) {
+        console.error('Bridge Error:', e);
+    }
 }
 
-// Lua → HTML: State/Visibility sync
-// FIX: document.body kann null sein wenn message früh feuert
+function generateLuaCode(action, name, value) {
+    const safeName = name.replace(/'/g, "\\'");
+    let valueStr = value;
+    
+    if (typeof value === 'boolean') {
+        valueStr = value ? 'true' : 'false';
+    } else if (typeof value === 'string') {
+        valueStr = "'" + value.replace(/'/g, "\\'") + "'";
+    } else if (typeof value === 'object') {
+        valueStr = JSON.stringify(value);
+    }
+    
+    switch(action) {
+        case 'toggle':
+            return `-- Toggle: ${name}\nif MenuToggles then MenuToggles['${safeName}'] = ${valueStr} end`;
+        case 'button':
+            return `-- Button: ${name}\nif MenuFunctions and MenuFunctions['${safeName}'] then MenuFunctions['${safeName}']() end`;
+        case 'slider':
+            return `-- Slider: ${name}\nif MenuSettings then MenuSettings['${safeName}'] = ${valueStr} end`;
+        case 'value':
+            return `-- Value: ${name}\nif MenuValues then MenuValues['${safeName}'] = ${valueStr} end`;
+        case 'online':
+            return `-- Online: ${name}\nif MenuOnline then MenuOnline['${safeName}'](${valueStr}) end`;
+        default:
+            return `-- Unknown: ${action}`;
+    }
+}
+
 window.addEventListener('message', function(e) {
-    const d = e.data;
-    if (!d || !d.type) return;
+    let d = e.data;
+    if (!d) return;
+    
+    if (typeof d === 'string') {
+        try {
+            d = JSON.parse(d);
+        } catch {
+            return;
+        }
+    }
+    
     if (d.type === 'setVisible') {
-        const b = document.body;
-        if (b) b.style.visibility = d.value ? 'visible' : 'hidden';
+        document.body.style.display = d.value ? 'flex' : 'none';
+        document.body.style.visibility = d.value ? 'visible' : 'hidden';
     }
     if (d.type === 'notify' && typeof notify === 'function') {
-        notify(d.title || '', d.msg || '', d.icon || 'fa-solid fa-bell');
+        notify(d.title || 'Menu', d.msg || '', d.icon || 'fa-solid fa-bell');
+    }
+    if (d.type === 'updateSpectators') {
+        updateSpectatorList(d.players || []);
+    }
+    if (d.type === 'updateKeybinds') {
+        updateKeybindList(d.keybinds || []);
     }
 });
 
-// Patch activate() → informiert Lua bei jeder Interaktion
-const _origActivate = activate;
-activate = function(item, dir) {
-    _origActivate(item, dir);
-    if (!item) return;
-    if (item.type === 'toggle') {
-        sendToLua('toggle', item.name, toggleState[makeKey(item)] || false);
-    } else if (item.type === 'button') {
-        sendToLua('button', item.name, true);
-    } else if (item.type === 'value' && item.actions) {
-        sendToLua('value', item.name, item.val);
-        const bc = document.getElementById('bc');
-        if (bc && bc.textContent === 'Spawner') {
-            sendToLua('spawn_vehicle', item.val, item.val);
-        }
-    }
-};
-
-// Patch adjSlider() → debounced an Lua
-const _origAdjSlider = adjSlider;
-adjSlider = function(item, dir) {
-    _origAdjSlider(item, dir);
-    clearTimeout(item._lt);
-    item._lt = setTimeout(() => sendToLua('slider', item.name, item.val), 120);
-};
-
-// Patch Online-Actions
-// FIX: onlineTab === -1 bedeutet List-Tab → kein ONLINE_TABS Eintrag
-const _origActivateOnlineItem = activateOnlineItem;
-activateOnlineItem = function() {
-    _origActivateOnlineItem();
-    if (onlineTab === -1) return; // List-Tab hat keine Actions
-    const tabName = ONLINE_TAB_NAMES[onlineTab];
-    if (!tabName || !ONLINE_TABS[tabName]) return;
-    const items = ONLINE_TABS[tabName].filter(i => i.type !== 'sep');
-    const item  = items[onlineItemIdx];
-    if (!item) return;
-    sendToLua('online', item.name, {
-        tab:     tabName,
-        targets: Array.from(selectedPlrs),
-        value:   item.val || true,
+function updateSpectatorList(players) {
+    const container = document.getElementById('spectator-list');
+    if (!container) return;
+    
+    let html = '<div class="spec-title">Spectators</div>';
+    players.forEach(p => {
+        html += `<div class="spec-row" data-dist="${p.distance || 0}">
+            <div class="spec-left">
+                <span class="spec-dot"></span>
+                <span class="spec-name">${p.name}</span>
+            </div>
+            <span class="spec-dist">${p.distance || '?'}m</span>
+        </div>`;
     });
-};
+    container.innerHTML = html;
+    colorSpectators();
+}
 
-console.log('[cfxgg] Lua Bridge aktiv');
+function updateKeybindList(keybinds) {
+    const container = document.getElementById('keybind-list');
+    if (!container) return;
+    
+    let html = '<div class="kb-title">Keybinds</div>';
+    keybinds.forEach(k => {
+        html += `<div class="kb-item"><span>${k.name}</span> <span class="kb-key">${k.key}</span></div>`;
+    });
+    container.innerHTML = html;
+}
+
+window.addEventListener('load', function() {
+    console.log('[cfxgg] UI geladen');
+    document.body.style.display = 'flex';
+    updateRail();
+});
+
+window.addEventListener('resize', updateRail);
+render();
 
 </script>
 </body>
