@@ -5,631 +5,207 @@
 <title>cfx.gg Menu</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
-html {
-  background: transparent !important;
-}
-body {
-  background: transparent !important;
-}
-
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@300;400;500&display=swap');
 * { margin:0; padding:0; box-sizing:border-box; }
-
-/* ══════════════════════════════════════════
-   THEME VARIABLES
-══════════════════════════════════════════ */
+html, body { background: transparent !important; background-color: transparent !important; }
 :root {
-  --accent:        #ff3daf;
-  --accent-glow:   rgba(255,20,147,0.7);
-  --accent-dim:    rgba(255,20,147,0.2);
-  --accent-border: rgba(255,20,147,0.28);
-  --accent-sep:    rgba(255,20,147,0.45);
-  --accent-fill:   rgba(255,20,147,0.4);
-  --sel-bg:        rgba(255,20,145,0.41);
-  --hbg-color:     rgba(255,20,147,0.2);
-  --hline-color:   rgba(255,20,147,0.4);
-  --banner-file:   url('banner.png');
+  --accent:#ff3daf; --accent-glow:rgba(255,20,147,0.7); --accent-dim:rgba(255,20,147,0.2);
+  --accent-border:rgba(255,20,147,0.28); --accent-sep:rgba(255,20,147,0.45); --accent-fill:rgba(255,20,147,0.4);
+  --sel-bg:rgba(255,20,145,0.41); --hbg-color:rgba(255,20,147,0.2); --hline-color:rgba(255,20,147,0.4);
 }
 body.theme-grey {
-  --accent:        #8a8aaa;
-  --accent-glow:   rgba(138,138,170,0.7);
-  --accent-dim:    rgba(138,138,170,0.15);
-  --accent-border: rgba(138,138,170,0.25);
-  --accent-sep:    rgba(138,138,170,0.45);
-  --accent-fill:   rgba(138,138,170,0.4);
-  --sel-bg:        rgba(138,138,170,0.3);
-  --hbg-color:     rgba(138,138,170,0.15);
-  --hline-color:   rgba(138,138,170,0.4);
-  --banner-file:   url('banner2.png');
+  --accent:#8a8aaa; --accent-glow:rgba(138,138,170,0.7); --accent-dim:rgba(138,138,170,0.15);
+  --accent-border:rgba(138,138,170,0.25); --accent-sep:rgba(138,138,170,0.45); --accent-fill:rgba(138,138,170,0.4);
+  --sel-bg:rgba(138,138,170,0.3); --hbg-color:rgba(138,138,170,0.15); --hline-color:rgba(138,138,170,0.4);
 }
 body.theme-red {
-  --accent:        #ffd400;
-  --accent-glow:   rgba(255,212,0,0.65);
-  --accent-dim:    rgba(255,212,0,0.18);
-  --accent-border: rgba(255,200,0,0.35);
-  --accent-sep:    rgba(255,190,0,0.55);
-  --accent-fill:   rgba(255,204,0,0.60);
-  --sel-bg:        rgba(255,215,0,0.40);
-  --hbg-color:     rgba(255,210,0,0.22);
-  --hline-color:   rgba(255,200,0,0.50);
-  --banner-file:   url('banner3.png');
+  --accent:#ffd400; --accent-glow:rgba(255,212,0,0.65); --accent-dim:rgba(255,212,0,0.18);
+  --accent-border:rgba(255,200,0,0.35); --accent-sep:rgba(255,190,0,0.55); --accent-fill:rgba(255,204,0,0.60);
+  --sel-bg:rgba(255,215,0,0.40); --hbg-color:rgba(255,210,0,0.22); --hline-color:rgba(255,200,0,0.50);
 }
-body {
-  background: rgba(0,0,0,0) !important;}
-  display:flex;
-  justify-content: flex-end;
-  align-items: center;
-  min-height: 100vh;
-  padding-right: 24px;
-  font-family:'Inter',sans-serif; user-select:none;
-}
-html, body {
-  background: transparent !important;
-  background-color: transparent !important;
-}
-/* ══════════════════════════════════════════
-   NOTIFY
-══════════════════════════════════════════ */
-#notify-container {
-  position:fixed; top:16px; left:50%; transform:translateX(-50%);
-  display:flex; flex-direction:column; gap:8px;
-  z-index:9999; pointer-events:none; min-width:240px;
-}
-.notify {
-  background:rgba(10,10,18,0.96);
-  border:1px solid rgba(255,255,255,0.07);
-  border-left:2px solid var(--accent);
-  padding:10px 16px 14px;
-  border-radius:4px; min-width:240px;
-  backdrop-filter:blur(12px);
-  display:flex; flex-direction:column;
-  animation:notifyIn 0.25s cubic-bezier(0.22,1,0.36,1);
-  overflow:hidden; position:relative;
-  box-shadow:0 8px 32px rgba(0,0,0,0.8);
-}
-@keyframes notifyIn {
-  from { transform:translateY(-14px) scale(0.97); opacity:0; }
-  to   { transform:translateY(0)     scale(1);    opacity:1; }
-}
-.notify-header {
-  display:flex; align-items:center; gap:8px;
-  font-size:11.5px; font-weight:600; color:#fff; letter-spacing:0.3px;
-}
+body { display:flex; justify-content:flex-end; align-items:center; min-height:100vh; padding-right:24px; font-family:'Inter',sans-serif; user-select:none; }
+
+/* NOTIFY */
+#notify-container { position:fixed; top:16px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; gap:8px; z-index:9999; pointer-events:none; min-width:240px; }
+.notify { background:rgba(10,10,18,0.96); border:1px solid rgba(255,255,255,0.07); border-left:2px solid var(--accent); padding:10px 16px 14px; border-radius:4px; min-width:240px; backdrop-filter:blur(12px); display:flex; flex-direction:column; animation:notifyIn 0.25s cubic-bezier(0.22,1,0.36,1); overflow:hidden; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.8); }
+@keyframes notifyIn { from{transform:translateY(-14px) scale(0.97);opacity:0;} to{transform:translateY(0) scale(1);opacity:1;} }
+.notify-header { display:flex; align-items:center; gap:8px; font-size:11.5px; font-weight:600; color:#fff; letter-spacing:0.3px; }
 .notify-header i { color:var(--accent); font-size:11px; }
 .notify-msg { font-size:10.5px; color:rgba(255,255,255,0.45); margin-top:3px; padding-left:19px; }
-.notify-bar {
-  height:2px; background:var(--accent);
-  position:absolute; bottom:0; left:0; width:100%;
-  box-shadow:0 0 6px var(--accent-glow);
-}
+.notify-bar { height:2px; background:var(--accent); position:absolute; bottom:0; left:0; width:100%; box-shadow:0 0 6px var(--accent-glow); }
 
-/* ══════════════════════════════════════════
-   WRAPPER + SCROLL RAIL
-══════════════════════════════════════════ */
-#wrapper { position:relative; }
-/* Der wrapper selbst darf keinen bg haben */
-#wrapper { background: transparent !important; }
-#scroll-rail { display:none; }
-#scroll-fill  { display:none; }
-#scroll-diamond { display:none; }
+/* WRAPPER */
+#wrapper { position:relative; background:transparent !important; }
 
-/* ══════════════════════════════════════════
-   MENU SHELL
-══════════════════════════════════════════ */
-#menu {
-  width:285px; background:#0d0d15; border-radius:3px;
-  box-shadow:0 0 0 1px rgba(255,255,255,0.05), 0 25px 70px rgba(0,0,0,0.95);
-  animation:none;
-  position:relative; overflow:hidden;
-}
-/* menuIn animation removed — caused layout bug on first open */
+/* MENU */
+#menu { width:285px; background:#0d0d15; border-radius:3px; box-shadow:0 0 0 1px rgba(255,255,255,0.05),0 25px 70px rgba(0,0,0,0.95); position:relative; overflow:hidden; }
 
-/* ══════════════════════════════════════════
-   HEADER / BANNER
-══════════════════════════════════════════ */
-.header {
-  position:relative; overflow:hidden;
-  background:#0f0f18;
-  border-bottom:1px solid rgba(255,255,255,0.05);
-}
-.hbg {
-  position:absolute; inset:0;
-  background:radial-gradient(ellipse 130% 100% at 50% -5%, var(--hbg-color) 0%, transparent 60%);
-  pointer-events:none;
-}
-.banner-img {
-  display:block; width:100%; height:90px;
-  object-fit:cover; position:relative; z-index:1;
-}
-.banner-fallback {
-  display:none; width:100%; height:90px;
-  align-items:center; justify-content:center;
-  font-family:'Rajdhani',sans-serif; font-size:38px; font-weight:700;
-  letter-spacing:5px; text-transform:lowercase;
-  color:transparent; -webkit-text-stroke:1.5px var(--accent);
-  animation:glow 2.5s ease-in-out infinite;
-  position:relative; z-index:1;
-}
-@keyframes glow {
-  0%,100% { filter:drop-shadow(0 0 10px var(--accent-glow)) drop-shadow(0 0 25px var(--accent-dim)); }
-  50%      { filter:drop-shadow(0 0 18px var(--accent-glow)) drop-shadow(0 0 45px var(--accent-fill)); }
-}
-.breadcrumb {
-  position:relative; padding:7px 0 10px;
-  font-size:10px; color:rgba(255,255,255,0.38);
-  letter-spacing:1px; text-transform:uppercase; text-align:center;
-}
-.hline {
-  position:absolute; bottom:0; left:0; right:0; height:1px;
-  background:linear-gradient(90deg, transparent, var(--hline-color) 50%, transparent);
-}
+/* HEADER */
+.header { position:relative; overflow:hidden; background:#0f0f18; border-bottom:1px solid rgba(255,255,255,0.05); }
+.hbg { position:absolute; inset:0; background:radial-gradient(ellipse 130% 100% at 50% -5%,var(--hbg-color) 0%,transparent 60%); pointer-events:none; }
+.banner-img { display:block; width:100%; height:90px; object-fit:cover; position:relative; z-index:1; }
+.banner-fallback { display:none; width:100%; height:90px; align-items:center; justify-content:center; font-family:'Rajdhani',sans-serif; font-size:38px; font-weight:700; letter-spacing:5px; text-transform:lowercase; color:transparent; -webkit-text-stroke:1.5px var(--accent); animation:glow 2.5s ease-in-out infinite; position:relative; z-index:1; }
+@keyframes glow { 0%,100%{filter:drop-shadow(0 0 10px var(--accent-glow)) drop-shadow(0 0 25px var(--accent-dim));} 50%{filter:drop-shadow(0 0 18px var(--accent-glow)) drop-shadow(0 0 45px var(--accent-fill));} }
+.breadcrumb { position:relative; padding:7px 0 10px; font-size:10px; color:rgba(255,255,255,0.38); letter-spacing:1px; text-transform:uppercase; text-align:center; }
+.hline { position:absolute; bottom:0; left:0; right:0; height:1px; background:linear-gradient(90deg,transparent,var(--hline-color) 50%,transparent); }
 
-/* ══════════════════════════════════════════
-   PANELS (spectator / keybind)
-══════════════════════════════════════════ */
-/* ══════════════════════════════════════════
-   SPECTATOR LIST — fixed top right, matches menu
-══════════════════════════════════════════ */
-#spectator-list {
-  display:none;
-  position:fixed; top:14px; right:14px;
-  width:160px; z-index:200;
-  background:#0d0d15;
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:3px; overflow:hidden;
-  box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 16px 40px rgba(0,0,0,0.9);
-}
+/* SPECTATOR */
+#spectator-list { display:none; position:fixed; top:14px; right:14px; width:160px; z-index:200; background:#0d0d15; border:1px solid rgba(255,255,255,0.05); border-radius:3px; overflow:hidden; box-shadow:0 0 0 1px rgba(255,255,255,0.03),0 16px 40px rgba(0,0,0,0.9); }
 #spectator-list.open { display:block; animation:panelIn 0.2s cubic-bezier(0.22,1,0.36,1); }
-.spec-title {
-  padding:6px 12px 5px;
-  font-size:8px; letter-spacing:2.5px; font-weight:600;
-  color:var(--accent-sep); text-transform:uppercase;
-  border-bottom:1px solid rgba(255,255,255,0.04);
-  background:#0b0b13;
-}
-.spec-row {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 12px; height:32px;
-  border-bottom:1px solid rgba(255,255,255,0.025);
-}
+.spec-title { padding:6px 12px 5px; font-size:8px; letter-spacing:2.5px; font-weight:600; color:var(--accent-sep); text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.04); background:#0b0b13; }
+.spec-row { display:flex; align-items:center; justify-content:space-between; padding:0 12px; height:32px; border-bottom:1px solid rgba(255,255,255,0.025); }
 .spec-row:last-child { border:none; }
 .spec-left { display:flex; align-items:center; gap:7px; min-width:0; }
-.spec-dot {
-  width:4px; height:4px; border-radius:50%; flex-shrink:0;
-  background:var(--accent); box-shadow:0 0 4px var(--accent-glow);
-  animation:specPulse 1.8s ease-in-out infinite;
-}
+.spec-dot { width:4px; height:4px; border-radius:50%; flex-shrink:0; background:var(--accent); box-shadow:0 0 4px var(--accent-glow); animation:specPulse 1.8s ease-in-out infinite; }
 @keyframes specPulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
-.spec-name {
-  font-size:11px; font-weight:400; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis; max-width:80px;
-  color:var(--accent);
-  transition:color 0.3s;
-}
-.spec-name.danger { color:#ff4444; text-shadow:0 0 6px rgba(255,60,60,0.5); }
-.spec-dist {
-  font-size:9px; color:rgba(255,255,255,0.28);
-  font-family:monospace; flex-shrink:0; letter-spacing:0.3px;
-}
-.spec-dist.danger { color:rgba(255,80,80,0.7); }
+.spec-name { font-size:11px; font-weight:400; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:80px; color:var(--accent); }
+.spec-dist { font-size:9px; color:rgba(255,255,255,0.28); font-family:monospace; flex-shrink:0; }
 
-/* ══════════════════════════════════════════
-   KEYBIND LIST — next to menu
-══════════════════════════════════════════ */
-#keybind-list {
-  display:none;
-  position:fixed; top:14px; left:14px;
-  width:160px; z-index:200;
-  background:#0d0d15;
-  border:1px solid rgba(255,255,255,0.05);
-  border-radius:3px; overflow:hidden;
-  box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 16px 40px rgba(0,0,0,0.9);
-}
+/* KEYBIND LIST */
+#keybind-list { display:none; position:fixed; top:14px; left:14px; width:160px; z-index:200; background:#0d0d15; border:1px solid rgba(255,255,255,0.05); border-radius:3px; overflow:hidden; box-shadow:0 0 0 1px rgba(255,255,255,0.03),0 16px 40px rgba(0,0,0,0.9); }
 #keybind-list.open { display:block; animation:panelIn 0.2s cubic-bezier(0.22,1,0.36,1); }
+@keyframes panelIn { from{opacity:0;transform:translateY(-5px) scale(0.98);} to{opacity:1;transform:translateY(0) scale(1);} }
+.kb-title { padding:6px 10px 5px; font-size:8px; letter-spacing:2.5px; font-weight:600; color:var(--accent-sep); text-transform:uppercase; border-bottom:1px solid rgba(255,255,255,0.04); background:#0b0b13; }
+.kb-item { padding:0 10px; height:30px; display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid rgba(255,255,255,0.03); gap:6px; }
+.kb-item:last-child { border:none; }
+.kb-item-name { flex:1; font-size:10px; color:#888; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.kb-item-right { display:flex; align-items:center; gap:5px; flex-shrink:0; }
+.kb-status-on { font-size:8.5px; font-weight:600; color:#3dff8a; letter-spacing:0.5px; }
+.kb-status-off { font-size:8.5px; font-weight:600; color:var(--accent); opacity:0.5; letter-spacing:0.5px; }
+.kb-key { background:#1c1c2a; border:1px solid rgba(255,255,255,0.08); border-radius:2px; padding:1px 6px; font-size:9px; color:#aaa; font-family:monospace; }
+.kb-empty { padding:12px 10px; font-size:9px; color:rgba(255,255,255,0.15); text-align:center; letter-spacing:0.5px; }
 
-/* ══════════════════════════════════════════
-   WATERMARK — small top-left corner
-══════════════════════════════════════════ */
-#watermark {
-  display:none;
-  position:fixed; top:0; left:0;
-  z-index:200;
-  background:#0a0a12;
-  border-right:1px solid rgba(255,255,255,0.05);
-  border-bottom:1px solid rgba(255,255,255,0.05);
-  border-radius:0 0 4px 0;
-  box-shadow:2px 2px 14px rgba(0,0,0,0.7);
-  font-family:'Courier New', Courier, monospace;
-}
+/* WATERMARK */
+#watermark { display:none; position:fixed; top:0; left:0; z-index:200; background:#0a0a12; border-right:1px solid rgba(255,255,255,0.05); border-bottom:1px solid rgba(255,255,255,0.05); border-radius:0 0 4px 0; box-shadow:2px 2px 14px rgba(0,0,0,0.7); font-family:'Courier New',Courier,monospace; }
 #watermark.open { display:block; }
-.wm-bar {
-  display:flex; align-items:center; gap:0;
-  height:22px; padding:0 10px 0 8px;
-}
-.wm-seg {
-  display:flex; align-items:center; gap:6px;
-  padding:0 8px; height:100%;
-  border-right:1px solid rgba(255,255,255,0.04);
-  white-space:nowrap; flex-shrink:0;
-}
-.wm-seg:first-child { padding-left:0; }
-.wm-seg:last-child { border-right:none; }
+.wm-bar { display:flex; align-items:center; height:22px; padding:0 10px 0 8px; }
+.wm-seg { display:flex; align-items:center; gap:6px; padding:0 8px; height:100%; border-right:1px solid rgba(255,255,255,0.04); white-space:nowrap; flex-shrink:0; }
+.wm-seg:first-child { padding-left:0; } .wm-seg:last-child { border-right:none; }
 .wm-seg.push { margin-left:auto; border-right:none; border-left:1px solid rgba(255,255,255,0.04); }
 .wm-icon { width:11px; height:11px; fill:var(--accent); flex-shrink:0; opacity:0.8; }
-.wm-label {
-  font-size:10px; font-weight:700; letter-spacing:1px;
-  text-transform:lowercase; color:var(--accent);
-}
+.wm-label { font-size:10px; font-weight:700; letter-spacing:1px; text-transform:lowercase; color:var(--accent); }
 .wm-val { font-size:9.5px; color:rgba(255,255,255,0.42); }
-.wm-val.dim { color:rgba(255,255,255,0.2); }
-.wm-val.green { color:#3dff8a; }
+.wm-val.dim { color:rgba(255,255,255,0.2); } .wm-val.green { color:#3dff8a; }
 .wm-time-val { font-size:9.5px; color:rgba(255,255,255,0.3); letter-spacing:0.5px; }
 
-@keyframes panelIn {
-  from { opacity:0; transform:translateY(-5px) scale(0.98); }
-  to   { opacity:1; transform:translateY(0)    scale(1); }
-}
-.spec-dot {
-  width:4px; height:4px; border-radius:50%;
-  background:var(--accent); flex-shrink:0;
-  box-shadow:0 0 4px var(--accent-glow);
-  animation:specPulse 1.8s ease-in-out infinite;
-}
-@keyframes specPulse { 0%,100%{opacity:1} 50%{opacity:0.2} }
-.kb-title {
-  padding:6px 10px 5px; font-size:8px; letter-spacing:2.5px; font-weight:600;
-  color:var(--accent-sep); text-transform:uppercase;
-  border-bottom:1px solid rgba(255,255,255,0.04);
-  background:#0b0b13;
-}
-.kb-item {
-  padding:0 10px; height:30px; display:flex; align-items:center; justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,0.03); font-size:10px; color:#777;
-  gap:6px;
-}
-.kb-item:last-child { border:none; }
-.kb-item-name {
-  flex:1; font-size:10px; color:#888; white-space:nowrap;
-  overflow:hidden; text-overflow:ellipsis;
-}
-.kb-item-right { display:flex; align-items:center; gap:5px; flex-shrink:0; }
-.kb-status-on  { font-size:8.5px; font-weight:600; color:#3dff8a; letter-spacing:0.5px; }
-.kb-status-off { font-size:8.5px; font-weight:600; color:var(--accent); opacity:0.5; letter-spacing:0.5px; }
-.kb-key {
-  background:#1c1c2a; border:1px solid rgba(255,255,255,0.08);
-  border-radius:2px; padding:1px 6px; font-size:9px; color:#aaa; font-family:monospace;
-}
-.kb-empty {
-  padding:12px 10px; font-size:9px; color:rgba(255,255,255,0.15);
-  text-align:center; letter-spacing:0.5px;
-}
-
-/* ══════════════════════════════════════════
-   CONTENT
-══════════════════════════════════════════ */
-.content {
-  overflow-y:auto; max-height:400px;
-  scrollbar-width:thin; scrollbar-color:var(--accent-fill) transparent;
-}
+/* CONTENT */
+.content { overflow-y:auto; max-height:400px; scrollbar-width:thin; scrollbar-color:var(--accent-fill) transparent; }
 .content::-webkit-scrollbar { width:3px; }
 .content::-webkit-scrollbar-thumb { background:var(--accent-fill); border-radius:2px; }
 
-/* ══════════════════════════════════════════
-   ITEMS
-══════════════════════════════════════════ */
-.item {
-  display:flex; align-items:center; justify-content:space-between;
-  padding:0 14px; height:37px; cursor:pointer;
-  border-bottom:1px solid rgba(255,255,255,0.025);
-  position:relative; transition:background 0.08s;
-}
+/* ITEMS */
+.item { display:flex; align-items:center; justify-content:space-between; padding:0 14px; height:37px; cursor:pointer; border-bottom:1px solid rgba(255,255,255,0.025); position:relative; transition:background 0.08s; }
 .item:hover:not(.selected) { background:rgba(255,255,255,0.02); }
 .item.selected { background:var(--sel-bg); }
 .item.selected .iname { color:#fff; font-weight:500; }
-.iname {
-  font-size:12.5px; color:#b8b8c8; letter-spacing:0.1px;
-  white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:170px;
-}
-
-/* ── TOGGLE ── */
-.toggle {
-  width:32px; height:16px; background:#20202e; border-radius:8px;
-  position:relative; border:1px solid rgba(255,255,255,0.05); flex-shrink:0;
-  transition:background 0.22s;
-}
-.toggle::after {
-  content:''; position:absolute; width:12px; height:12px;
-  background:#353548; border-radius:50%; top:1px; left:1px;
-  transition:left 0.22s cubic-bezier(0.4,0,0.2,1), background 0.22s, box-shadow 0.22s;
-}
+.iname { font-size:12.5px; color:#b8b8c8; letter-spacing:0.1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:170px; }
+.toggle { width:32px; height:16px; background:#20202e; border-radius:8px; position:relative; border:1px solid rgba(255,255,255,0.05); flex-shrink:0; transition:background 0.22s; }
+.toggle::after { content:''; position:absolute; width:12px; height:12px; background:#353548; border-radius:50%; top:1px; left:1px; transition:left 0.22s cubic-bezier(0.4,0,0.2,1),background 0.22s,box-shadow 0.22s; }
 .toggle.on { background:var(--accent-dim); border-color:var(--accent-border); }
 .toggle.on::after { left:17px; background:var(--accent); box-shadow:0 0 7px var(--accent-glow); }
-
-/* ── SLIDER ── */
 .srow { display:flex; align-items:center; gap:8px; flex-shrink:0; }
 .sval { font-size:10px; color:#888; min-width:30px; text-align:right; font-weight:500; }
 .item.selected .sval { color:var(--accent); }
 .slidertrack { width:72px; height:3px; background:#252535; border-radius:2px; position:relative; flex-shrink:0; }
-.sliderfill { height:100%; background:linear-gradient(90deg, var(--accent-dim), var(--accent)); border-radius:2px; transition:width 0.08s; }
-.sliderthumb {
-  position:absolute; width:12px; height:12px;
-  background:var(--accent); border-radius:50%;
-  top:50%; transform:translate(-50%,-50%);
-  box-shadow:0 0 6px var(--accent-glow); transition:left 0.08s;
-}
-.item.selected .sliderthumb { box-shadow:0 0 10px var(--accent-glow); }
-
-/* ── VALUE ── */
+.sliderfill { height:100%; background:linear-gradient(90deg,var(--accent-dim),var(--accent)); border-radius:2px; transition:width 0.08s; }
+.sliderthumb { position:absolute; width:12px; height:12px; background:var(--accent); border-radius:50%; top:50%; transform:translate(-50%,-50%); box-shadow:0 0 6px var(--accent-glow); transition:left 0.08s; }
 .ival { font-size:11px; color:#484858; font-weight:300; flex-shrink:0; white-space:nowrap; }
 .ival .ca { color:#444; font-size:10px; }
 .item.selected .ival { color:#aaa; }
 .item.selected .ival .ca { color:#777; }
-
-/* ── ARROW / BUTTON ── */
 .arr { font-size:12px; color:#444; flex-shrink:0; }
 .item.selected .arr { color:#aaa; }
 .fp { width:14px; height:14px; flex-shrink:0; opacity:0.22; transition:opacity 0.1s; }
 .item.selected .fp { opacity:0.65; }
-
-/* ── PLAYER CHECKBOX ── */
-.plr-check {
-  width:18px; height:18px; border-radius:50%; flex-shrink:0;
-  border:1.5px solid #252540; background:#14142a;
-  display:flex; align-items:center; justify-content:center;
-  transition:border-color 0.18s, background 0.18s, box-shadow 0.18s;
-}
+.plr-check { width:18px; height:18px; border-radius:50%; flex-shrink:0; border:1.5px solid #252540; background:#14142a; display:flex; align-items:center; justify-content:center; transition:border-color 0.18s,background 0.18s,box-shadow 0.18s; }
 .plr-check.checked { border-color:var(--accent); background:var(--accent-dim); box-shadow:0 0 8px var(--accent-glow); }
-.plr-check.checked::after {
-  content:''; width:8px; height:8px; border-radius:50%;
-  background:var(--accent); box-shadow:0 0 5px var(--accent-glow); display:block;
-}
+.plr-check.checked::after { content:''; width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 5px var(--accent-glow); display:block; }
 
-/* ── ONLINE TAB BAR ── */
-#online-tabs {
-  display:none;
-  background:#0b0b14;
-  border-bottom:1px solid rgba(255,255,255,0.04);
-  padding:0 8px;
-}
+/* ONLINE TABS */
+#online-tabs { display:none; background:#0b0b14; border-bottom:1px solid rgba(255,255,255,0.04); padding:0 8px; }
 #online-tabs.visible { display:flex; }
-.otab {
-  flex:1; height:30px; display:flex;
-  align-items:center; justify-content:center;
-  font-size:9.5px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase;
-  color:rgba(255,255,255,0.25); cursor:pointer;
-  border-bottom:2px solid transparent;
-  transition:color 0.15s, border-color 0.15s;
-  position:relative;
-}
+.otab { flex:1; height:30px; display:flex; align-items:center; justify-content:center; font-size:9.5px; font-weight:600; letter-spacing:0.8px; text-transform:uppercase; color:rgba(255,255,255,0.25); cursor:pointer; border-bottom:2px solid transparent; transition:color 0.15s,border-color 0.15s; position:relative; }
 .otab.active { color:#fff; border-bottom-color:var(--accent); }
-.otab.active::after {
-  content:''; position:absolute; bottom:-1px; left:50%;
-  transform:translateX(-50%);
-  width:16px; height:2px;
-  background:var(--accent);
-  box-shadow:0 0 5px var(--accent-glow);
-}
+.otab.active::after { content:''; position:absolute; bottom:-1px; left:50%; transform:translateX(-50%); width:16px; height:2px; background:var(--accent); box-shadow:0 0 5px var(--accent-glow); }
 
-/* ── SEPARATOR ── */
-.sep {
-  display:flex; align-items:center; gap:10px;
-  padding:9px 14px 4px; font-size:8.5px; font-weight:500;
-  letter-spacing:2px; color:var(--accent-sep); text-transform:uppercase;
-}
+/* SEP */
+.sep { display:flex; align-items:center; gap:10px; padding:9px 14px 4px; font-size:8.5px; font-weight:500; letter-spacing:2px; color:var(--accent-sep); text-transform:uppercase; }
 .sep::before,.sep::after { content:''; flex:1; height:1px; background:var(--accent-dim); }
 
-/* ── FOOTER ── */
+/* FOOTER */
 .footer-gap { height:5px; background:#07070e; }
-.footer {
-  background:#0a0a12; border-top:1px solid rgba(255,255,255,0.04);
-  padding:5px 10px 5px 8px; display:flex; justify-content:space-between; align-items:center;
-}
+.footer { background:#0a0a12; border-top:1px solid rgba(255,255,255,0.04); padding:5px 10px 5px 8px; display:flex; justify-content:space-between; align-items:center; }
 .footer-left { display:flex; align-items:center; gap:6px; }
 .footer-icon { width:14px; height:14px; opacity:0.4; fill:var(--accent); }
 .fbrand { font-size:9px; color:rgba(255,255,255,0.2); }
 .fbrand span { color:var(--accent-fill); }
 .fcnt { font-size:9px; color:#2a2a38; }
 
-/* ══════════════════════════════════════════
-   OPEN KEY OVERLAY — Key Picker
-══════════════════════════════════════════ */
-#open-overlay {
-  position:fixed; inset:0; z-index:9998;
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:flex-end;
-  padding-bottom:48px;
-  pointer-events:none;
-}
-#open-overlay.hidden { display:none; }
-
-.open-key-box {
-  display:flex; flex-direction:column; align-items:center; gap:12px;
-  background:rgba(8,8,16,0.92);
-  border:1px solid rgba(255,255,255,0.07);
-  border-top:2px solid var(--accent);
-  border-radius:6px;
-  padding:20px 36px 18px;
-  backdrop-filter:blur(16px);
-  box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 20px 60px rgba(0,0,0,0.95);
-  animation:overlayIn 0.35s cubic-bezier(0.22,1,0.36,1);
-  min-width:220px; text-align:center;
-}
-@keyframes overlayIn {
-  from { opacity:0; transform:translateY(10px); }
-  to   { opacity:1; transform:translateY(0); }
-}
-
-.okb-title {
-  font-size:9px; letter-spacing:3px; text-transform:uppercase;
-  color:rgba(255,255,255,0.25); font-family:'Inter',sans-serif;
-}
-.okb-waiting {
-  font-size:11px; color:rgba(255,255,255,0.18);
-  letter-spacing:1px; font-family:'Inter',sans-serif;
-  animation:waitBlink 1.4s ease-in-out infinite;
-}
-@keyframes waitBlink {
-  0%,100%{ opacity:0.18; } 50%{ opacity:0.5; }
-}
-
-.key-pill {
-  background:#0e0e1e;
-  border:1px solid rgba(255,255,255,0.14);
-  border-bottom:3px solid rgba(255,255,255,0.20);
-  border-radius:5px;
-  padding:6px 20px;
-  font-size:18px; font-weight:700; letter-spacing:1.5px;
-  color:var(--accent);
-  font-family:'Rajdhani',sans-serif;
-  box-shadow:0 0 20px var(--accent-dim), inset 0 1px 0 rgba(255,255,255,0.06);
-  min-width:60px;
-  animation:keyAppear 0.2s cubic-bezier(0.22,1,0.36,1);
-}
-@keyframes keyAppear {
-  from { transform:scale(0.85); opacity:0; }
-  to   { transform:scale(1);    opacity:1; }
-}
-
-.okb-confirm {
-  font-size:9.5px; color:rgba(255,255,255,0.22);
-  letter-spacing:0.5px; font-family:'Inter',sans-serif;
-}
-.okb-confirm span {
-  color:var(--accent); font-weight:600;
-}
-
-/* ── KEYBIND PICKER OVERLAY (F6) ── */
-#keybind-overlay {
-  position:fixed; inset:0; z-index:9997;
-  display:none; flex-direction:column;
-  align-items:center; justify-content:flex-end;
-  padding-bottom:48px;
-  pointer-events:none;
-}
+/* KEYBIND OVERLAY */
+#keybind-overlay { position:fixed; inset:0; z-index:9997; display:none; flex-direction:column; align-items:center; justify-content:flex-end; padding-bottom:48px; pointer-events:none; }
 #keybind-overlay.visible { display:flex; }
-#keybind-overlay .open-key-box {
-  animation:overlayIn 0.25s cubic-bezier(0.22,1,0.36,1);
-}
+.open-key-box { display:flex; flex-direction:column; align-items:center; gap:12px; background:rgba(8,8,16,0.92); border:1px solid rgba(255,255,255,0.07); border-top:2px solid var(--accent); border-radius:6px; padding:20px 36px 18px; backdrop-filter:blur(16px); box-shadow:0 0 0 1px rgba(255,255,255,0.03),0 20px 60px rgba(0,0,0,0.95); animation:overlayIn 0.25s cubic-bezier(0.22,1,0.36,1); min-width:220px; text-align:center; }
+@keyframes overlayIn { from{opacity:0;transform:translateY(10px);} to{opacity:1;transform:translateY(0);} }
+.okb-title { font-size:9px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,0.25); }
+.okb-waiting { font-size:11px; color:rgba(255,255,255,0.18); letter-spacing:1px; animation:waitBlink 1.4s ease-in-out infinite; }
+@keyframes waitBlink { 0%,100%{opacity:0.18;} 50%{opacity:0.5;} }
+.key-pill { background:#0e0e1e; border:1px solid rgba(255,255,255,0.14); border-bottom:3px solid rgba(255,255,255,0.20); border-radius:5px; padding:6px 20px; font-size:18px; font-weight:700; letter-spacing:1.5px; color:var(--accent); font-family:'Rajdhani',sans-serif; box-shadow:0 0 20px var(--accent-dim); min-width:60px; animation:keyAppear 0.2s cubic-bezier(0.22,1,0.36,1); }
+@keyframes keyAppear { from{transform:scale(0.85);opacity:0;} to{transform:scale(1);opacity:1;} }
+.okb-confirm { font-size:9.5px; color:rgba(255,255,255,0.22); letter-spacing:0.5px; }
+.okb-confirm span { color:var(--accent); font-weight:600; }
 </style>
 </head>
 <body>
 
-<!-- NOTIFY CONTAINER (outside menu, fixed) -->
 <div id="notify-container"></div>
 
-<!-- WATERMARK — fixed top bar -->
 <div id="watermark">
   <div class="wm-bar">
-    <!-- Icon + Brand -->
     <div class="wm-seg">
-      <svg class="wm-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-        <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019z"/>
-      </svg>
+      <svg class="wm-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019z"/></svg>
       <span class="wm-label">cfx.gg</span>
     </div>
-    <!-- Username -->
-    <div class="wm-seg">
-      <span class="wm-val">sweicon</span>
-    </div>
-    <!-- User ID -->
-    <div class="wm-seg">
-      <span class="wm-val dim">75131</span>
-    </div>
-    <!-- Date -->
-    <div class="wm-seg">
-      <span class="wm-val dim" id="wm-date">Jul 17 2025</span>
-    </div>
-    <!-- Expiry -->
-    <div class="wm-seg">
-      <span class="wm-val green">Never expires</span>
-    </div>
-    <!-- Build -->
-    <div class="wm-seg">
-      <span class="wm-val dim">Build 262119</span>
-    </div>
-    <!-- Clock — pushed right -->
-    <div class="wm-seg push">
-      <span class="wm-time-val" id="wm-time">00:00:00</span>
-    </div>
+    <div class="wm-seg"><span class="wm-val">sweicon</span></div>
+    <div class="wm-seg"><span class="wm-val dim">75131</span></div>
+    <div class="wm-seg"><span class="wm-val dim">Jul 17 2025</span></div>
+    <div class="wm-seg"><span class="wm-val green">Never expires</span></div>
+    <div class="wm-seg"><span class="wm-val dim">Build 262119</span></div>
+    <div class="wm-seg push"><span class="wm-time-val" id="wm-time">00:00:00</span></div>
   </div>
 </div>
 
-<!-- SPECTATOR LIST — fixed top right -->
 <div id="spectator-list">
   <div class="spec-title">Spectators</div>
-  <div class="spec-row" data-dist="12">
-    <div class="spec-left">
-      <span class="spec-dot"></span>
-      <span class="spec-name">xXSniper99Xx</span>
-    </div>
-    <span class="spec-dist">12m</span>
-  </div>
-  <div class="spec-row" data-dist="4">
-    <div class="spec-left">
-      <span class="spec-dot"></span>
-      <span class="spec-name">Player_123</span>
-    </div>
-    <span class="spec-dist">4m</span>
-  </div>
-  <div class="spec-row" data-dist="38">
-    <div class="spec-left">
-      <span class="spec-dot"></span>
-      <span class="spec-name">NoobKiller</span>
-    </div>
-    <span class="spec-dist">38m</span>
-  </div>
+  <div class="spec-row"><div class="spec-left"><span class="spec-dot"></span><span class="spec-name">xXSniper99Xx</span></div><span class="spec-dist">12m</span></div>
+  <div class="spec-row"><div class="spec-left"><span class="spec-dot"></span><span class="spec-name">Player_123</span></div><span class="spec-dist">4m</span></div>
+  <div class="spec-row"><div class="spec-left"><span class="spec-dot"></span><span class="spec-name">NoobKiller</span></div><span class="spec-dist">38m</span></div>
 </div>
 
-
-<!-- OPEN KEY OVERLAY — Key Picker -->
-<div id="open-overlay">
-  <div class="open-key-box" id="okb">
-    <span class="okb-title">Set Menu Key</span>
-    <span class="okb-waiting" id="okb-waiting">press any key...</span>
-    <!-- key pill shown after keypress -->
-    <span class="okb-confirm" id="okb-confirm" style="display:none">
-      Press <span>Enter</span> to confirm
-    </span>
-  </div>
-</div>
-
-<!-- KEYBIND LIST — fixed top left, always visible when open -->
 <div id="keybind-list">
   <div class="kb-title">Keybinds</div>
-  <div id="kb-items"><!-- leer --></div>
+  <div id="kb-items"></div>
 </div>
 
-<div id="wrapper"  style="display:none">
-  <!-- SCROLL RAIL — outside #menu, positioned by JS -->
-
-
-  <div id="scroll-rail"><div id="scroll-fill"></div><div id="scroll-diamond"></div></div>
+<div id="wrapper" style="display:none">
   <div id="menu">
-    <div class="header" id="header">
+    <div class="header">
       <div class="hbg"></div>
-      <img class="banner-img" id="banner-img" src="banner.png"
-           onerror="this.style.display='none';document.getElementById('banner-fallback').style.display='flex'">
+      <img class="banner-img" id="banner-img" src="banner.png" onerror="this.style.display='none';document.getElementById('banner-fallback').style.display='flex'">
       <div class="banner-fallback" id="banner-fallback">cfx.gg</div>
       <div class="breadcrumb" id="bc">Main Menu</div>
       <div class="hline"></div>
     </div>
-
-    <!-- ONLINE TAB BAR: List | Safe | Risk | Vehicle -->
     <div id="online-tabs">
       <div class="otab" data-tab="-1">List</div>
       <div class="otab" data-tab="0">Safe</div>
       <div class="otab" data-tab="1">Risk</div>
       <div class="otab" data-tab="2">Vehicle</div>
     </div>
-
     <div class="content" id="content"></div>
-
-    <div class="footer-gap" id="footer-gap"></div>
+    <div class="footer-gap"></div>
     <div class="footer">
       <div class="footer-left">
-        <svg class="footer-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg">
-          <path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019z"/>
-        </svg>
+        <svg class="footer-icon" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019z"/></svg>
         <span class="fbrand"><span>discord.gg/cfxmenu</span> &nbsp;·&nbsp; Build: 262119</span>
       </div>
       <span class="fcnt" id="fcnt">1 / 1</span>
@@ -637,1055 +213,375 @@ html, body {
   </div>
 </div>
 
+<div id="keybind-overlay">
+  <div class="open-key-box" id="kob">
+    <span class="okb-title">Keybind: <span id="kob-item-name" style="color:var(--accent)"></span></span>
+    <span class="okb-waiting" id="kob-waiting">press any key...</span>
+    <span class="okb-confirm" id="kob-confirm" style="display:none">Press <span>Enter</span> to confirm &nbsp;·&nbsp; <span style="color:#888">Backspace</span> = remove</span>
+  </div>
+</div>
+
 <script>
+const FP_SVG=`<svg class="fp" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"><path d="M50 54 C46 54 43 51 43 47 C43 43 46 40 50 40 C54 40 57 43 57 47 C57 53 53 58 50 62 C47 66 45 72 46 78"/><path d="M54 78 C55 72 57 66 59 61 C62 56 64 52 64 47 C64 39 58 33 50 33 C42 33 36 39 36 47 C36 53 38 59 43 64"/><path d="M36 68 C31 62 28 55 28 47 C28 35 38 25 50 25 C62 25 72 35 72 47 C72 55 69 62 64 68 C62 72 61 77 62 82"/><path d="M40 84 C37 79 34 73 33 67 C30 60 27 54 24 48 C22 42 22 36 24 30 C28 20 38 13 50 13 C62 13 72 20 76 30 C78 36 78 42 76 48 C74 53 72 58 71 63"/><path d="M19 60 C16 56 14 50 14 44 C14 28 30 15 50 15"/><path d="M81 60 C84 56 86 50 86 44 C86 28 70 15 50 15"/></svg>`;
 
-window.addEventListener('message', function(event) {
-    if (event.data && event.data.type === 'control') {
-        // Wenn wir noch im Key-Pick-Mode sind, diesen überspringen
-        if (keyPickMode) {
-            keyPickMode = false;
-            menuHotkey  = '__lua__'; // Dummy, wird nie getriggert
-            const overlay = document.getElementById('open-overlay');
-            if (overlay) overlay.classList.add('hidden');
-        }
+const tog=(n)=>({type:'toggle',name:n});
+const val=(n,v,a)=>({type:'value',name:n,val:v,actions:a||null});
+const btn=(n)=>({type:'button',name:n});
+const sldr=(n,v,mn,mx)=>({type:'slider',name:n,val:v,min:mn,max:mx});
+const sep=(l)=>({type:'sep',label:l});
+const sub=(n,c)=>({type:'sub',name:n,children:{label:n,items:c}});
+const cfg=(id,n)=>val(`[${id}] ${n}`,'Load',['Load','Overwrite','Delete']);
 
-        const e = new KeyboardEvent('keydown', {
-            key:        event.data.key,
-            code:       event.data.key,
-            bubbles:    true,
-            cancelable: true
-        });
-        window.dispatchEvent(e);
-    }
-
-    // skipKeyPick — überspringt den Key-Setup-Screen komplett
-    if (event.data && event.data.type === 'skipKeyPick') {
-        keyPickMode = false;
-        menuHotkey  = '__lua__';
-        pendingKey  = null;
-        const overlay = document.getElementById('open-overlay');
-        if (overlay) overlay.classList.add('hidden');
-        // Menü direkt anzeigen
-        document.getElementById('wrapper').style.display = '';
-        menuVisible = true;
-        render();
-    }
-});
-   
-// ══════════════════════════════════════════
-//  NOTIFY
-// ══════════════════════════════════════════
-function notify(title, msg, icon) {
-  const container = document.getElementById('notify-container');
-  // Max 3 gleichzeitig — älteste entfernen
-  while(container.children.length >= 3) {
-    const oldest = container.firstChild;
-    if(oldest) oldest.remove();
-  }
-  const n = document.createElement('div');
-  n.className = 'notify';
-  n.innerHTML = `
-    <div class="notify-header">
-      <i class="${icon||'fa-solid fa-bell'}"></i> ${title}
-    </div>
-    <div class="notify-msg">${msg}</div>
-    <div class="notify-bar"></div>`;
-  container.appendChild(n);
-  // start progress bar shrink
-  const bar = n.querySelector('.notify-bar');
-  requestAnimationFrame(() => {
-    bar.style.transition = 'width 3s linear';
-    bar.style.width = '0%';
-  });
-  // remove after 3s
-  setTimeout(() => {
-    n.style.transition = 'opacity 0.25s, transform 0.25s';
-    n.style.opacity = '0';
-    n.style.transform = 'translateY(-8px) scale(0.97)';
-    setTimeout(() => n.remove(), 250);
-  }, 3000);
-}
-
-// ══════════════════════════════════════════
-//  THEME SYSTEM
-// ══════════════════════════════════════════
-const THEMES = {
-  'Default': { cls: '',           banner: 'banner.png'  },
-  'Grey':    { cls: 'theme-grey', banner: 'banner2.png' },
-  'Red':     { cls: 'theme-red',  banner: 'banner3.png' },
-  'Pink':    { cls: '',           banner: 'banner.png'  },
+const ONLINE_PLAYERS=['Player 1','Player 2','Player 3'];
+const ONLINE_TABS={
+  Safe:[tog("Spectate"),tog("Local Teleport"),btn("Teleport To Player"),val("Friend","Add",["Add","Remove","Spectate"]),btn("Teleport To Void"),btn("Bring"),btn("Copy Outfit"),sep("Kill"),val("Smash","Car",["Car","Truck","Boat","Helicopter","Bike"]),btn("Explode"),btn("Massacre"),btn("Player Cage"),btn("Attack"),btn("Launch"),btn("Box"),tog("Freeze"),tog("Stuck"),btn("Random Ragdoll")],
+  Risk:[btn("Kill Player"),tog("Silent Kill"),btn("Killer Clown Attack"),btn("UFO Attack"),btn("Asteroid Attack"),btn("Crash in Vehicles"),btn("Spawn Admins"),btn("Spawn Attacker"),tog("Taze Loop"),tog("Sound Spammer")],
+  Vehicle:[btn("Steal Vehicle"),btn("Kick Driver"),btn("Kick Driver #2"),btn("Delete Vehicle"),tog("Freeze Vehicle"),btn("Glitch Vehicle"),btn("TP to Void"),btn("NPC Vehicle Hijack"),btn("Launch Vehicle"),btn("Break Vehicle")],
 };
+const ONLINE_TAB_NAMES=['Safe','Risk','Vehicle'];
+let onlineMode=false,onlineTab=-1,onlineItemIdx=0;
 
-function applyTheme(name) {
-  const t = THEMES[name] || THEMES['Default'];
-  document.body.className = t.cls;
-  const img = document.getElementById('banner-img');
-  const fb  = document.getElementById('banner-fallback');
-  img.src = t.banner;
-  img.style.display = 'block';
-  fb.style.display  = 'none';
-  img.onerror = () => { img.style.display='none'; fb.style.display='flex'; };
-}
-
-// ══════════════════════════════════════════
-//  FINGERPRINT SVG
-// ══════════════════════════════════════════
-const FP_SVG = `<svg class="fp" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round">
-  <!-- core center loop -->
-  <path d="M50 54 C46 54 43 51 43 47 C43 43 46 40 50 40 C54 40 57 43 57 47 C57 53 53 58 50 62 C47 66 45 72 46 78"/>
-  <path d="M54 78 C55 72 57 66 59 61 C62 56 64 52 64 47 C64 39 58 33 50 33 C42 33 36 39 36 47 C36 53 38 59 43 64"/>
-  <!-- middle ring -->
-  <path d="M36 68 C31 62 28 55 28 47 C28 35 38 25 50 25 C62 25 72 35 72 47 C72 55 69 62 64 68 C62 72 61 77 62 82"/>
-  <!-- outer ring -->
-  <path d="M40 84 C37 79 34 73 33 67 C30 60 27 54 24 48 C22 42 22 36 24 30 C28 20 38 13 50 13 C62 13 72 20 76 30 C78 36 78 42 76 48 C74 53 72 58 71 63"/>
-  <!-- outermost arc -->
-  <path d="M19 60 C16 56 14 50 14 44 C14 28 30 15 50 15"/>
-  <path d="M81 60 C84 56 86 50 86 44 C86 28 70 15 50 15"/>
-</svg>`;
-
-// ══════════════════════════════════════════
-//  HELPERS
-// ══════════════════════════════════════════
-const tog  = n           => ({type:'toggle', name:n});
-const val  = (n,v,a)     => ({type:'value',  name:n, val:v, actions:a||null});
-const btn  = n           => ({type:'button', name:n});
-const sldr = (n,v,mn,mx) => ({type:'slider', name:n, val:v, min:mn, max:mx});
-const sep  = l           => ({type:'sep',    label:l});
-const sub  = (n,c)       => ({type:'sub',    name:n, children:{label:n, items:c}});
-const plr  = n           => ({type:'player', name:n});
-const cfg  = (id,n)      => val(`[${id}] ${n}`, 'Load', ['Load','Overwrite','Delete']);
-
-// ══════════════════════════════════════════
-//  PLAYER ACTION MENU
-// ══════════════════════════════════════════
-function makePlayerMenu(name) {
-  return { label: name, items: [
-    sep("Safe"),
-    tog("Spectate"), tog("Local Teleport"),
-    btn("Teleport To Void"), btn("Bring"), btn("Copy Outfit"),
-    sep("Kill"),
-    val("Smash","Car",["Car","Truck","Boat","Helicopter","Bike"]),
-    val("Silent Kill","Car",["Car","Truck","Boat","Explosion","Fall"]),
-    btn("Explode"), btn("Massacre"), btn("Player Cage"),
-    btn("Attack"), btn("Launch"), btn("Box"),
-    tog("Freeze"), tog("Stuck"), btn("Random Ragdoll"),
-    sep("Risk"),
-    btn("Kill Player"), tog("Silent Kill"),
-    btn("Killer Clown Attack"), btn("UFO Attack"), btn("Asteroid Attack"),
-    btn("Crash in Vehicles"), btn("Spawn Attacker"),
-    tog("Taze Loop"), tog("Sound Spammer"),
-    sep("Vehicle"),
-    btn("Steal Vehicle"), btn("Kick Driver"), btn("Kick Driver #2"),
-    btn("Delete Vehicle"), tog("Freeze Vehicle"), btn("Glitch Vehicle"),
-    btn("Launch Vehicle"), btn("Break Vehicle"),
-  ]};
-}
-
-// ══════════════════════════════════════════
-//  ONLINE TABS DATA
-// ══════════════════════════════════════════
-const ONLINE_PLAYERS = ['Player 1','Player 2','Player 3'];
-
-const ONLINE_TABS = {
-  Safe: [
-    tog("Spectate"), tog("Local Teleport"),
-    btn("Teleport To Player"),
-    val("Friend","Add",["Add","Remove","Spectate"]),
-    btn("Teleport To Void"), btn("Bring"), btn("Copy Outfit"),
-    sep("Kill"),
-    val("Smash","Car",["Car","Truck","Boat","Helicopter","Bike"]),
-    val("Silent Kill","Car",["Car","Truck","Boat","Explosion","Fall"]),
-    btn("Explode"), btn("Massacre"), btn("Player Cage"),
-    btn("Attack"), btn("Launch"), btn("Box"),
-    tog("Freeze"), tog("Stuck"), btn("Random Ragdoll"),
-  ],
-  Risk: [
-    btn("Kill Player"), tog("Silent Kill"),
-    btn("Killer Clown Attack"), btn("UFO Attack"), btn("Asteroid Attack"),
-    btn("Crash in Vehicles"), btn("Spawn Admins"), btn("Spawn Attacker"),
-    tog("Slider Mode Air"), btn("Stuck Teleport"),
-    tog("Taze Loop"), tog("Sound Spammer"),
-  ],
-  Vehicle: [
-    btn("Steal Vehicle"), btn("Kick Driver"), btn("Kick Driver #2"),
-    btn("Delete Vehicle"), tog("Freeze Vehicle"), btn("Glitch Vehicle"),
-    btn("TP to Void"), btn("NPC Vehicle Hijack"),
-    btn("Launch Vehicle"), btn("Break Vehicle"),
-  ],
-};
-const ONLINE_TAB_NAMES = ['Safe','Risk','Vehicle'];
-
-// online mode state
-let onlineMode    = false;
-let onlineTab     = -1;   // -1=List, 0=Safe, 1=Risk, 2=Vehicle
-let onlineItemIdx = 0;
-
-
-const MAIN = { label:"Main Menu", items:[
-
+const MAIN={label:"Main Menu",items:[
   sub("Self Options",[
-    sub("NoClip Options",[
-      tog("NoClip"), tog("NoClip Invisibility"),
-      sep("NoClip Settings"),
-      sldr("NoClip Speed",16,1,50), sldr("NoClip Vertical Speed",1,0.1,10),
-    ]),
-    sub("Health",[
-      tog("Godmode"), tog("Auto Revive"), tog("Fake Dead"),
-      btn("Revive"), btn("Heal"), btn("Armour"), btn("Suicide"),
-    ]),
-    sub("Appearance",[
-      btn("Ped Changer"), btn("Outfit"), btn("Admin Outfit"),
-      btn("Random Outfit"), btn("Saved Outfit"), btn("Skin Editor"),
-    ]),
-    sub("Basic Options",[
-      tog("Invisibility"), tog("No Ragdoll"), tog("Anti Headshot"),
-      tog("Anti Stun"), tog("Seatbelt"),
-      sep("Movement"),
-      tog("Infinite Stamina"), tog("Infinite Combatroll"), tog("Infinite Jumps"),
-      sep("Speed"),
-      sldr("Run Speed",1,0.5,5), sldr("Swim Speed",1,0.5,5),
-    ]),
-    sub("Teleport",[
-      btn("To Waypoint"), btn("To Coords"), btn("Teleport Back"),
-      sep("Locations"),
-      btn("Airport"), btn("Beach"), btn("Maze Bank"), btn("Mount Chiliad"),
-    ]),
+    sub("NoClip Options",[tog("NoClip"),tog("NoClip Invisibility"),sep("NoClip Settings"),sldr("NoClip Speed",16,1,50),sldr("NoClip Vertical Speed",1,0.1,10)]),
+    sub("Health",[tog("Godmode"),tog("Auto Revive"),tog("Fake Dead"),btn("Revive"),btn("Heal"),btn("Armour"),btn("Suicide")]),
+    sub("Appearance",[btn("Ped Changer"),btn("Outfit"),btn("Admin Outfit"),btn("Random Outfit"),btn("Saved Outfit"),btn("Skin Editor")]),
+    sub("Basic Options",[tog("Invisibility"),tog("No Ragdoll"),tog("Anti Headshot"),tog("Anti Stun"),tog("Seatbelt"),sep("Movement"),tog("Infinite Stamina"),tog("Infinite Combatroll"),tog("Infinite Jumps"),sep("Speed"),sldr("Run Speed",1,0.5,5),sldr("Swim Speed",1,0.5,5)]),
+    sub("Teleport",[btn("To Waypoint"),btn("To Coords"),btn("Teleport Back"),sep("Locations"),btn("Airport"),btn("Beach"),btn("Maze Bank"),btn("Mount Chiliad")]),
   ]),
-
-  // Online Options — special type, opens directly into player+tab view
-  {type:'online', name:'Online Options'},
-
+  {type:'online',name:'Online Options'},
   sub("Visual Options",[
-    sub("Player ESP",[
-      tog("Self ESP"), tog("Exclude Dead"), tog("Nametags"),
-      tog("Skeleton"), tog("Box ESP"), tog("Health Bar"),
-      tog("Distance ESP"), tog("Weapon ESP"),
-    ]),
-    sub("NPC ESP",[
-      tog("NPC ESP"), tog("Exclude Dead"), tog("Nametags"),
-      tog("Skeleton"), tog("Box ESP"), tog("Health Bar"),
-      tog("Distance ESP"), tog("Weapon ESP"),
-    ]),
-    sub("Vehicle ESP",[
-      tog("Vehicle ESP"), tog("Exclude Dead"), tog("Nametags"), tog("Box ESP"),
-    ]),
-    sub("Crosshair",[
-      tog("Crosshair"),
-      val("Mode","Dot",["Dot","Cross","Circle","Square","Arrow"]),
-      val("Color","White",["White","Red","Green","Blue","Pink","Yellow","Cyan"]),
-      sldr("Thickness",1,1,5), sldr("Size",10,5,30),
-    ]),
-    sub("ESP Colors",[
-      val("Box ESP Color","Red",["Red","Green","Blue","Pink","White","Yellow","Cyan"]),
-      val("Skeleton Color","White",["White","Red","Green","Blue","Pink","Yellow"]),
-      val("Health Bar Style","Default",["Default","Gradient","Flat","Outlined"]),
-    ]),
+    sub("Player ESP",[tog("Self ESP"),tog("Exclude Dead"),tog("Nametags"),tog("Skeleton"),tog("Box ESP"),tog("Health Bar"),tog("Distance ESP"),tog("Weapon ESP")]),
+    sub("NPC ESP",[tog("NPC ESP"),tog("Exclude Dead"),tog("Nametags"),tog("Skeleton"),tog("Box ESP"),tog("Health Bar"),tog("Distance ESP"),tog("Weapon ESP")]),
+    sub("Vehicle ESP",[tog("Vehicle ESP"),tog("Exclude Dead"),tog("Nametags"),tog("Box ESP")]),
+    sub("Crosshair",[tog("Crosshair"),val("Mode","Dot",["Dot","Cross","Circle","Square","Arrow"]),val("Color","White",["White","Red","Green","Blue","Pink","Yellow","Cyan"]),sldr("Thickness",1,1,5),sldr("Size",10,5,30)]),
+    sub("ESP Colors",[val("Box ESP Color","Red",["Red","Green","Blue","Pink","White","Yellow","Cyan"]),val("Skeleton Color","White",["White","Red","Green","Blue","Pink","Yellow"]),val("Health Bar Style","Default",["Default","Gradient","Flat","Outlined"])]),
   ]),
-
   sub("Combat Options",[
-    tog("Fast Punch"), tog("One Punch"), tog("One Shot"),
-    sub("Aimbot",[
-      tog("Enable Aimbot"), tog("Ignore Vehicles"), tog("Visible Only"),
-      val("Aimbot Key","RMB",["RMB","LMB","Middle","F","E","R","X","C","V"]),
-      val("Target Bone","Head",["Head","Neck","Chest","Pelvis","LeftFoot","RightFoot"]),
-      sldr("Smoothing",5,1,20),
-      sep("FOV"),
-      tog("Show FOV"), tog("Filled FOV"),
-      sldr("FOV Size",150,10,360), sldr("Fill Opacity",0.3,0,1),
-    ]),
-    sub("Silent Aim",[
-      tog("Enable"), tog("Target NPCs"), tog("Visible Check"),
-      val("Silent Aim Key","LMB",["LMB","RMB","Middle","F","E","R","X","C"]),
-      val("Mode","Default",["Default","Bullet","Instant"]),
-      val("Aim Bone","Head",["Head","Neck","Chest","Pelvis","LeftFoot","RightFoot"]),
-      sep("Targeting"),
-      sldr("FOV",150,10,360), sldr("Distance",200,10,500),
-      val("Hit Chance","90%",["50%","60%","70%","80%","90%","100%"]),
-    ]),
-    sub("Ragebot",[
-      tog("Enable"), tog("Target NPCs"),
-      val("Type","Default",["Default","Aggressive","Safe"]),
-      val("Bullet","Normal",["Normal","Explosive","Incendiary","FMJ"]),
-      sldr("FOV",180,10,360), tog("Show FOV"),
-      val("FOV Color","Red",["Red","Green","Blue","Pink","White","Yellow"]),
-    ]),
+    tog("Fast Punch"),tog("One Punch"),tog("One Shot"),
+    sub("Aimbot",[tog("Enable Aimbot"),tog("Ignore Vehicles"),tog("Visible Only"),val("Aimbot Key","RMB",["RMB","LMB","Middle","F","E","R","X","C","V"]),val("Target Bone","Head",["Head","Neck","Chest","Pelvis","LeftFoot","RightFoot"]),sldr("Smoothing",5,1,20),sep("FOV"),tog("Show FOV"),tog("Filled FOV"),sldr("FOV Size",150,10,360),sldr("Fill Opacity",0.3,0,1)]),
+    sub("Silent Aim",[tog("Enable"),tog("Target NPCs"),tog("Visible Check"),val("Silent Aim Key","LMB",["LMB","RMB","Middle","F","E","R","X","C"]),val("Mode","Default",["Default","Bullet","Instant"]),val("Aim Bone","Head",["Head","Neck","Chest","Pelvis","LeftFoot","RightFoot"]),sep("Targeting"),sldr("FOV",150,10,360),sldr("Distance",200,10,500),val("Hit Chance","90%",["50%","60%","70%","80%","90%","100%"])]),
+    sub("Ragebot",[tog("Enable"),tog("Target NPCs"),val("Type","Default",["Default","Aggressive","Safe"]),val("Bullet","Normal",["Normal","Explosive","Incendiary","FMJ"]),sldr("FOV",180,10,360),tog("Show FOV"),val("FOV Color","Red",["Red","Green","Blue","Pink","White","Yellow"])]),
   ]),
-
   sub("Weapon Options",[
-    sub("Give Weapons",[
-      btn("Pistol"), btn("SMG"), btn("Rifle"),
-      btn("Sniper"), btn("Shotgun"), btn("Heavy"), btn("Melee"),
-    ]),
-    btn("Give All Weapons"), btn("Remove All Weapons"),
-    btn("Upgrade Weapons"), btn("Refill Ammo"),
-    tog("No Reload"), tog("Infinite Ammo"),
+    sub("Give Weapons",[btn("Pistol"),btn("SMG"),btn("Rifle"),btn("Sniper"),btn("Shotgun"),btn("Heavy"),btn("Melee")]),
+    btn("Give All Weapons"),btn("Remove All Weapons"),btn("Upgrade Weapons"),btn("Refill Ammo"),tog("No Reload"),tog("Infinite Ammo"),
   ]),
-
   sub("Vehicle Options",[
-    sub("Spawner",[
-      btn("Spawn by Name"), tog("Spawn Inside Vehicle"), tog("Spoof Vehicle"),
-      sep("Vehicles"),
-      val("Addon","HycadeM3G80c",["HycadeM3G80c","HycadeM3G80c2","AddonCar1"]),
-      val("Compacts","BLISTA",["BLISTA","BRIOSO","ISSI2","WEEVIL"]),
-      val("Sedans","ASEA",["ASEA","ASTEROPE","FUGITIVE","INGOT","INTRUDER"]),
-      val("SUVs","BALLER",["BALLER","CAVALCADE","DUBSTA","GRANGER","MESA"]),
-      val("Coupes","COGCABRIO",["COGCABRIO","EXEMPLAR","F620","FELON","SENTINEL"]),
-      val("Muscle","BLADE",["BLADE","BUCCANEER","CHINO","DOMINATOR","GAUNTLET"]),
-      val("Sports","ELEGY",["ELEGY","FELTZER","FUROREGT","JESTER","KURUMA"]),
-      val("Super","ADDER",["ADDER","BULLET","CHEETAH","ENTITYXF","INFERNUS"]),
-    ]),
-    btn("Tuning"), btn("Repair"), btn("Flip"),
-    tog("Boost"), btn("Delete"), btn("Change Plate"),
-    tog("Vehicle Godmode"), tog("Vehicle Jump"),
-    tog("Auto Pilot"), tog("Lock / Unlock"),
-    tog("Force Engine On"), tog("Horn Boost"),
-    sldr("Horn Boost Speed",5,1,20),
-    sub("Troll",[
-      btn("Force Drag Out"), tog("Physgun"), tog("Kick Vehicle Mode"),
-      tog("Pit Mode"), tog("Tow Truck"), tog("Rainbow Vehicle"),
-      tog("Carry Vehicle"), sldr("Throw Force",10,1,50),
-      sldr("Carry Distance",5,1,20), btn("Spawn RC Car"),
-      sldr("Control Speed",3,1,20),
-    ]),
+    sub("Spawner",[btn("Spawn by Name"),tog("Spawn Inside Vehicle"),tog("Spoof Vehicle"),sep("Vehicles"),val("Addon","HycadeM3G80c",["HycadeM3G80c","HycadeM3G80c2","AddonCar1"]),val("Compacts","BLISTA",["BLISTA","BRIOSO","ISSI2","WEEVIL"]),val("Sedans","ASEA",["ASEA","ASTEROPE","FUGITIVE","INGOT","INTRUDER"]),val("SUVs","BALLER",["BALLER","CAVALCADE","DUBSTA","GRANGER","MESA"]),val("Coupes","COGCABRIO",["COGCABRIO","EXEMPLAR","F620","FELON","SENTINEL"]),val("Muscle","BLADE",["BLADE","BUCCANEER","CHINO","DOMINATOR","GAUNTLET"]),val("Sports","ELEGY",["ELEGY","FELTZER","FUROREGT","JESTER","KURUMA"]),val("Super","ADDER",["ADDER","BULLET","CHEETAH","ENTITYXF","INFERNUS"])]),
+    btn("Tuning"),btn("Repair"),btn("Flip"),tog("Boost"),btn("Delete"),btn("Change Plate"),tog("Vehicle Godmode"),tog("Vehicle Jump"),tog("Auto Pilot"),tog("Lock / Unlock"),tog("Force Engine On"),tog("Horn Boost"),sldr("Horn Boost Speed",5,1,20),
+    sub("Troll",[btn("Force Drag Out"),tog("Physgun"),tog("Kick Vehicle Mode"),tog("Pit Mode"),tog("Tow Truck"),tog("Rainbow Vehicle"),tog("Carry Vehicle"),sldr("Throw Force",10,1,50),sldr("Carry Distance",5,1,20),btn("Spawn RC Car"),sldr("Control Speed",3,1,20)]),
   ]),
-
   sub("Misc Options",[
-    tog("Spectator List"), tog("Keybind List"),
-    sub("Free Cam",[
-      tog("Enable Freecam"), sldr("Freecam Speed",2,0.5,20),
-      tog("Visible Options"), btn("Adjust Keys"),
-    ]),
-    sub("Server",[
-      sub("Triggers",[
-        btn("Load Triggers"), tog("Trigger Bypass"),
-        sep("Found Triggers"),
-        btn("Negative Money #2"), btn("Money #3"), btn("Revive Player"),
-        btn("Add all Licenses"), btn("Open Skin Menu"),
-        btn("Spawn Vehicle"), btn("Revive Self"),
-      ]),
-      btn("Lag Server"), tog("Kick to Air Mode"),
-      btn("Local Teleport All"), tog("Infinite Voice Range"),
-      btn("Silent Kill All"), btn("Kill All"), btn("Massacre All"),
-    ]),
-    sub("Bypasses",[
-      tog("Player Proof Bypass"), tog("Force Allow Ragdoll"),
-      tog("Force Enable Controls"), tog("Spoof own Ped [TESTING]"),
-      btn("Freeze Anticheats"), tog("Screenshot Blocker"),
-      val("Entity Spawn Bypass","Type 1",["Type 1","Type 2","Type 3","Type 4"]),
-      sep("Extra Anticheat Bypasses"),
-      sub("Waveshield",[
-        tog("Enable Waveshield"), sldr("Strength",5,1,10),
-      ]),
-    ]),
-    sub("Time & Weather",[
-      tog("Force Time"), sldr("Hour",12,0,23),
-      tog("Force Weather"),
-      val("Weather Type","Clear",["Clear","Clouds","Overcast","Rain","Thunder","Foggy","Snowlight","Blizzard","Christmas","Halloween"]),
-    ]),
-    sub("Freeze Resource",[
-      btn("Resource #1"), btn("Resource #2"),
-    ]),
+    tog("Spectator List"),tog("Keybind List"),
+    sub("Free Cam",[tog("Enable Freecam"),sldr("Freecam Speed",2,0.5,20),tog("Visible Options"),btn("Adjust Keys")]),
+    sub("Server",[sub("Triggers",[btn("Load Triggers"),tog("Trigger Bypass"),sep("Found Triggers"),btn("Negative Money #2"),btn("Money #3"),btn("Revive Player"),btn("Add all Licenses"),btn("Open Skin Menu"),btn("Spawn Vehicle"),btn("Revive Self")]),btn("Lag Server"),tog("Kick to Air Mode"),btn("Local Teleport All"),tog("Infinite Voice Range"),btn("Silent Kill All"),btn("Kill All"),btn("Massacre All")]),
+    sub("Bypasses",[tog("Player Proof Bypass"),tog("Force Allow Ragdoll"),tog("Force Enable Controls"),tog("Spoof own Ped [TESTING]"),btn("Freeze Anticheats"),tog("Screenshot Blocker"),val("Entity Spawn Bypass","Type 1",["Type 1","Type 2","Type 3","Type 4"]),sep("Extra Anticheat Bypasses"),sub("Waveshield",[tog("Enable Waveshield"),sldr("Strength",5,1,10)])]),
+    sub("Time & Weather",[tog("Force Time"),sldr("Hour",12,0,23),tog("Force Weather"),val("Weather Type","Clear",["Clear","Clouds","Overcast","Rain","Thunder","Foggy","Snowlight","Blizzard","Christmas","Halloween"])]),
+    sub("Freeze Resource",[btn("Resource #1"),btn("Resource #2")]),
   ]),
-
   sub("Settings",[
-    btn("Reset Menu"), btn("Reset Slider Values"),
-    sldr("Menu Position X",0.06,0,1), sldr("Menu Position Y",0.38,0,1),
+    btn("Reset Menu"),btn("Reset Slider Values"),
+    sldr("Menu Position X",0.06,0,1),sldr("Menu Position Y",0.38,0,1),
     sep("Menu Settings"),
-    sub("Menu Settings",[
-      val("Theme","Default",["Default","Grey","Red","Pink"]),
-      val("Background","Dark",["Dark","Blur","Transparent","Image"]),
-      tog("Blur Background"),
-      val("Menu Hotkey","F4",["F1","F2","F3","F4","F5","F6","Insert","Delete","Home"]),
-    ]),
+    sub("Menu Settings",[val("Theme","Default",["Default","Grey","Red","Pink"]),val("Background","Dark",["Dark","Blur","Transparent","Image"]),tog("Blur Background"),val("Menu Hotkey","F4",["F1","F2","F3","F4","F5","F6","Insert","Delete","Home"])]),
     sep("Other Modules"),
-    sub("Configs",[
-      btn("Create Config"), btn("Load config by id"),
-      sep("Available Configs"),
-      cfg(15376,"ontop"), cfg(15377,"config2"), cfg(15378,"backup"),
-    ]),
-    sub("Keybinds",[
-      btn("Add Keybind"), btn("Clear All"), sep("Current Keybinds"),
-    ]),
-    sub("Menu",[
-      tog("Show FPS"), tog("Show Watermark"),
-      val("Menu Scale","1.0",["0.8","0.9","1.0","1.1","1.2","1.5"]),
-    ]),
+    sub("Configs",[btn("Create Config"),btn("Load config by id"),sep("Available Configs"),cfg(15376,"ontop"),cfg(15377,"config2"),cfg(15378,"backup")]),
+    sub("Keybinds",[btn("Add Keybind"),btn("Clear All"),sep("Current Keybinds")]),
+    sub("Menu",[tog("Show FPS"),tog("Show Watermark"),val("Menu Scale","1.0",["0.8","0.9","1.0","1.1","1.2","1.5"])]),
   ]),
 ]};
 
-// ══════════════════════════════════════════
-//  STATE
-// ══════════════════════════════════════════
-const stack        = [{menu:MAIN, idx:0}];
-const toggleState  = {};
-const selectedPlrs = new Set();
+// STATE
+const stack=[{menu:MAIN,idx:0}];
+const toggleState={};
+const selectedPlrs=new Set();
+const keybinds={};
+let kbPickMode=false,kbPending=null;
+let menuVisible=false;
 
-function cur()      { return stack[stack.length-1]; }
-function allItems() { return cur().menu.items; }
-function visItems() { return allItems().filter(i=>i.type!=='sep'); }
-function makeKey(item) { return stack.map(s=>s.menu.label).join('||')+'||'+item.name; }
+function cur(){return stack[stack.length-1];}
+function allItems(){return cur().menu.items;}
+function visItems(){return allItems().filter(i=>i.type!=='sep');}
+function makeKey(item){return stack.map(s=>s.menu.label).join('||')+'||'+item.name;}
+function cycleVal(item,dir){let ci=item.actions.indexOf(item.val);if(ci===-1)ci=0;item.val=item.actions[(ci+dir+item.actions.length)%item.actions.length];}
+function sliderStep(i){return(i.max-i.min)<=2?0.1:1;}
+function sliderPct(i){return((i.val-i.min)/(i.max-i.min))*100;}
+function sliderFmt(i){return parseFloat(i.val).toFixed(sliderStep(i)<1?1:0);}
+function adjSlider(item,dir){const s=sliderStep(item);item.val=Math.min(item.max,Math.max(item.min,parseFloat((parseFloat(item.val)+dir*s).toFixed(10))));}
 
-function cycleVal(item, dir) {
-  let ci = item.actions.indexOf(item.val);
-  if(ci===-1) ci=0;
-  item.val = item.actions[(ci+dir+item.actions.length)%item.actions.length];
+function notify(title,msg,icon){
+  const c=document.getElementById('notify-container');
+  while(c.children.length>=3) c.firstChild.remove();
+  const n=document.createElement('div');n.className='notify';
+  n.innerHTML=`<div class="notify-header"><i class="${icon||'fa-solid fa-bell'}"></i> ${title}</div><div class="notify-msg">${msg}</div><div class="notify-bar"></div>`;
+  c.appendChild(n);
+  const bar=n.querySelector('.notify-bar');
+  requestAnimationFrame(()=>{bar.style.transition='width 3s linear';bar.style.width='0%';});
+  setTimeout(()=>{n.style.transition='opacity 0.25s';n.style.opacity='0';setTimeout(()=>n.remove(),250);},3000);
 }
 
-function sliderStep(i){ return (i.max-i.min)<=2?0.1:1; }
-function sliderPct(i) { return ((i.val-i.min)/(i.max-i.min))*100; }
-function sliderFmt(i) { return parseFloat(i.val).toFixed(sliderStep(i)<1?1:0); }
-function adjSlider(item,dir){
-  const s=sliderStep(item);
-  item.val=Math.min(item.max,Math.max(item.min,parseFloat((parseFloat(item.val)+dir*s).toFixed(10))));
+function applyTheme(name){
+  const map={'Default':'','Grey':'theme-grey','Red':'theme-red','Pink':''};
+  document.body.className=map[name]||'';
+  const bmap={'Default':'banner.png','Grey':'banner2.png','Red':'banner3.png','Pink':'banner.png'};
+  const img=document.getElementById('banner-img');
+  img.src=bmap[name]||'banner.png';img.style.display='block';
+  document.getElementById('banner-fallback').style.display='none';
+  img.onerror=()=>{img.style.display='none';document.getElementById('banner-fallback').style.display='flex';};
 }
 
-// ══════════════════════════════════════════
-//  RENDER
-// ══════════════════════════════════════════
-function renderOnline() {
-  const tabBar = document.getElementById('online-tabs');
+function renderOnline(){
+  const tabBar=document.getElementById('online-tabs');
   tabBar.classList.add('visible');
-
-  // active tab: -1 = List, 0/1/2 = action tabs
-  const isListView = onlineTab === -1;
+  const isListView=onlineTab===-1;
   tabBar.querySelectorAll('.otab').forEach(t=>{
-    const tv = parseInt(t.dataset.tab, 10);
-    t.classList.toggle('active', tv === onlineTab);
-    t.onclick = ()=>{
-      onlineTab = tv;
-      onlineItemIdx = 0;
-      render();
-    };
+    const tv=parseInt(t.dataset.tab,10);
+    t.classList.toggle('active',tv===onlineTab);
+    t.onclick=()=>{onlineTab=tv;onlineItemIdx=0;render();};
   });
-
-  const contentEl = document.getElementById('content');
-  let html = '';
-
+  const contentEl=document.getElementById('content');
+  let html='';
   if(isListView){
-    document.getElementById('bc').textContent = 'Online Options';
+    document.getElementById('bc').textContent='Online Options';
     ONLINE_PLAYERS.forEach((p,i)=>{
-      const sel = i === onlineItemIdx;
-      const checked = selectedPlrs.has(p);
-      html += `<div class="item${sel?' selected':''}" data-plr="${i}">
-        <span class="iname">${p}</span>
-        <div class="plr-check${checked?' checked':''}"></div>
-      </div>`;
+      const sel=i===onlineItemIdx;const checked=selectedPlrs.has(p);
+      html+=`<div class="item${sel?' selected':''}" data-plr="${i}"><span class="iname">${p}</span><div class="plr-check${checked?' checked':''}"></div></div>`;
     });
-  } else {
-    const tabName = ONLINE_TAB_NAMES[onlineTab];
-    document.getElementById('bc').textContent = `Online › ${tabName}`;
-    const items = ONLINE_TABS[tabName];
-    let vi = 0;
-    html = items.map(item=>{
-      if(item.type==='sep') return `<div class="sep">${item.label}</div>`;
-      const myVi = vi++;
-      const sel  = myVi === onlineItemIdx;
-      const on   = toggleState['online||'+tabName+'||'+item.name] || false;
-      let right  = '';
+  }else{
+    const tabName=ONLINE_TAB_NAMES[onlineTab];
+    document.getElementById('bc').textContent=`Online › ${tabName}`;
+    const items=ONLINE_TABS[tabName];let vi=0;
+    html=items.map(item=>{
+      if(item.type==='sep')return`<div class="sep">${item.label}</div>`;
+      const myVi=vi++;const sel=myVi===onlineItemIdx;const on=toggleState['online||'+tabName+'||'+item.name]||false;
+      let right='';
       switch(item.type){
-        case 'toggle': right=`<div class="toggle${on?' on':''}"></div>`; break;
-        case 'slider': {
-          const pct=sliderPct(item), d=sliderFmt(item);
-          right=`<div class="srow"><span class="sval">${d}</span><div class="slidertrack"><div class="sliderfill" style="width:${pct}%"></div><div class="sliderthumb" style="left:${pct}%"></div></div></div>`;
-          break;
-        }
-        case 'value': right=item.actions
-          ?`<span class="ival"><span class="ca">‹ </span>${item.val}<span class="ca"> ›</span></span>`
-          :`<span class="ival">${item.val}</span>`; break;
-        case 'button': right=FP_SVG; break;
-        default: right=`<span class="arr">»</span>`;
+        case 'toggle':right=`<div class="toggle${on?' on':''}"></div>`;break;
+        case 'slider':{const pct=sliderPct(item),d=sliderFmt(item);right=`<div class="srow"><span class="sval">${d}</span><div class="slidertrack"><div class="sliderfill" style="width:${pct}%"></div><div class="sliderthumb" style="left:${pct}%"></div></div></div>`;break;}
+        case 'value':right=item.actions?`<span class="ival"><span class="ca">‹ </span>${item.val}<span class="ca"> ›</span></span>`:`<span class="ival">${item.val}</span>`;break;
+        case 'button':right=FP_SVG;break;
+        default:right=`<span class="arr">»</span>`;
       }
-      return `<div class="item${sel?' selected':''}" data-ovi="${myVi}">
-        <span class="iname">${item.name}</span>${right}
-      </div>`;
+      return`<div class="item${sel?' selected':''}" data-ovi="${myVi}"><span class="iname">${item.name}</span>${right}</div>`;
     }).join('');
   }
-
-  contentEl.innerHTML = html;
-  document.getElementById('fcnt').textContent = isListView
-    ? `${selectedPlrs.size} / ${ONLINE_PLAYERS.length}`
-    : ONLINE_TAB_NAMES[onlineTab];
-
-  // click: player toggle
-  contentEl.querySelectorAll('[data-plr]').forEach(div=>{
-    div.addEventListener('click',()=>{
-      const i = parseInt(div.dataset.plr, 10);
-      onlineItemIdx = i;
-      const p = ONLINE_PLAYERS[i];
-      if(selectedPlrs.has(p)) selectedPlrs.delete(p);
-      else selectedPlrs.add(p);
-      render();
-    });
-  });
-  // click: action item
-  contentEl.querySelectorAll('[data-ovi]').forEach(div=>{
-    div.addEventListener('click',()=>{
-      onlineItemIdx = parseInt(div.dataset.ovi, 10);
-      activateOnlineItem();
-    });
-  });
-
-  const focused = contentEl.querySelector('.item.selected');
-  if(focused) focused.scrollIntoView({block:'nearest'});
-  updateRail();
+  contentEl.innerHTML=html;
+  document.getElementById('fcnt').textContent=isListView?`${selectedPlrs.size} / ${ONLINE_PLAYERS.length}`:ONLINE_TAB_NAMES[onlineTab];
+  contentEl.querySelectorAll('[data-plr]').forEach(div=>{div.addEventListener('click',()=>{const i=parseInt(div.dataset.plr,10);onlineItemIdx=i;const p=ONLINE_PLAYERS[i];if(selectedPlrs.has(p))selectedPlrs.delete(p);else selectedPlrs.add(p);render();});});
+  contentEl.querySelectorAll('[data-ovi]').forEach(div=>{div.addEventListener('click',()=>{onlineItemIdx=parseInt(div.dataset.ovi,10);activateOnlineItem();});});
+  const focused=contentEl.querySelector('.item.selected');if(focused)focused.scrollIntoView({block:'nearest'});
 }
 
-function render() {
-  // Check if we're in online mode
-  if(onlineMode){
-    renderOnline();
-    return;
-  }
-
-  // Hide tab bar
+function render(){
+  if(onlineMode){renderOnline();return;}
   document.getElementById('online-tabs').classList.remove('visible');
-
-  const {menu,idx} = cur();
-  document.getElementById('bc').textContent = menu.label;
-
+  const{menu,idx}=cur();
+  document.getElementById('bc').textContent=menu.label;
   let vi=0;
-  const html = allItems().map(item=>{
-    if(item.type==='sep') return `<div class="sep">${item.label}</div>`;
-    const myVi=vi++;
-    const sel=myVi===idx;
-    const on=toggleState[makeKey(item)]||false;
-
+  const html=allItems().map(item=>{
+    if(item.type==='sep')return`<div class="sep">${item.label}</div>`;
+    const myVi=vi++;const sel=myVi===idx;const on=toggleState[makeKey(item)]||false;
     let right='';
     switch(item.type){
-      case 'toggle':
-        right=`<div class="toggle${on?' on':''}"></div>`; break;
-      case 'slider': {
-        const pct=sliderPct(item), d=sliderFmt(item);
-        right=`<div class="srow"><span class="sval">${d}</span><div class="slidertrack"><div class="sliderfill" style="width:${pct}%"></div><div class="sliderthumb" style="left:${pct}%"></div></div></div>`;
-        break;
-      }
-      case 'value':
-        right=item.actions
-          ?`<span class="ival"><span class="ca">‹ </span>${item.val}<span class="ca"> ›</span></span>`
-          :`<span class="ival">${item.val}</span>`;
-        break;
-      case 'sub':
-        right=`<span class="arr">»</span>`; break;
-      case 'online':
-        right=`<span class="arr">»</span>`; break;
-      case 'player':
-        right=`<div class="plr-check${selectedPlrs.has(item.name)?' checked':''}"></div>`; break;
-      case 'button':
-        right=FP_SVG; break;
+      case 'toggle':right=`<div class="toggle${on?' on':''}"></div>`;break;
+      case 'slider':{const pct=sliderPct(item),d=sliderFmt(item);right=`<div class="srow"><span class="sval">${d}</span><div class="slidertrack"><div class="sliderfill" style="width:${pct}%"></div><div class="sliderthumb" style="left:${pct}%"></div></div></div>`;break;}
+      case 'value':right=item.actions?`<span class="ival"><span class="ca">‹ </span>${item.val}<span class="ca"> ›</span></span>`:`<span class="ival">${item.val}</span>`;break;
+      case 'sub':case 'online':right=`<span class="arr">»</span>`;break;
+      case 'button':right=FP_SVG;break;
     }
-
-    return `<div class="item${sel?' selected':''}" data-vi="${myVi}">
-      <span class="iname">${item.name}</span>${right}
-    </div>`;
+    return`<div class="item${sel?' selected':''}" data-vi="${myVi}"><span class="iname">${item.name}</span>${right}</div>`;
   }).join('');
-
   document.getElementById('content').innerHTML=html;
   const vis=visItems();
   document.getElementById('fcnt').textContent=`${Math.min(idx+1,vis.length)} / ${vis.length}`;
-
-  document.querySelectorAll('.item').forEach(div=>{
-    div.addEventListener('click',()=>{
-      const myVi=parseInt(div.dataset.vi,10);
-      if(isNaN(myVi)) return;
-      cur().idx=myVi;
-      activate(visItems()[myVi], 1);
-    });
-  });
-
-  const focused=document.querySelector('.item.selected');
-  if(focused) focused.scrollIntoView({block:'nearest'});
-  updateRail();
+  document.querySelectorAll('.item').forEach(div=>{div.addEventListener('click',()=>{const myVi=parseInt(div.dataset.vi,10);if(isNaN(myVi))return;cur().idx=myVi;activate(visItems()[myVi],1);});});
+  const focused=document.querySelector('.item.selected');if(focused)focused.scrollIntoView({block:'nearest'});
 }
 
 function activateOnlineItem(){
-  const tabName = ONLINE_TAB_NAMES[onlineTab];
-  const items   = ONLINE_TABS[tabName].filter(i=>i.type!=='sep');
-  const item    = items[onlineItemIdx];
-  if(!item) return;
-  const k = 'online||'+tabName+'||'+item.name;
-  if(item.type==='toggle'){
-    toggleState[k]=!toggleState[k];
-    render();
-  } else if(item.type==='value'&&item.actions){
-    cycleVal(item,1);
-    render();
-  } else {
-    render();
-  }
+  const tabName=ONLINE_TAB_NAMES[onlineTab];
+  const items=ONLINE_TABS[tabName].filter(i=>i.type!=='sep');
+  const item=items[onlineItemIdx];if(!item)return;
+  const k='online||'+tabName+'||'+item.name;
+  if(item.type==='toggle'){toggleState[k]=!toggleState[k];render();}
+  else if(item.type==='value'&&item.actions){cycleVal(item,1);render();}
+  else render();
 }
 
-
-function activate(item, dir) {
-  if(!item) return;
+function activate(item,dir){
+  if(!item)return;
   const k=makeKey(item);
-
   if(item.type==='toggle'){
-    toggleState[k]=!toggleState[k];
-    const on=toggleState[k];
-    // Spectator / Keybind panels
-    if(item.name==='Spectator List'){
-      document.getElementById('spectator-list').classList.toggle('open',on);
-      if(on) colorSpectators();
-      notify('Spectator List', on?'Panel opened':'Panel closed', 'fa-solid fa-eye');
-    }
-    if(item.name==='Keybind List'){
-      document.getElementById('keybind-list').classList.toggle('open',on);
-      notify('Keybind List', on?'Panel opened':'Panel closed', 'fa-solid fa-keyboard');
-    }
-    if(item.name==='Show Watermark'){
-      document.getElementById('watermark').classList.toggle('open', on);
-    }
+    toggleState[k]=!toggleState[k];const on=toggleState[k];
+    if(item.name==='Spectator List')document.getElementById('spectator-list').classList.toggle('open',on);
+    if(item.name==='Keybind List')document.getElementById('keybind-list').classList.toggle('open',on);
+    if(item.name==='Show Watermark')document.getElementById('watermark').classList.toggle('open',on);
+    notify(item.name,on?'Enabled':'Disabled','fa-solid fa-bolt');
     render();
-
-  } else if(item.type==='online'){
-    onlineMode    = true;
-    onlineTab     = -1;
-    onlineItemIdx = 0;
+  }else if(item.type==='online'){onlineMode=true;onlineTab=-1;onlineItemIdx=0;render();}
+  else if(item.type==='sub'){stack.push({menu:item.children,idx:0});render();}
+  else if(item.type==='value'&&item.actions){
+    cycleVal(item,dir);
+    if(item.name==='Theme'){applyTheme(item.val);notify('Theme',`Changed to ${item.val}`,'fa-solid fa-palette');}
     render();
-
-  } else if(item.type==='sub'){
-    stack.push({menu:item.children, idx:0});
-    render();
-
-  } else if(item.type==='player'){
-    if(selectedPlrs.has(item.name)) selectedPlrs.delete(item.name);
-    else selectedPlrs.add(item.name);
-    render();
-
-  } else if(item.type==='value' && item.actions){
-    cycleVal(item, dir);
-    if(item.name==='Theme') {
-      applyTheme(item.val);
-      notify('Theme', `Theme changed to ${item.val}`, 'fa-solid fa-palette');
-    }
-
-    render();
-
-  } else if(item.type==='button'){
-    render();
-  } else {
-    render();
-  }
+  }else render();
 }
 
-// ══════════════════════════════════════════
-//  SCROLL RAIL — positioned outside menu
-// ══════════════════════════════════════════
-function updateRail(){
-  // scroll rail disabled
+// KEYBIND
+const KB_FORBIDDEN=new Set(['Tab','Shift','Control','Alt','Meta','CapsLock',' ']);
+function openKeybindPicker(item){
+  kbPickMode=true;kbPending={item,key:null};
+  document.getElementById('kob-item-name').textContent=item.name;
+  document.getElementById('kob-waiting').style.display='';
+  document.getElementById('kob-confirm').style.display='none';
+  const old=document.getElementById('kob').querySelector('.key-pill');if(old)old.remove();
+  document.getElementById('keybind-overlay').classList.add('visible');
 }
-
-// ══════════════════════════════════════════
-//  KEYBOARD
-// ══════════════════════════════════════════
-
-// ══════════════════════════════════════════
-//  KEYBIND SYSTEM — Funktionen
-// ══════════════════════════════════════════
-const keybinds    = {};
-let   kbPickMode  = false;
-let   kbPending   = null;
-const KB_FORBIDDEN = new Set(['Tab','Shift','Control','Alt','Meta','CapsLock',' ']);
-
-function openKeybindPicker(item) {
-  kbPickMode = true;
-  kbPending  = { item, key: null };
-  const overlay = document.getElementById('keybind-overlay');
-  const nameEl  = document.getElementById('kob-item-name');
-  const waiting = document.getElementById('kob-waiting');
-  const conf    = document.getElementById('kob-confirm');
-  const kob     = document.getElementById('kob');
-  if(!overlay) return;
-  nameEl.textContent = item.name;
-  waiting.style.display = '';
-  conf.style.display = 'none';
-  const old = kob.querySelector('.key-pill');
-  if(old) old.remove();
-  overlay.style.display = 'flex';
+function closeKeybindPicker(){kbPickMode=false;kbPending=null;document.getElementById('keybind-overlay').classList.remove('visible');}
+function confirmKeybind(){
+  if(!kbPending||!kbPending.key)return;
+  const{item,key}=kbPending;keybinds[item.name]={key,type:item.type};
+  closeKeybindPicker();renderKeybindList();
+  notify('Keybind',item.name+' → '+key,'fa-solid fa-keyboard');
 }
-
-function closeKeybindPicker() {
-  kbPickMode = false;
-  kbPending  = null;
-  const overlay = document.getElementById('keybind-overlay');
-  if(overlay) overlay.style.display = 'none';
-}
-
-function confirmKeybind() {
-  if(!kbPending || !kbPending.key) return;
-  const { item, key } = kbPending;
-  keybinds[item.name] = { key, type: item.type };
-  closeKeybindPicker();
-  renderKeybindList();
-  notify('Keybind', item.name + ' → ' + key, 'fa-solid fa-keyboard');
-}
-
-function removeKeybind(name) {
-  delete keybinds[name];
-  renderKeybindList();
-}
-
-function renderKeybindList() {
-  const el = document.getElementById('kb-items');
-  if(!el) return;
-  const entries = Object.entries(keybinds);
-  if(entries.length === 0) {
-    el.innerHTML = '<div class="kb-empty">No keybinds set<br><span style="opacity:.5;font-size:8px">F6 on any item</span></div>';
-    return;
-  }
-  el.innerHTML = entries.map(([name, { key, type }]) => {
-    const isToggle = type === 'toggle';
-    const on = isToggle && Object.entries(toggleState).some(([k,v]) => k.endsWith('||'+name) && v === true);
-    let statusHtml = '';
-    if(isToggle) {
-      statusHtml = on
-        ? '<span class="kb-status-on">ON</span>'
-        : '<span class="kb-status-off">OFF</span>';
-    }
-    return '<div class="kb-item">'
-      + '<span class="kb-item-name">' + name + '</span>'
-      + '<div class="kb-item-right">' + statusHtml
-      + '<span class="kb-key">' + key + '</span></div></div>';
+function renderKeybindList(){
+  const el=document.getElementById('kb-items');if(!el)return;
+  const entries=Object.entries(keybinds);
+  if(entries.length===0){el.innerHTML='<div class="kb-empty">No keybinds set<br><span style="opacity:.5;font-size:8px">F6 on any item</span></div>';return;}
+  el.innerHTML=entries.map(([name,{key,type}])=>{
+    const isToggle=type==='toggle';
+    const on=isToggle&&Object.entries(toggleState).some(([k,v])=>k.endsWith('||'+name)&&v===true);
+    const sh=isToggle?(on?'<span class="kb-status-on">ON</span>':'<span class="kb-status-off">OFF</span>'):'';
+    return`<div class="kb-item"><span class="kb-item-name">${name}</span><div class="kb-item-right">${sh}<span class="kb-key">${key}</span></div></div>`;
   }).join('');
 }
 
-function triggerKeybind(name) {
-  function findInMenu(menu) {
-    for(const item of menu.items) {
-      if(item.name === name) return item;
-      if(item.type === 'sub' && item.children) {
-        const f = findInMenu(item.children);
-        if(f) return f;
+// ══════════════════════════════════════════
+//  handleKey — EINZIGE Navigationsfunktion
+//  Wird von keydown UND von Lua-Messages aufgerufen
+// ══════════════════════════════════════════
+function handleKey(key){
+
+  // KEYBIND PICKER
+  if(kbPickMode){
+    if(key==='Escape'){closeKeybindPicker();return;}
+    if(key==='Enter'){if(kbPending&&kbPending.key)confirmKeybind();return;}
+    if(key==='Backspace'){if(kbPending){delete keybinds[kbPending.item.name];closeKeybindPicker();renderKeybindList();}return;}
+    if(KB_FORBIDDEN.has(key))return;
+    kbPending.key=key;
+    const kob=document.getElementById('kob');
+    const old=kob.querySelector('.key-pill');if(old)old.remove();
+    const pill=document.createElement('span');pill.className='key-pill';pill.textContent=key;
+    kob.insertBefore(pill,document.getElementById('kob-confirm'));
+    document.getElementById('kob-waiting').style.display='none';
+    document.getElementById('kob-confirm').style.display='';
+    return;
+  }
+
+  // MENU GESCHLOSSEN — keybinds triggern
+  if(!menuVisible){
+    for(const[name,{key:k}]of Object.entries(keybinds)){
+      if(key===k){
+        function findItem(menu){for(const item of menu.items){if(item.name===name)return item;if(item.type==='sub'&&item.children){const f=findItem(item.children);if(f)return f;}}return null;}
+        const item=findItem(MAIN);if(!item)return;
+        if(item.type==='toggle'){
+          const mk=Object.keys(toggleState).find(k=>k.endsWith('||'+name))||('Main Menu||'+name);
+          toggleState[mk]=!toggleState[mk];
+          renderKeybindList();notify(name,toggleState[mk]?'Enabled':'Disabled','fa-solid fa-bolt');
+        }else if(item.type==='button'){notify(name,'Triggered','fa-solid fa-bolt');}
+        return;
       }
     }
-    return null;
-  }
-  const item = findInMenu(MAIN);
-  if(!item) return;
-  if(item.type === 'toggle') {
-    let k = Object.keys(toggleState).find(k => k.endsWith('||'+name));
-    if(!k) k = 'Main Menu||' + name;
-    toggleState[k] = !toggleState[k];
-    const on = toggleState[k];
-    sendToLua('toggle', name, on);
-    renderKeybindList();
-    if(menuVisible) render();
-    notify(name, on ? 'Enabled' : 'Disabled', 'fa-solid fa-bolt');
-  } else if(item.type === 'button') {
-    sendToLua('button', name, true);
-    notify(name, 'Triggered', 'fa-solid fa-bolt');
-  }
-}
-
-
-// ══════════════════════════════════════════
-//  MENU OPEN-KEY SYSTEM
-// ══════════════════════════════════════════
-let menuHotkey  = null;
-let menuVisible = false;
-let keyPickMode = true;
-let pendingKey  = null;
-
-const FORBIDDEN_KEYS = new Set(['Tab','Escape','Backspace','Shift','Control','Alt','Meta','CapsLock','ArrowUp','ArrowDown','ArrowLeft','ArrowRight']);
-
-function toggleMenu() {
-  menuVisible = !menuVisible;
-  const wrapper = document.getElementById('wrapper');
-  if(wrapper) wrapper.style.display = menuVisible ? '' : 'none';
-  if(menuVisible) {
-    // Kurz warten damit DOM sichtbar ist, dann rendern
-    requestAnimationFrame(() => { render(); });
-  }
-}
-
-function showPendingKey(key) {
-  pendingKey = key;
-  const okb     = document.getElementById('okb');
-  const waiting = document.getElementById('okb-waiting');
-  const conf    = document.getElementById('okb-confirm');
-  if(!okb) return;
-  const old = okb.querySelector('.key-pill');
-  if(old) old.remove();
-  const pill = document.createElement('span');
-  pill.className   = 'key-pill';
-  pill.textContent = key;
-  okb.insertBefore(pill, conf);
-  if(waiting) waiting.style.display = 'none';
-  if(conf)    conf.style.display = '';
-}
-
-function confirmKey(key) {
-  menuHotkey  = key;
-  keyPickMode = false;
-  const overlay = document.getElementById('open-overlay');
-  if(overlay) overlay.classList.add('hidden');
-  notify('Menu Key', key + ' = open / close', 'fa-solid fa-keyboard');
-}
-
-// ══════════════════════════════════════════
-//  UNIFIED KEYBOARD HANDLER
-//  Alle Eingaben in einem Listener — keine Reihenfolge-Probleme
-// ══════════════════════════════════════════
-document.addEventListener('keydown', e => {
-
-  // ── KB PICKER (F6-Overlay) — höchste Priorität ──
-  if(kbPickMode) {
-    e.preventDefault();
-    e.stopImmediatePropagation();
-    if(e.key === 'Escape')    { closeKeybindPicker(); return; }
-    if(e.key === 'Enter')     { if(kbPending && kbPending.key) confirmKeybind(); return; }
-    if(e.key === 'Backspace') {
-      if(kbPending) { removeKeybind(kbPending.item.name); closeKeybindPicker(); }
-      return;
-    }
-    if(KB_FORBIDDEN.has(e.key)) return;
-    // Taste anzeigen
-    kbPending.key = e.key;
-    const kob     = document.getElementById('kob');
-    const waiting = document.getElementById('kob-waiting');
-    const confirm2 = document.getElementById('kob-confirm');
-    const old2 = kob.querySelector('.key-pill');
-    if(old2) old2.remove();
-    const pill2 = document.createElement('span');
-    pill2.className   = 'key-pill';
-    pill2.textContent = e.key;
-    kob.insertBefore(pill2, confirm2);
-    waiting.style.display = 'none';
-    confirm2.style.display = '';
     return;
   }
-
-  // ── KEY PICKER (Menü-Open-Key) — zweite Priorität ──
-  if(keyPickMode) {
-    e.preventDefault();
-    if(e.key === 'Enter') { if(pendingKey) confirmKey(pendingKey); return; }
-    if(FORBIDDEN_KEYS.has(e.key)) return;
-    showPendingKey(e.key);
-    return;
-  }
-
-  // ── MENU TOGGLE ──
-  if(e.key === menuHotkey) {
-    e.preventDefault();
-    toggleMenu();
-    return;
-  }
-
-  // ── KEYBIND TRIGGER (wenn Menu zu) ──
-  if(!menuVisible) {
-    for(const [name, { key }] of Object.entries(keybinds)) {
-      if(e.key === key) { triggerKeybind(name); return; }
-    }
-    return;
-  }
-
-  // ── MENU NAVIGATION (Menu offen) ──
 
   // ONLINE MODE
   if(onlineMode){
-    const isListView = onlineTab === -1;
-    const tabItems   = isListView ? [] : ONLINE_TABS[ONLINE_TAB_NAMES[onlineTab]].filter(i=>i.type!=='sep');
-    const listLen    = ONLINE_PLAYERS.length;
-    const actLen     = tabItems.length;
-    const ALL_TABS   = [-1, 0, 1, 2];
-    switch(e.key){
-      case 'ArrowDown':
-        e.preventDefault();
-        onlineItemIdx = Math.min(onlineItemIdx+1, isListView ? listLen-1 : actLen-1);
-        render(); break;
-      case 'ArrowUp':
-        e.preventDefault();
-        onlineItemIdx = Math.max(onlineItemIdx-1, 0);
-        render(); break;
-      case 'ArrowRight': case 'Enter':
-        e.preventDefault();
-        if(isListView){
-          const p = ONLINE_PLAYERS[onlineItemIdx];
-          if(p){ if(selectedPlrs.has(p)) selectedPlrs.delete(p); else selectedPlrs.add(p); }
-        } else {
-          const item = tabItems[onlineItemIdx];
-          if(item){
-            if(item.type==='slider') adjSlider(item,1);
-            else if(item.type==='value'&&item.actions) cycleVal(item,1);
-            else activateOnlineItem();
-          }
-        }
-        render(); break;
-      case 'ArrowLeft':
-        e.preventDefault();
-        if(!isListView){
-          const item = tabItems[onlineItemIdx];
-          if(item&&item.type==='slider') { adjSlider(item,-1); render(); }
-          else if(item&&item.type==='value'&&item.actions){ cycleVal(item,-1); render(); }
-        }
-        break;
-      case 'e': case 'E':
-        e.preventDefault(); {
-          const ci = ALL_TABS.indexOf(onlineTab);
-          onlineTab = ALL_TABS[(ci+1)%ALL_TABS.length];
-          onlineItemIdx = 0; render();
-        } break;
-      case 'q': case 'Q':
-        e.preventDefault(); {
-          const ci = ALL_TABS.indexOf(onlineTab);
-          onlineTab = ALL_TABS[(ci-1+ALL_TABS.length)%ALL_TABS.length];
-          onlineItemIdx = 0; render();
-        } break;
-      case 'Backspace': case 'Escape':
-        e.preventDefault();
-        if(!isListView){ onlineTab=-1; onlineItemIdx=0; render(); }
-        else { onlineMode=false; render(); }
-        break;
+    const isListView=onlineTab===-1;
+    const tabItems=isListView?[]:ONLINE_TABS[ONLINE_TAB_NAMES[onlineTab]].filter(i=>i.type!=='sep');
+    const ALL_TABS=[-1,0,1,2];
+    if(key==='ArrowDown'){onlineItemIdx=Math.min(onlineItemIdx+1,isListView?ONLINE_PLAYERS.length-1:tabItems.length-1);render();}
+    else if(key==='ArrowUp'){onlineItemIdx=Math.max(onlineItemIdx-1,0);render();}
+    else if(key==='ArrowRight'||key==='Enter'){
+      if(isListView){const p=ONLINE_PLAYERS[onlineItemIdx];if(p){if(selectedPlrs.has(p))selectedPlrs.delete(p);else selectedPlrs.add(p);}}
+      else{const item=tabItems[onlineItemIdx];if(item){if(item.type==='slider')adjSlider(item,1);else if(item.type==='value'&&item.actions)cycleVal(item,1);else activateOnlineItem();}}
+      render();
+    }else if(key==='ArrowLeft'){
+      if(!isListView){const item=tabItems[onlineItemIdx];if(item&&item.type==='slider'){adjSlider(item,-1);render();}else if(item&&item.type==='value'&&item.actions){cycleVal(item,-1);render();}}
+    }else if(key==='e'||key==='E'){const ci=ALL_TABS.indexOf(onlineTab);onlineTab=ALL_TABS[(ci+1)%ALL_TABS.length];onlineItemIdx=0;render();}
+    else if(key==='q'||key==='Q'){const ci=ALL_TABS.indexOf(onlineTab);onlineTab=ALL_TABS[(ci-1+ALL_TABS.length)%ALL_TABS.length];onlineItemIdx=0;render();}
+    else if(key==='Backspace'||key==='Escape'){
+      if(!isListView){onlineTab=-1;onlineItemIdx=0;render();}
+      else{onlineMode=false;render();}
     }
     return;
   }
 
   // NORMAL MODE
-  const vis  = visItems();
-  const st   = cur();
-  const item = vis[st.idx];
+  const vis=visItems();const st=cur();const item=vis[st.idx];
 
-  // F6 = Keybind setzen (nur auf aktivierbare Items)
-  if(e.key === 'F6' && item && item.type !== 'sep' && item.type !== 'sub' && item.type !== 'online') {
-    e.preventDefault();
-    openKeybindPicker(item);
+  if(key==='F6'&&item&&item.type!=='sep'&&item.type!=='sub'&&item.type!=='online'){openKeybindPicker(item);return;}
+
+  if(key==='ArrowDown'){cur().idx=Math.min(st.idx+1,vis.length-1);render();}
+  else if(key==='ArrowUp'){cur().idx=Math.max(st.idx-1,0);render();}
+  else if(key==='ArrowRight'||key==='Enter'){
+    if(!item)return;
+    if(item.type==='slider'){adjSlider(item,1);render();}
+    else if(item.type==='value'&&item.actions){cycleVal(item,1);if(item.name==='Theme')applyTheme(item.val);render();}
+    else activate(item,1);
+  }else if(key==='ArrowLeft'){
+    if(!item)return;
+    if(item.type==='slider'){adjSlider(item,-1);render();}
+    else if(item.type==='value'&&item.actions){cycleVal(item,-1);if(item.name==='Theme')applyTheme(item.val);render();}
+    else if(stack.length>1){stack.pop();render();}
+  }else if(key==='Backspace'||key==='Escape'){
+    if(onlineMode){onlineMode=false;render();}
+    else if(stack.length>1){stack.pop();render();}
+    else{menuVisible=false;document.getElementById('wrapper').style.display='none';}
+  }
+}
+
+// keydown → handleKey
+document.addEventListener('keydown',e=>{
+  if(kbPickMode||menuVisible){e.preventDefault();e.stopPropagation();}
+  handleKey(e.key);
+});
+
+// ══════════════════════════════════════════
+//  MESSAGE HANDLER — Lua → HTML
+//  Kein Key-Pick-Screen, nur direkte Kontrolle
+// ══════════════════════════════════════════
+window.addEventListener('message',function(event){
+  const d=event.data;
+  if(!d||!d.type)return;
+
+  // Lua öffnet/schließt Menu
+  if(d.type==='setVisible'){
+    menuVisible=!!d.value;
+    document.getElementById('wrapper').style.display=menuVisible?'':'none';
+    if(menuVisible)render();
     return;
   }
 
-  switch(e.key){
-    case 'ArrowDown':
-      e.preventDefault(); cur().idx=Math.min(st.idx+1,vis.length-1); render(); break;
-    case 'ArrowUp':
-      e.preventDefault(); cur().idx=Math.max(st.idx-1,0); render(); break;
-    case 'ArrowRight': case 'Enter':
-      e.preventDefault();
-      if(!item) break;
-      if(item.type==='slider')                   { adjSlider(item,1);  render(); }
-      else if(item.type==='value'&&item.actions) { cycleVal(item,1); if(item.name==='Theme') applyTheme(item.val); render(); }
-      else activate(item, 1);
-      break;
-    case 'ArrowLeft':
-      e.preventDefault();
-      if(!item) break;
-      if(item.type==='slider')                   { adjSlider(item,-1); render(); }
-      else if(item.type==='value'&&item.actions) { cycleVal(item,-1); if(item.name==='Theme') applyTheme(item.val); render(); }
-      else if(stack.length>1)                    { stack.pop(); render(); }
-      break;
-    case 'Backspace': case 'Escape':
-      e.preventDefault();
-      if(onlineMode){ onlineMode=false; render(); }
-      else if(stack.length>1){ stack.pop(); render(); }
-      else { toggleMenu(); }
-      break;
+  // Lua schickt Taste → direkt an handleKey
+  if(d.type==='control'){
+    handleKey(d.key);
+    return;
+  }
+
+  // Notify von Lua
+  if(d.type==='notify'){
+    notify(d.title||'',d.msg||'',d.icon||'fa-solid fa-bell');
+    return;
   }
 });
 
-function triggerKeybind(name) {
-  function findInMenu(menu) {
-    for(const item of menu.items) {
-      if(item.name === name) return item;
-      if(item.type === 'sub' && item.children) {
-        const found = findInMenu(item.children);
-        if(found) return found;
-      }
-    }
-    return null;
-  }
-  const item = findInMenu(MAIN);
-  if(!item) return;
-  if(item.type === 'toggle') {
-    const k = Object.keys(toggleState).find(k => k.endsWith('||'+name)) || name;
-    toggleState[k] = !toggleState[k];
-    renderKeybindList();
-    render();
-    notify(name, toggleState[k] ? 'Enabled' : 'Disabled', 'fa-solid fa-bolt');
-  } else if(item.type === 'button') {
-    notify(name, 'Triggered', 'fa-solid fa-bolt');
-  }
-}
-
-// ══════════════════════════════════════════
-//  LUA BRIDGE — sendet Menu-Events an Lua
-// ══════════════════════════════════════════
-function sendToLua(action, name, value) {
-    try {
-        const payload = JSON.stringify({ action, name, value });
-        if (typeof SendDuiMessage === 'function') SendDuiMessage(payload);
-        window.parent.postMessage({ action, name, value }, '*');
-    } catch(e) {}
-}
-
-// Lua → HTML: State/Visibility sync
-// FIX: document.body kann null sein wenn message früh feuert
-window.addEventListener('message', function(e) {
-    const d = e.data;
-    if (!d || !d.type) return;
-    if (d.type === 'setVisible') {
-        const b = document.body;
-        if (b) b.style.visibility = d.value ? 'visible' : 'hidden';
-    }
-    if (d.type === 'notify' && typeof notify === 'function') {
-        notify(d.title || '', d.msg || '', d.icon || 'fa-solid fa-bell');
-    }
-});
-
-// Patch activate() → informiert Lua bei jeder Interaktion
-const _origActivate = activate;
-activate = function(item, dir) {
-    _origActivate(item, dir);
-    if (!item) return;
-    if (item.type === 'toggle') {
-        sendToLua('toggle', item.name, toggleState[makeKey(item)] || false);
-    } else if (item.type === 'button') {
-        sendToLua('button', item.name, true);
-    } else if (item.type === 'value' && item.actions) {
-        sendToLua('value', item.name, item.val);
-        const bc = document.getElementById('bc');
-        if (bc && bc.textContent === 'Spawner') {
-            sendToLua('spawn_vehicle', item.val, item.val);
-        }
-    }
-};
-
-// Patch adjSlider() → debounced an Lua
-const _origAdjSlider = adjSlider;
-adjSlider = function(item, dir) {
-    _origAdjSlider(item, dir);
-    clearTimeout(item._lt);
-    item._lt = setTimeout(() => sendToLua('slider', item.name, item.val), 120);
-};
-
-// Patch Online-Actions
-// FIX: onlineTab === -1 bedeutet List-Tab → kein ONLINE_TABS Eintrag
-const _origActivateOnlineItem = activateOnlineItem;
-activateOnlineItem = function() {
-    _origActivateOnlineItem();
-    if (onlineTab === -1) return; // List-Tab hat keine Actions
-    const tabName = ONLINE_TAB_NAMES[onlineTab];
-    if (!tabName || !ONLINE_TABS[tabName]) return;
-    const items = ONLINE_TABS[tabName].filter(i => i.type !== 'sep');
-    const item  = items[onlineItemIdx];
-    if (!item) return;
-    sendToLua('online', item.name, {
-        tab:     tabName,
-        targets: Array.from(selectedPlrs),
-        value:   item.val || true,
-    });
-};
-
-console.log('[cfxgg] Lua Bridge aktiv');
-
+// Uhr
+setInterval(()=>{
+  const el=document.getElementById('wm-time');if(!el)return;
+  const n=new Date();el.textContent=[n.getHours(),n.getMinutes(),n.getSeconds()].map(v=>String(v).padStart(2,'0')).join(':');
+},1000);
 </script>
-
-<!-- KEYBIND PICKER OVERLAY -->
-<div id="keybind-overlay" style="position:fixed;inset:0;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:48px;pointer-events:none;">
-  <div class="open-key-box" id="kob">
-    <span class="okb-title">Keybind: <span id="kob-item-name" style="color:var(--accent)"></span></span>
-    <span class="okb-waiting" id="kob-waiting">press any key...</span>
-    <span class="okb-confirm" id="kob-confirm" style="display:none">
-      Press <span>Enter</span> to confirm &nbsp;·&nbsp; <span style="color:#888">Backspace</span> = remove
-    </span>
-  </div>
-</div>
 </body>
 </html>
