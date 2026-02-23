@@ -27,7 +27,7 @@ body { display:flex; justify-content:flex-end; align-items:center; min-height:10
 
 /* NOTIFY */
 #notify-container { position:fixed; top:16px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; gap:8px; z-index:9999; pointer-events:none; min-width:240px; }
-.notify { background:rgba(10,10,18,0.96); border:1px solid rgba(255,255,255,0.07); border-left:2px solid var(--accent); padding:10px 16px 14px; border-radius:4px; min-width:240px; backdrop-filter:blur(12px); display:flex; flex-direction:column; animation:notifyIn 0.25s cubic-bezier(0.22,1,0.36,1); overflow:hidden; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.8); }
+.notify { background:#0a0a12; border:1px solid rgba(255,255,255,0.09); border-left:2px solid var(--accent); padding:10px 16px 14px; border-radius:4px; min-width:240px; display:flex; flex-direction:column; animation:notifyIn 0.25s cubic-bezier(0.22,1,0.36,1); overflow:hidden; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.9); }
 @keyframes notifyIn { from{transform:translateY(-14px) scale(0.97);opacity:0;} to{transform:translateY(0) scale(1);opacity:1;} }
 .notify-header { display:flex; align-items:center; gap:8px; font-size:11.5px; font-weight:600; color:#fff; letter-spacing:0.3px; }
 .notify-header i { color:var(--accent); font-size:11px; }
@@ -299,6 +299,11 @@ const selectedPlrs=new Set();
 const keybinds={};
 let kbPickMode=false,kbPending=null;
 let menuVisible=false;
+// Key-Pick für Menu Open/Close Key
+let menuHotkey=null;
+let keyPickMode=true;  // true = warte auf Open-Key beim Start
+let pendingKey=null;
+const FORBIDDEN_KEYS=new Set(['Tab','Escape','Backspace','Shift','Control','Alt','Meta','CapsLock']);
 
 function cur(){return stack[stack.length-1];}
 function allItems(){return cur().menu.items;}
@@ -458,12 +463,70 @@ function renderKeybindList(){
 }
 
 // ══════════════════════════════════════════
+//  KEY-PICK OVERLAY (Open/Close Key)
+// ══════════════════════════════════════════
+// Overlay HTML ist schon im DOM als #keybind-overlay mit id="kob"
+// Wir bauen ein zweites einfaches Overlay für den Menu-Open-Key
+function showKeyPickOverlay(){
+  // Zeige kob overlay mit anderem Titel
+  document.getElementById('kob-item-name').textContent='Menu Open/Close Key';
+  document.getElementById('kob-waiting').style.display='';
+  document.getElementById('kob-confirm').style.display='none';
+  const old=document.getElementById('kob').querySelector('.key-pill');if(old)old.remove();
+  document.getElementById('keybind-overlay').classList.add('visible');
+}
+function hideKeyPickOverlay(){
+  document.getElementById('keybind-overlay').classList.remove('visible');
+}
+function showPendingKey(key){
+  pendingKey=key;
+  const kob=document.getElementById('kob');
+  const old=kob.querySelector('.key-pill');if(old)old.remove();
+  const pill=document.createElement('span');pill.className='key-pill';pill.textContent=key;
+  kob.insertBefore(pill,document.getElementById('kob-confirm'));
+  document.getElementById('kob-waiting').style.display='none';
+  document.getElementById('kob-confirm').style.display='';
+}
+function confirmMenuKey(key){
+  menuHotkey=key;keyPickMode=false;
+  hideKeyPickOverlay();
+  notify('Menu Key',key+' = öffnen / schließen','fa-solid fa-keyboard');
+}
+
+// Zeige Key-Pick beim Start
+showKeyPickOverlay();
+
+// ══════════════════════════════════════════
 //  handleKey — EINZIGE Navigationsfunktion
 //  Wird von keydown UND von Lua-Messages aufgerufen
 // ══════════════════════════════════════════
+function closeMenu(){
+  menuVisible=false;
+  document.getElementById('wrapper').style.display='none';
+  while(stack.length>1)stack.pop();
+  onlineMode=false;onlineTab=-1;onlineItemIdx=0;
+  // Lua informieren: Controls freigeben
+  try{ window.parent.postMessage({type:'control',key:'__close__'},'*'); }catch(e){}
+}
+function openMenu(){
+  menuVisible=true;
+  document.getElementById('wrapper').style.display='';
+  render();
+  // Lua informieren: Controls sperren
+  try{ window.parent.postMessage({type:'control',key:'__open__'},'*'); }catch(e){}
+}
+
 function handleKey(key){
 
-  // KEYBIND PICKER
+  // ── KEY-PICK für Menu-Hotkey (höchste Priorität wenn aktiv) ──
+  if(keyPickMode&&!kbPickMode){
+    if(key==='Enter'){if(pendingKey)confirmMenuKey(pendingKey);return;}
+    if(FORBIDDEN_KEYS.has(key))return;
+    showPendingKey(key);
+    return;
+  }
+
+  // ── KEYBIND PICKER (F6-Overlay) ──
   if(kbPickMode){
     if(key==='Escape'){closeKeybindPicker();return;}
     if(key==='Enter'){if(kbPending&&kbPending.key)confirmKeybind();return;}
@@ -479,7 +542,14 @@ function handleKey(key){
     return;
   }
 
-  // MENU GESCHLOSSEN — keybinds triggern
+  // ── MENU TOGGLE via Hotkey ──
+  if(key===menuHotkey){
+    if(menuVisible)closeMenu();
+    else{menuVisible=true;document.getElementById('wrapper').style.display='';render();}
+    return;
+  }
+
+  // ── MENU GESCHLOSSEN — keybinds triggern ──
   if(!menuVisible){
     for(const[name,{key:k}]of Object.entries(keybinds)){
       if(key===k){
@@ -496,7 +566,7 @@ function handleKey(key){
     return;
   }
 
-  // ONLINE MODE
+  // ── ONLINE MODE ──
   if(onlineMode){
     const isListView=onlineTab===-1;
     const tabItems=isListView?[]:ONLINE_TABS[ONLINE_TAB_NAMES[onlineTab]].filter(i=>i.type!=='sep');
@@ -509,16 +579,21 @@ function handleKey(key){
       render();
     }else if(key==='ArrowLeft'){
       if(!isListView){const item=tabItems[onlineItemIdx];if(item&&item.type==='slider'){adjSlider(item,-1);render();}else if(item&&item.type==='value'&&item.actions){cycleVal(item,-1);render();}}
-    }else if(key==='e'||key==='E'){const ci=ALL_TABS.indexOf(onlineTab);onlineTab=ALL_TABS[(ci+1)%ALL_TABS.length];onlineItemIdx=0;render();}
-    else if(key==='q'||key==='Q'){const ci=ALL_TABS.indexOf(onlineTab);onlineTab=ALL_TABS[(ci-1+ALL_TABS.length)%ALL_TABS.length];onlineItemIdx=0;render();}
-    else if(key==='Backspace'||key==='Escape'){
+    }else if(key==='TabRight'||key==='e'||key==='E'){  // TabRight = Lua-eigener Key für E
+      const ci=ALL_TABS.indexOf(onlineTab);onlineTab=ALL_TABS[(ci+1)%ALL_TABS.length];onlineItemIdx=0;render();
+    }else if(key==='TabLeft'||key==='q'||key==='Q'){   // TabLeft = Lua-eigener Key für Q
+      const ci=ALL_TABS.indexOf(onlineTab);onlineTab=ALL_TABS[(ci-1+ALL_TABS.length)%ALL_TABS.length];onlineItemIdx=0;render();
+    }else if(key==='Backspace'){
+      // Backspace: Tab-Ansicht → List; List → zurück zu Main
       if(!isListView){onlineTab=-1;onlineItemIdx=0;render();}
       else{onlineMode=false;render();}
+    }else if(key==='Escape'){
+      closeMenu();
     }
     return;
   }
 
-  // NORMAL MODE
+  // ── NORMAL MODE ──
   const vis=visItems();const st=cur();const item=vis[st.idx];
 
   if(key==='F6'&&item&&item.type!=='sep'&&item.type!=='sub'&&item.type!=='online'){openKeybindPicker(item);return;}
@@ -535,37 +610,40 @@ function handleKey(key){
     if(item.type==='slider'){adjSlider(item,-1);render();}
     else if(item.type==='value'&&item.actions){cycleVal(item,-1);if(item.name==='Theme')applyTheme(item.val);render();}
     else if(stack.length>1){stack.pop();render();}
-  }else if(key==='Backspace'||key==='Escape'){
-    if(onlineMode){onlineMode=false;render();}
-    else if(stack.length>1){stack.pop();render();}
-    else{menuVisible=false;document.getElementById('wrapper').style.display='none';}
+  }else if(key==='Backspace'){
+    // Backspace: in Sub → einen zurück; im Root → Menu schließen
+    if(stack.length>1){stack.pop();render();}
+    else{closeMenu();}
+  }else if(key==='Escape'){
+    closeMenu();
   }
 }
 
-// keydown → handleKey
+// keydown → handleKey (nur wenn kein keyPickMode oder kbPickMode)
 document.addEventListener('keydown',e=>{
-  if(kbPickMode||menuVisible){e.preventDefault();e.stopPropagation();}
+  if(keyPickMode||kbPickMode||menuVisible){e.preventDefault();e.stopPropagation();}
   handleKey(e.key);
 });
 
 // ══════════════════════════════════════════
 //  MESSAGE HANDLER — Lua → HTML
-//  Kein Key-Pick-Screen, nur direkte Kontrolle
 // ══════════════════════════════════════════
 window.addEventListener('message',function(event){
   const d=event.data;
   if(!d||!d.type)return;
 
-  // Lua öffnet/schließt Menu
+  // Lua meldet Menu wurde von aussen geöffnet/geschlossen
   if(d.type==='setVisible'){
-    menuVisible=!!d.value;
-    document.getElementById('wrapper').style.display=menuVisible?'':'none';
-    if(menuVisible)render();
+    if(d.value) openMenu(); else closeMenu();
     return;
   }
 
   // Lua schickt Taste → direkt an handleKey
+  // __open__ / __close__ sind interne Signale von Lua zurück ans HTML
+  // (passiert wenn Lua selbst den State tracked)
   if(d.type==='control'){
+    if(d.key==='__open__'){ openMenu(); return; }
+    if(d.key==='__close__'){ closeMenu(); return; }
     handleKey(d.key);
     return;
   }
