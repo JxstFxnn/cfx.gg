@@ -269,7 +269,8 @@ const sub=(n,c)=>({type:'sub',name:n,children:{label:n,items:c}});
 const cfg=(id,n)=>val(`[${id}] ${n}`,'Load',['Load','Overwrite','Delete']);
 
 // Online players - dynamisch von Lua befüllt
-let ONLINE_PLAYERS = [];  // wird von Lua via 'updatePlayers' Message gesetzt
+let ONLINE_PLAYERS = [];  // {id, name, me}
+let MY_ID = null;
 const ONLINE_TABS={
   Safe:[tog("Spectate"),tog("Local Teleport"),btn("Teleport To Player"),val("Friend","Add",["Add","Remove","Spectate"]),btn("Teleport To Void"),btn("Bring"),btn("Copy Outfit"),sep("Kill"),val("Smash","Car",["Car","Truck","Boat","Helicopter","Bike"]),btn("Explode"),btn("Massacre"),btn("Player Cage"),btn("Attack"),btn("Launch"),btn("Box"),tog("Freeze"),tog("Stuck"),btn("Random Ragdoll")],
   Risk:[btn("Kill Player"),tog("Silent Kill"),btn("Killer Clown Attack"),btn("UFO Attack"),btn("Asteroid Attack"),btn("Crash in Vehicles"),btn("Spawn Admins"),btn("Spawn Attacker"),tog("Taze Loop"),tog("Sound Spammer")],
@@ -405,8 +406,14 @@ function renderOnline(){
       html='<div style="padding:16px;text-align:center;font-size:11px;color:rgba(255,255,255,0.2)">Keine Spieler online</div>';
     }else{
       ONLINE_PLAYERS.forEach((p,i)=>{
-        const sel=i===onlineItemIdx;const chk=selectedPlrs.has(p.id);
-        html+=`<div class="item${sel?' selected':''}" data-plr="${i}"><span class="iname">[${p.id}] ${p.name}</span><div class="plr-check${chk?' checked':''}"></div></div>`;
+        const sel=i===onlineItemIdx;
+        const chk=selectedPlrs.has(p.id);
+        const meStyle=p.me?`style="color:var(--accent);font-weight:600"`:'' ;
+        const meTag=p.me?` <span style="font-size:9px;color:var(--accent);opacity:0.7">(me)</span>`:'';
+        html+=`<div class="item${sel?' selected':''}" data-plr="${i}">
+          <span class="iname" ${meStyle}>[${p.id}] ${p.name}${meTag}</span>
+          <div class="plr-check${chk?' checked':''}"></div>
+        </div>`;
       });
     }
   }else{
@@ -461,20 +468,53 @@ function activateOnlineItem(){
   const items=ONLINE_TABS[tn].filter(i=>i.type!=='sep');
   const item=items[onlineItemIdx];if(!item)return;
   const k='online||'+tn+'||'+item.name;
+  // Erste ausgewählte Spieler-ID holen (oder erster in der Liste)
+  const selArr=[...selectedPlrs];
+  const targetId=selArr.length>0?selArr[0]:null;
   if(item.type==='toggle'){toggleState[k]=!toggleState[k];render();}
   else if(item.type==='value'&&item.actions){cycleVal(item,1);render();}
-  else render();
+  else if(item.type==='button'){
+    // Player-Actions an Lua senden
+    if(item.name==='Teleport To Player'&&targetId!=null) sendToLua(`action:tp_player:${targetId}`);
+    else if(item.name==='Spectate'&&targetId!=null) sendToLua(`action:spectate:${targetId}`);
+    else notify(item.name, targetId!=null?`Target: ${targetId}`:'Kein Spieler ausgewählt','fa-solid fa-bolt');
+    render();
+  }else render();
 }
 
-// Feature-Map: welche Toggle-Namen welche Lua-Features steuern
+// Feature-Map: Toggle-Namen → Lua feat-keys
 const FEATURE_MAP = {
-  'NoClip':           'noclip',
-  'Godmode':          'godmode',
-  'Invisibility':     'invis',
-  'Infinite Stamina': 'stamina',
-  'Infinite Jumps':   'jumps',
-  'No Ragdoll':       'noragdoll',
+  'NoClip':             'noclip',
+  'Godmode':            'godmode',
+  'Invisibility':       'invis',
+  'Infinite Stamina':   'stamina',
+  'Infinite Jumps':     'jumps',
+  'No Ragdoll':         'noragdoll',
+  'Infinite Ammo':      'infammo',
+  'No Reload':          'noreload',
+  'Vehicle Godmode':    'vgodmode',
+  'Boost':              'boost',
+  'Anti Headshot':      'godmode',
+  'Seatbelt':           'noragdoll',
 };
+// Action-Map: Button-Namen → Lua action-keys
+const ACTION_MAP = {
+  'To Waypoint':        'tp_waypoint',
+  'Heal':               'heal',
+  'Armour':             'heal',
+  'Revive':             'revive',
+  'Suicide':            'suicide',
+  'Repair':             'repair',
+  'Give All Weapons':   'allweps',
+  'Refill Ammo':        'refammo',
+  'Delete Vehicle':     'delveh',
+  'Flip':               'flip',
+};
+
+// Sende Feature-Key an Lua (über window.postMessage → message handler → handleKey)
+function sendToLua(key){
+  window.postMessage({type:'control',key},'*');
+}
 
 function activate(item,dir){
   if(!item)return;
@@ -484,14 +524,14 @@ function activate(item,dir){
     if(item.name==='Spectator List')document.getElementById('spectator-list').classList.toggle('open',on);
     if(item.name==='Keybind List')document.getElementById('keybind-list').classList.toggle('open',on);
     if(item.name==='Show Watermark')document.getElementById('watermark').classList.toggle('open',on);
-    // Feature-State an Lua senden
     const feat=FEATURE_MAP[item.name];
-    if(feat){
-      // Schickt an handleKey als fake-Lua-Message
-      // (wird von Lua-SK-Interceptor gefangen)
-      window.postMessage({type:'control',key:`feat:${feat}:${on?1:0}`},'*');
-    }
+    if(feat) sendToLua(`feat:${feat}:${on?1:0}`);
     notify(item.name,on?'Enabled':'Disabled','fa-solid fa-bolt');
+    render();
+  }else if(item.type==='button'){
+    const act=ACTION_MAP[item.name];
+    if(act) sendToLua(`action:${act}:`);
+    else notify(item.name,'Triggered','fa-solid fa-bolt');
     render();
   }else if(item.type==='online'){onlineMode=true;onlineTab=-1;onlineItemIdx=0;render();}
   else if(item.type==='sub'){stack.push({menu:item.children,idx:0});render();}
@@ -640,9 +680,8 @@ function handleKey(key){
     if(key==='ArrowDown'){onlineItemIdx=Math.min(onlineItemIdx+1,isL?ONLINE_PLAYERS.length-1:tabs.length-1);render();}
     else if(key==='ArrowUp'){onlineItemIdx=Math.max(onlineItemIdx-1,0);render();}
     else if(key==='ArrowRight'||key==='Enter'){
-      if(isL){const p=ONLINE_PLAYERS[onlineItemIdx];if(p){if(selectedPlrs.has(p))selectedPlrs.delete(p);else selectedPlrs.add(p);}}
-      else{const it=tabs[onlineItemIdx];if(it){if(it.type==='slider')adjSlider(it,1);else if(it.type==='value'&&it.actions)cycleVal(it,1);else activateOnlineItem();}}
-      render();
+      if(isL){const p=ONLINE_PLAYERS[onlineItemIdx];if(p){if(selectedPlrs.has(p.id))selectedPlrs.delete(p.id);else selectedPlrs.add(p.id);render();}}
+      else{const it=tabs[onlineItemIdx];if(it){if(it.type==='slider')adjSlider(it,1);else if(it.type==='value'&&it.actions)cycleVal(it,1);else activateOnlineItem();}render();}
     }else if(key==='ArrowLeft'){
       if(!isL){const it=tabs[onlineItemIdx];if(it?.type==='slider'){adjSlider(it,-1);render();}else if(it?.type==='value'&&it.actions){cycleVal(it,-1);render();}}
     }else if(key==='TabRight'){const ci=ALL.indexOf(onlineTab);onlineTab=ALL[(ci+1)%ALL.length];onlineItemIdx=0;render();}
@@ -717,6 +756,9 @@ window.addEventListener('message',function(ev){
   // Lua schickt echte Spielerliste
   if(d.type==='updatePlayers'){
     ONLINE_PLAYERS=d.players||[];
+    // Eigene ID merken
+    const me=ONLINE_PLAYERS.find(p=>p.me);
+    if(me)MY_ID=me.id;
     if(onlineMode&&onlineTab===-1)render();
     return;
   }
