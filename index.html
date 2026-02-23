@@ -628,11 +628,16 @@ body {
 
 <script>
 
-   window.addEventListener('message', (event) => {
-    if (event.data.type === 'control') {
-        // Wir simulieren den Tastendruck für dein bestehendes System
-        const keyEvent = new KeyboardEvent('keydown', { key: event.data.key });
-        window.dispatchEvent(keyEvent);
+window.addEventListener('message', (event) => {
+    if (event.data && event.data.type === 'control') {
+        // Falls dein Menü eine Funktion "handleInput" hat:
+        if (typeof handleInput === 'function') {
+            handleInput(event.data.key);
+        }
+        
+        // Zusätzlich als Keyboard-Event feuern
+        const ev = new KeyboardEvent('keydown', { key: event.data.key });
+        window.dispatchEvent(ev);
     }
 });
    
