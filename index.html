@@ -627,6 +627,15 @@ body {
 </div>
 
 <script>
+
+   window.addEventListener('message', (event) => {
+    if (event.data.type === 'control') {
+        // Wir simulieren den Tastendruck für dein bestehendes System
+        const keyEvent = new KeyboardEvent('keydown', { key: event.data.key });
+        window.dispatchEvent(keyEvent);
+    }
+});
+   
 // ══════════════════════════════════════════
 //  NOTIFY
 // ══════════════════════════════════════════
