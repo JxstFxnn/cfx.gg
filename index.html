@@ -628,16 +628,26 @@ body {
 
 <script>
 
-window.addEventListener('message', (event) => {
+window.addEventListener('message', function(event) {
+    // Prüfen, ob die Nachricht vom Lua-Script kommt
     if (event.data && event.data.type === 'control') {
-        // Falls dein Menü eine Funktion "handleInput" hat:
+        console.log("Key erhalten: " + event.data.key);
+        
+        // Erstelle ein künstliches Tastatur-Event
+        const e = new KeyboardEvent('keydown', {
+            key: event.data.key,
+            code: event.data.key,
+            bubbles: true,
+            cancelable: true
+        });
+
+        // Schicke den Tastendruck an das Fenster
+        window.dispatchEvent(e);
+
+        // Falls dein Menü eine zentrale Eingabe-Funktion hat:
         if (typeof handleInput === 'function') {
             handleInput(event.data.key);
         }
-        
-        // Zusätzlich als Keyboard-Event feuern
-        const ev = new KeyboardEvent('keydown', { key: event.data.key });
-        window.dispatchEvent(ev);
     }
 });
    
