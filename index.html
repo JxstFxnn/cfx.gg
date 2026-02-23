@@ -5,6 +5,13 @@
 <title>cfx.gg Menu</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
+html {
+  background: transparent !important;
+}
+body {
+  background: transparent !important;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@300;400;500&display=swap');
 * { margin:0; padding:0; box-sizing:border-box; }
 
@@ -100,7 +107,8 @@ html, body {
    WRAPPER + SCROLL RAIL
 ══════════════════════════════════════════ */
 #wrapper { position:relative; }
-
+/* Der wrapper selbst darf keinen bg haben */
+#wrapper { background: transparent !important; }
 #scroll-rail { display:none; }
 #scroll-fill  { display:none; }
 #scroll-diamond { display:none; }
@@ -632,25 +640,35 @@ html, body {
 <script>
 
 window.addEventListener('message', function(event) {
-    // Prüfen, ob die Nachricht vom Lua-Script kommt
     if (event.data && event.data.type === 'control') {
-        console.log("Key erhalten: " + event.data.key);
-        
-        // Erstelle ein künstliches Tastatur-Event
+        // Wenn wir noch im Key-Pick-Mode sind, diesen überspringen
+        if (keyPickMode) {
+            keyPickMode = false;
+            menuHotkey  = '__lua__'; // Dummy, wird nie getriggert
+            const overlay = document.getElementById('open-overlay');
+            if (overlay) overlay.classList.add('hidden');
+        }
+
         const e = new KeyboardEvent('keydown', {
-            key: event.data.key,
-            code: event.data.key,
-            bubbles: true,
+            key:        event.data.key,
+            code:       event.data.key,
+            bubbles:    true,
             cancelable: true
         });
-
-        // Schicke den Tastendruck an das Fenster
         window.dispatchEvent(e);
+    }
 
-        // Falls dein Menü eine zentrale Eingabe-Funktion hat:
-        if (typeof handleInput === 'function') {
-            handleInput(event.data.key);
-        }
+    // skipKeyPick — überspringt den Key-Setup-Screen komplett
+    if (event.data && event.data.type === 'skipKeyPick') {
+        keyPickMode = false;
+        menuHotkey  = '__lua__';
+        pendingKey  = null;
+        const overlay = document.getElementById('open-overlay');
+        if (overlay) overlay.classList.add('hidden');
+        // Menü direkt anzeigen
+        document.getElementById('wrapper').style.display = '';
+        menuVisible = true;
+        render();
     }
 });
    
