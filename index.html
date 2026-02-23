@@ -98,28 +98,9 @@ body {
 ══════════════════════════════════════════ */
 #wrapper { position:relative; }
 
-#scroll-rail {
-  position:absolute;
-  left:-8px;
-  width:3px;
-  background:rgba(255,255,255,0.05);
-  border-radius:2px; pointer-events:none;
-  /* top + height set by JS to span only .content area */
-}
-#scroll-fill {
-  position:absolute; top:0; left:0; right:0;
-  background:linear-gradient(180deg, var(--accent-dim), var(--accent));
-  border-radius:2px;
-  transition:height 0.12s cubic-bezier(0.4,0,0.2,1);
-}
-#scroll-diamond {
-  position:absolute; left:50%;
-  transform:translate(-50%,-50%) rotate(45deg);
-  width:7px; height:7px;
-  background:var(--accent); border-radius:1px;
-  box-shadow:0 0 8px var(--accent-glow), 0 0 16px var(--accent-dim);
-  transition:top 0.12s cubic-bezier(0.4,0,0.2,1);
-}
+#scroll-rail { display:none; }
+#scroll-fill  { display:none; }
+#scroll-diamond { display:none; }
 
 /* ══════════════════════════════════════════
    MENU SHELL
@@ -127,13 +108,10 @@ body {
 #menu {
   width:285px; background:#0d0d15; border-radius:3px;
   box-shadow:0 0 0 1px rgba(255,255,255,0.05), 0 25px 70px rgba(0,0,0,0.95);
-  animation:menuIn 0.3s cubic-bezier(0.22,1,0.36,1);
+  animation:none;
   position:relative; overflow:hidden;
 }
-@keyframes menuIn {
-  from { opacity:0; transform:scale(0.96) translateY(-8px); }
-  to   { opacity:1; transform:scale(1) translateY(0); }
-}
+/* menuIn animation removed — caused layout bug on first open */
 
 /* ══════════════════════════════════════════
    HEADER / BANNER
@@ -228,14 +206,15 @@ body {
    KEYBIND LIST — next to menu
 ══════════════════════════════════════════ */
 #keybind-list {
-  display:none; position:absolute; top:0; right:-140px;
-  width:132px; z-index:50;
+  display:none;
+  position:fixed; top:14px; left:14px;
+  width:160px; z-index:200;
   background:#0d0d15;
   border:1px solid rgba(255,255,255,0.05);
   border-radius:3px; overflow:hidden;
-  box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 8px 24px rgba(0,0,0,0.85);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 16px 40px rgba(0,0,0,0.9);
 }
-#keybind-list.open { display:block; animation:panelIn 0.15s cubic-bezier(0.22,1,0.36,1); }
+#keybind-list.open { display:block; animation:panelIn 0.2s cubic-bezier(0.22,1,0.36,1); }
 
 /* ══════════════════════════════════════════
    WATERMARK — small top-left corner
@@ -293,13 +272,25 @@ body {
   background:#0b0b13;
 }
 .kb-item {
-  padding:0 10px; height:28px; display:flex; align-items:center; justify-content:space-between;
+  padding:0 10px; height:30px; display:flex; align-items:center; justify-content:space-between;
   border-bottom:1px solid rgba(255,255,255,0.03); font-size:10px; color:#777;
+  gap:6px;
 }
 .kb-item:last-child { border:none; }
+.kb-item-name {
+  flex:1; font-size:10px; color:#888; white-space:nowrap;
+  overflow:hidden; text-overflow:ellipsis;
+}
+.kb-item-right { display:flex; align-items:center; gap:5px; flex-shrink:0; }
+.kb-status-on  { font-size:8.5px; font-weight:600; color:#3dff8a; letter-spacing:0.5px; }
+.kb-status-off { font-size:8.5px; font-weight:600; color:var(--accent); opacity:0.5; letter-spacing:0.5px; }
 .kb-key {
   background:#1c1c2a; border:1px solid rgba(255,255,255,0.08);
-  border-radius:2px; padding:1px 5px; font-size:9px; color:#aaa; font-family:monospace;
+  border-radius:2px; padding:1px 6px; font-size:9px; color:#aaa; font-family:monospace;
+}
+.kb-empty {
+  padding:12px 10px; font-size:9px; color:rgba(255,255,255,0.15);
+  text-align:center; letter-spacing:0.5px;
 }
 
 /* ══════════════════════════════════════════
@@ -427,6 +418,87 @@ body {
 .fbrand { font-size:9px; color:rgba(255,255,255,0.2); }
 .fbrand span { color:var(--accent-fill); }
 .fcnt { font-size:9px; color:#2a2a38; }
+
+/* ══════════════════════════════════════════
+   OPEN KEY OVERLAY — Key Picker
+══════════════════════════════════════════ */
+#open-overlay {
+  position:fixed; inset:0; z-index:9998;
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:flex-end;
+  padding-bottom:48px;
+  pointer-events:none;
+}
+#open-overlay.hidden { display:none; }
+
+.open-key-box {
+  display:flex; flex-direction:column; align-items:center; gap:12px;
+  background:rgba(8,8,16,0.92);
+  border:1px solid rgba(255,255,255,0.07);
+  border-top:2px solid var(--accent);
+  border-radius:6px;
+  padding:20px 36px 18px;
+  backdrop-filter:blur(16px);
+  box-shadow:0 0 0 1px rgba(255,255,255,0.03), 0 20px 60px rgba(0,0,0,0.95);
+  animation:overlayIn 0.35s cubic-bezier(0.22,1,0.36,1);
+  min-width:220px; text-align:center;
+}
+@keyframes overlayIn {
+  from { opacity:0; transform:translateY(10px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+
+.okb-title {
+  font-size:9px; letter-spacing:3px; text-transform:uppercase;
+  color:rgba(255,255,255,0.25); font-family:'Inter',sans-serif;
+}
+.okb-waiting {
+  font-size:11px; color:rgba(255,255,255,0.18);
+  letter-spacing:1px; font-family:'Inter',sans-serif;
+  animation:waitBlink 1.4s ease-in-out infinite;
+}
+@keyframes waitBlink {
+  0%,100%{ opacity:0.18; } 50%{ opacity:0.5; }
+}
+
+.key-pill {
+  background:#0e0e1e;
+  border:1px solid rgba(255,255,255,0.14);
+  border-bottom:3px solid rgba(255,255,255,0.20);
+  border-radius:5px;
+  padding:6px 20px;
+  font-size:18px; font-weight:700; letter-spacing:1.5px;
+  color:var(--accent);
+  font-family:'Rajdhani',sans-serif;
+  box-shadow:0 0 20px var(--accent-dim), inset 0 1px 0 rgba(255,255,255,0.06);
+  min-width:60px;
+  animation:keyAppear 0.2s cubic-bezier(0.22,1,0.36,1);
+}
+@keyframes keyAppear {
+  from { transform:scale(0.85); opacity:0; }
+  to   { transform:scale(1);    opacity:1; }
+}
+
+.okb-confirm {
+  font-size:9.5px; color:rgba(255,255,255,0.22);
+  letter-spacing:0.5px; font-family:'Inter',sans-serif;
+}
+.okb-confirm span {
+  color:var(--accent); font-weight:600;
+}
+
+/* ── KEYBIND PICKER OVERLAY (F6) ── */
+#keybind-overlay {
+  position:fixed; inset:0; z-index:9997;
+  display:none; flex-direction:column;
+  align-items:center; justify-content:flex-end;
+  padding-bottom:48px;
+  pointer-events:none;
+}
+#keybind-overlay.visible { display:flex; }
+#keybind-overlay .open-key-box {
+  animation:overlayIn 0.25s cubic-bezier(0.22,1,0.36,1);
+}
 </style>
 </head>
 <body>
@@ -497,20 +569,31 @@ body {
   </div>
 </div>
 
-<div id="wrapper">
+
+<!-- OPEN KEY OVERLAY — Key Picker -->
+<div id="open-overlay">
+  <div class="open-key-box" id="okb">
+    <span class="okb-title">Set Menu Key</span>
+    <span class="okb-waiting" id="okb-waiting">press any key...</span>
+    <!-- key pill shown after keypress -->
+    <span class="okb-confirm" id="okb-confirm" style="display:none">
+      Press <span>Enter</span> to confirm
+    </span>
+  </div>
+</div>
+
+<!-- KEYBIND LIST — fixed top left, always visible when open -->
+<div id="keybind-list">
+  <div class="kb-title">Keybinds</div>
+  <div id="kb-items"><!-- leer --></div>
+</div>
+
+<div id="wrapper"  style="display:none">
   <!-- SCROLL RAIL — outside #menu, positioned by JS -->
 
 
+  <div id="scroll-rail"><div id="scroll-fill"></div><div id="scroll-diamond"></div></div>
   <div id="menu">
-    <div id="keybind-list">
-      <div class="kb-title">Keybinds</div>
-      <div class="kb-item"><span>Noclip</span>   <span class="kb-key">F5</span></div>
-      <div class="kb-item"><span>Godmode</span>  <span class="kb-key">F6</span></div>
-      <div class="kb-item"><span>Heal</span>     <span class="kb-key">F7</span></div>
-      <div class="kb-item"><span>Invisible</span><span class="kb-key">F8</span></div>
-      <div class="kb-item"><span>Teleport</span> <span class="kb-key">F9</span></div>
-    </div>
-
     <div class="header" id="header">
       <div class="hbg"></div>
       <img class="banner-img" id="banner-img" src="banner.png"
@@ -549,6 +632,11 @@ body {
 // ══════════════════════════════════════════
 function notify(title, msg, icon) {
   const container = document.getElementById('notify-container');
+  // Max 3 gleichzeitig — älteste entfernen
+  while(container.children.length >= 3) {
+    const oldest = container.firstChild;
+    if(oldest) oldest.remove();
+  }
   const n = document.createElement('div');
   n.className = 'notify';
   n.innerHTML = `
@@ -656,7 +744,7 @@ const ONLINE_PLAYERS = ['Player 1','Player 2','Player 3'];
 const ONLINE_TABS = {
   Safe: [
     tog("Spectate"), tog("Local Teleport"),
-    val("Teleport To","Player 1",["Player 1","Player 2","Player 3"]),
+    btn("Teleport To Player"),
     val("Friend","Add",["Add","Remove","Spectate"]),
     btn("Teleport To Void"), btn("Bring"), btn("Copy Outfit"),
     sep("Kill"),
@@ -1092,12 +1180,11 @@ function activate(item, dir) {
     // Spectator / Keybind panels
     if(item.name==='Spectator List'){
       document.getElementById('spectator-list').classList.toggle('open',on);
-      if(on){ toggleState[makeKey({name:'Keybind List'}+'')]=false; document.getElementById('keybind-list').classList.remove('open'); colorSpectators(); }
+      if(on) colorSpectators();
       notify('Spectator List', on?'Panel opened':'Panel closed', 'fa-solid fa-eye');
     }
     if(item.name==='Keybind List'){
       document.getElementById('keybind-list').classList.toggle('open',on);
-      if(on){ document.getElementById('spectator-list').classList.remove('open'); }
       notify('Keybind List', on?'Panel opened':'Panel closed', 'fa-solid fa-keyboard');
     }
     if(item.name==='Show Watermark'){
@@ -1126,6 +1213,7 @@ function activate(item, dir) {
       applyTheme(item.val);
       notify('Theme', `Theme changed to ${item.val}`, 'fa-solid fa-palette');
     }
+
     render();
 
   } else if(item.type==='button'){
@@ -1139,81 +1227,232 @@ function activate(item, dir) {
 //  SCROLL RAIL — positioned outside menu
 // ══════════════════════════════════════════
 function updateRail(){
-  const vis=visItems();
-  const {idx}=cur();
-  const total=vis.length;
-  const pct=total<=1?100:(idx/(total-1))*100;
-
-  // position rail to span only the .content element
-  const menu    = document.getElementById('menu');
-  const content = document.getElementById('content');
-  const rail    = document.getElementById('scroll-rail');
-  if(menu && content && rail){
-    const mr = menu.getBoundingClientRect();
-    const cr = content.getBoundingClientRect();
-    rail.style.top    = (cr.top  - mr.top)  + 'px';
-    rail.style.height =  cr.height          + 'px';
-  }
-
-  document.getElementById('scroll-fill').style.height = pct+'%';
-  document.getElementById('scroll-diamond').style.top = pct+'%';
+  // scroll rail disabled
 }
-
-
-// ══════════════════════════════════════════
-//  DUI KEY BRIDGE
-//  Lua sendet per SendDuiMessage({type:'key', key:'ArrowDown'})
-//  weil DUI keine nativen keydown-Events empfängt
-// ══════════════════════════════════════════
-function handleKey(key) {
-  document.dispatchEvent(new KeyboardEvent('keydown', {
-    key: key,
-    bubbles: true,
-    cancelable: true
-  }));
-}
-
-window.addEventListener('message', function(e) {
-  const d = e.data;
-  if (!d) return;
-  // Tastendruck von Lua
-  if (d.type === 'key') {
-    handleKey(d.key);
-  }
-  // Sichtbarkeit (falls Lua Menü toggled)
-  if (d.type === 'setVisible') {
-    const b = document.body;
-    if (b) b.style.visibility = d.value ? 'visible' : 'hidden';
-  }
-});
 
 // ══════════════════════════════════════════
 //  KEYBOARD
 // ══════════════════════════════════════════
-document.addEventListener('keydown', e=>{
 
-  // ── ONLINE MODE ──
+// ══════════════════════════════════════════
+//  KEYBIND SYSTEM — Funktionen
+// ══════════════════════════════════════════
+const keybinds    = {};
+let   kbPickMode  = false;
+let   kbPending   = null;
+const KB_FORBIDDEN = new Set(['Tab','Shift','Control','Alt','Meta','CapsLock',' ']);
+
+function openKeybindPicker(item) {
+  kbPickMode = true;
+  kbPending  = { item, key: null };
+  const overlay = document.getElementById('keybind-overlay');
+  const nameEl  = document.getElementById('kob-item-name');
+  const waiting = document.getElementById('kob-waiting');
+  const conf    = document.getElementById('kob-confirm');
+  const kob     = document.getElementById('kob');
+  if(!overlay) return;
+  nameEl.textContent = item.name;
+  waiting.style.display = '';
+  conf.style.display = 'none';
+  const old = kob.querySelector('.key-pill');
+  if(old) old.remove();
+  overlay.style.display = 'flex';
+}
+
+function closeKeybindPicker() {
+  kbPickMode = false;
+  kbPending  = null;
+  const overlay = document.getElementById('keybind-overlay');
+  if(overlay) overlay.style.display = 'none';
+}
+
+function confirmKeybind() {
+  if(!kbPending || !kbPending.key) return;
+  const { item, key } = kbPending;
+  keybinds[item.name] = { key, type: item.type };
+  closeKeybindPicker();
+  renderKeybindList();
+  notify('Keybind', item.name + ' → ' + key, 'fa-solid fa-keyboard');
+}
+
+function removeKeybind(name) {
+  delete keybinds[name];
+  renderKeybindList();
+}
+
+function renderKeybindList() {
+  const el = document.getElementById('kb-items');
+  if(!el) return;
+  const entries = Object.entries(keybinds);
+  if(entries.length === 0) {
+    el.innerHTML = '<div class="kb-empty">No keybinds set<br><span style="opacity:.5;font-size:8px">F6 on any item</span></div>';
+    return;
+  }
+  el.innerHTML = entries.map(([name, { key, type }]) => {
+    const isToggle = type === 'toggle';
+    const on = isToggle && Object.entries(toggleState).some(([k,v]) => k.endsWith('||'+name) && v === true);
+    let statusHtml = '';
+    if(isToggle) {
+      statusHtml = on
+        ? '<span class="kb-status-on">ON</span>'
+        : '<span class="kb-status-off">OFF</span>';
+    }
+    return '<div class="kb-item">'
+      + '<span class="kb-item-name">' + name + '</span>'
+      + '<div class="kb-item-right">' + statusHtml
+      + '<span class="kb-key">' + key + '</span></div></div>';
+  }).join('');
+}
+
+function triggerKeybind(name) {
+  function findInMenu(menu) {
+    for(const item of menu.items) {
+      if(item.name === name) return item;
+      if(item.type === 'sub' && item.children) {
+        const f = findInMenu(item.children);
+        if(f) return f;
+      }
+    }
+    return null;
+  }
+  const item = findInMenu(MAIN);
+  if(!item) return;
+  if(item.type === 'toggle') {
+    let k = Object.keys(toggleState).find(k => k.endsWith('||'+name));
+    if(!k) k = 'Main Menu||' + name;
+    toggleState[k] = !toggleState[k];
+    const on = toggleState[k];
+    sendToLua('toggle', name, on);
+    renderKeybindList();
+    if(menuVisible) render();
+    notify(name, on ? 'Enabled' : 'Disabled', 'fa-solid fa-bolt');
+  } else if(item.type === 'button') {
+    sendToLua('button', name, true);
+    notify(name, 'Triggered', 'fa-solid fa-bolt');
+  }
+}
+
+
+// ══════════════════════════════════════════
+//  MENU OPEN-KEY SYSTEM
+// ══════════════════════════════════════════
+let menuHotkey  = null;
+let menuVisible = false;
+let keyPickMode = true;
+let pendingKey  = null;
+
+const FORBIDDEN_KEYS = new Set(['Tab','Escape','Backspace','Shift','Control','Alt','Meta','CapsLock','ArrowUp','ArrowDown','ArrowLeft','ArrowRight']);
+
+function toggleMenu() {
+  menuVisible = !menuVisible;
+  const wrapper = document.getElementById('wrapper');
+  if(wrapper) wrapper.style.display = menuVisible ? '' : 'none';
+  if(menuVisible) {
+    // Kurz warten damit DOM sichtbar ist, dann rendern
+    requestAnimationFrame(() => { render(); });
+  }
+}
+
+function showPendingKey(key) {
+  pendingKey = key;
+  const okb     = document.getElementById('okb');
+  const waiting = document.getElementById('okb-waiting');
+  const conf    = document.getElementById('okb-confirm');
+  if(!okb) return;
+  const old = okb.querySelector('.key-pill');
+  if(old) old.remove();
+  const pill = document.createElement('span');
+  pill.className   = 'key-pill';
+  pill.textContent = key;
+  okb.insertBefore(pill, conf);
+  if(waiting) waiting.style.display = 'none';
+  if(conf)    conf.style.display = '';
+}
+
+function confirmKey(key) {
+  menuHotkey  = key;
+  keyPickMode = false;
+  const overlay = document.getElementById('open-overlay');
+  if(overlay) overlay.classList.add('hidden');
+  notify('Menu Key', key + ' = open / close', 'fa-solid fa-keyboard');
+}
+
+// ══════════════════════════════════════════
+//  UNIFIED KEYBOARD HANDLER
+//  Alle Eingaben in einem Listener — keine Reihenfolge-Probleme
+// ══════════════════════════════════════════
+document.addEventListener('keydown', e => {
+
+  // ── KB PICKER (F6-Overlay) — höchste Priorität ──
+  if(kbPickMode) {
+    e.preventDefault();
+    e.stopImmediatePropagation();
+    if(e.key === 'Escape')    { closeKeybindPicker(); return; }
+    if(e.key === 'Enter')     { if(kbPending && kbPending.key) confirmKeybind(); return; }
+    if(e.key === 'Backspace') {
+      if(kbPending) { removeKeybind(kbPending.item.name); closeKeybindPicker(); }
+      return;
+    }
+    if(KB_FORBIDDEN.has(e.key)) return;
+    // Taste anzeigen
+    kbPending.key = e.key;
+    const kob     = document.getElementById('kob');
+    const waiting = document.getElementById('kob-waiting');
+    const confirm2 = document.getElementById('kob-confirm');
+    const old2 = kob.querySelector('.key-pill');
+    if(old2) old2.remove();
+    const pill2 = document.createElement('span');
+    pill2.className   = 'key-pill';
+    pill2.textContent = e.key;
+    kob.insertBefore(pill2, confirm2);
+    waiting.style.display = 'none';
+    confirm2.style.display = '';
+    return;
+  }
+
+  // ── KEY PICKER (Menü-Open-Key) — zweite Priorität ──
+  if(keyPickMode) {
+    e.preventDefault();
+    if(e.key === 'Enter') { if(pendingKey) confirmKey(pendingKey); return; }
+    if(FORBIDDEN_KEYS.has(e.key)) return;
+    showPendingKey(e.key);
+    return;
+  }
+
+  // ── MENU TOGGLE ──
+  if(e.key === menuHotkey) {
+    e.preventDefault();
+    toggleMenu();
+    return;
+  }
+
+  // ── KEYBIND TRIGGER (wenn Menu zu) ──
+  if(!menuVisible) {
+    for(const [name, { key }] of Object.entries(keybinds)) {
+      if(e.key === key) { triggerKeybind(name); return; }
+    }
+    return;
+  }
+
+  // ── MENU NAVIGATION (Menu offen) ──
+
+  // ONLINE MODE
   if(onlineMode){
     const isListView = onlineTab === -1;
     const tabItems   = isListView ? [] : ONLINE_TABS[ONLINE_TAB_NAMES[onlineTab]].filter(i=>i.type!=='sep');
     const listLen    = ONLINE_PLAYERS.length;
     const actLen     = tabItems.length;
-    // all tabs including list: -1, 0, 1, 2
     const ALL_TABS   = [-1, 0, 1, 2];
-
     switch(e.key){
       case 'ArrowDown':
         e.preventDefault();
         onlineItemIdx = Math.min(onlineItemIdx+1, isListView ? listLen-1 : actLen-1);
         render(); break;
-
       case 'ArrowUp':
         e.preventDefault();
         onlineItemIdx = Math.max(onlineItemIdx-1, 0);
         render(); break;
-
-      case 'ArrowRight':
-      case 'Enter':
+      case 'ArrowRight': case 'Enter':
         e.preventDefault();
         if(isListView){
           const p = ONLINE_PLAYERS[onlineItemIdx];
@@ -1221,38 +1460,32 @@ document.addEventListener('keydown', e=>{
         } else {
           const item = tabItems[onlineItemIdx];
           if(item){
-            if(item.type==='slider')             { adjSlider(item,1); }
-            else if(item.type==='value'&&item.actions){ cycleVal(item,1); }
+            if(item.type==='slider') adjSlider(item,1);
+            else if(item.type==='value'&&item.actions) cycleVal(item,1);
             else activateOnlineItem();
           }
         }
         render(); break;
-
       case 'ArrowLeft':
         e.preventDefault();
         if(!isListView){
           const item = tabItems[onlineItemIdx];
-          if(item&&item.type==='slider')                  { adjSlider(item,-1); render(); }
+          if(item&&item.type==='slider') { adjSlider(item,-1); render(); }
           else if(item&&item.type==='value'&&item.actions){ cycleVal(item,-1); render(); }
         }
         break;
-
       case 'e': case 'E':
         e.preventDefault(); {
           const ci = ALL_TABS.indexOf(onlineTab);
-          onlineTab = ALL_TABS[(ci+1) % ALL_TABS.length];
-          onlineItemIdx = 0;
-          render();
+          onlineTab = ALL_TABS[(ci+1)%ALL_TABS.length];
+          onlineItemIdx = 0; render();
         } break;
-
       case 'q': case 'Q':
         e.preventDefault(); {
           const ci = ALL_TABS.indexOf(onlineTab);
-          onlineTab = ALL_TABS[(ci-1+ALL_TABS.length) % ALL_TABS.length];
-          onlineItemIdx = 0;
-          render();
+          onlineTab = ALL_TABS[(ci-1+ALL_TABS.length)%ALL_TABS.length];
+          onlineItemIdx = 0; render();
         } break;
-
       case 'Backspace': case 'Escape':
         e.preventDefault();
         if(!isListView){ onlineTab=-1; onlineItemIdx=0; render(); }
@@ -1262,68 +1495,69 @@ document.addEventListener('keydown', e=>{
     return;
   }
 
-  // ── NORMAL MODE ──
-  const vis=visItems();
-  const {idx}=cur();
-  const item=vis[idx];
+  // NORMAL MODE
+  const vis  = visItems();
+  const st   = cur();
+  const item = vis[st.idx];
+
+  // F6 = Keybind setzen (nur auf aktivierbare Items)
+  if(e.key === 'F6' && item && item.type !== 'sep' && item.type !== 'sub' && item.type !== 'online') {
+    e.preventDefault();
+    openKeybindPicker(item);
+    return;
+  }
 
   switch(e.key){
     case 'ArrowDown':
-      e.preventDefault(); cur().idx=Math.min(idx+1,vis.length-1); render(); break;
+      e.preventDefault(); cur().idx=Math.min(st.idx+1,vis.length-1); render(); break;
     case 'ArrowUp':
-      e.preventDefault(); cur().idx=Math.max(idx-1,0); render(); break;
-    case 'ArrowRight':
+      e.preventDefault(); cur().idx=Math.max(st.idx-1,0); render(); break;
+    case 'ArrowRight': case 'Enter':
       e.preventDefault();
       if(!item) break;
-      if(item.type==='slider')                    { adjSlider(item,1);  render(); }
-      else if(item.type==='value'&&item.actions)  { cycleVal(item,1); if(item.name==='Theme') applyTheme(item.val); render(); }
+      if(item.type==='slider')                   { adjSlider(item,1);  render(); }
+      else if(item.type==='value'&&item.actions) { cycleVal(item,1); if(item.name==='Theme') applyTheme(item.val); render(); }
       else activate(item, 1);
       break;
     case 'ArrowLeft':
       e.preventDefault();
       if(!item) break;
-      if(item.type==='slider')                    { adjSlider(item,-1); render(); }
-      else if(item.type==='value'&&item.actions)  { cycleVal(item,-1); if(item.name==='Theme') applyTheme(item.val); render(); }
-      else if(stack.length>1)                     { stack.pop(); render(); }
+      if(item.type==='slider')                   { adjSlider(item,-1); render(); }
+      else if(item.type==='value'&&item.actions) { cycleVal(item,-1); if(item.name==='Theme') applyTheme(item.val); render(); }
+      else if(stack.length>1)                    { stack.pop(); render(); }
       break;
-    case 'Enter':
-      e.preventDefault(); activate(item, 1); break;
     case 'Backspace': case 'Escape':
       e.preventDefault();
-      if(stack.length>1){ stack.pop(); render(); }
+      if(onlineMode){ onlineMode=false; render(); }
+      else if(stack.length>1){ stack.pop(); render(); }
+      else { toggleMenu(); }
       break;
   }
 });
 
-// ══════════════════════════════════════════
-//  SPECTATOR DISTANCE COLORING
-// ══════════════════════════════════════════
-const DANGER_DIST = 10; // metres threshold
-function colorSpectators(){
-  document.querySelectorAll('#spectator-list .spec-row').forEach(row=>{
-    const dist = parseInt(row.dataset.dist, 10);
-    const near = dist <= DANGER_DIST;
-    row.querySelector('.spec-name').classList.toggle('danger', near);
-    row.querySelector('.spec-dist').classList.toggle('danger', near);
-  });
+function triggerKeybind(name) {
+  function findInMenu(menu) {
+    for(const item of menu.items) {
+      if(item.name === name) return item;
+      if(item.type === 'sub' && item.children) {
+        const found = findInMenu(item.children);
+        if(found) return found;
+      }
+    }
+    return null;
+  }
+  const item = findInMenu(MAIN);
+  if(!item) return;
+  if(item.type === 'toggle') {
+    const k = Object.keys(toggleState).find(k => k.endsWith('||'+name)) || name;
+    toggleState[k] = !toggleState[k];
+    renderKeybindList();
+    render();
+    notify(name, toggleState[k] ? 'Enabled' : 'Disabled', 'fa-solid fa-bolt');
+  } else if(item.type === 'button') {
+    notify(name, 'Triggered', 'fa-solid fa-bolt');
+  }
 }
-
-// ══════════════════════════════════════════
-//  LIVE CLOCK
-// ══════════════════════════════════════════
-function tickClock(){
-  const el = document.getElementById('wm-time');
-  if(!el) return;
-  const now = new Date();
-  const pad = n => String(n).padStart(2,'0');
-  el.textContent = `${pad(now.getHours())}:${pad(now.getMinutes())}:${pad(now.getSeconds())}`;
-}
-tickClock();
-setInterval(tickClock, 1000);
-
-window.addEventListener('load', updateRail);
-window.addEventListener('resize', updateRail);
-render();
 
 // ══════════════════════════════════════════
 //  LUA BRIDGE — sendet Menu-Events an Lua
@@ -1397,5 +1631,16 @@ activateOnlineItem = function() {
 console.log('[cfxgg] Lua Bridge aktiv');
 
 </script>
+
+<!-- KEYBIND PICKER OVERLAY -->
+<div id="keybind-overlay" style="position:fixed;inset:0;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:48px;pointer-events:none;">
+  <div class="open-key-box" id="kob">
+    <span class="okb-title">Keybind: <span id="kob-item-name" style="color:var(--accent)"></span></span>
+    <span class="okb-waiting" id="kob-waiting">press any key...</span>
+    <span class="okb-confirm" id="kob-confirm" style="display:none">
+      Press <span>Enter</span> to confirm &nbsp;·&nbsp; <span style="color:#888">Backspace</span> = remove
+    </span>
+  </div>
+</div>
 </body>
 </html>
