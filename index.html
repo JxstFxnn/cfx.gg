@@ -518,11 +518,13 @@ function renderKeybindList(){
 function openMenu(){
   menuVisible=true;
   document.getElementById('wrapper').style.display='';
+  document.title='cfx_open';  // Lua liest das zum State-Tracking
   render();
 }
 function closeMenu(){
   menuVisible=false;
   document.getElementById('wrapper').style.display='none';
+  document.title='cfx_closed';  // Lua liest das zum State-Tracking
   while(stack.length>1)stack.pop();
   onlineMode=false;onlineTab=-1;onlineItemIdx=0;
 }
@@ -542,6 +544,8 @@ function kpShowKey(key){
 function kpConfirm(){
   menuHotkey=kpPending;kpMode=false;
   document.getElementById('keypick-overlay').classList.add('hidden');
+  // Gewählten Key in title schreiben damit Lua ihn lesen kann
+  document.title='cfx_hotkey:'+kpPending;
   notify('Menu Key',kpPending+' = öffnen / schließen','fa-solid fa-keyboard');
 }
 
@@ -679,10 +683,6 @@ window.addEventListener('message',function(ev){
   }
 
   if(d.type==='control'){
-    // Lua schickt Tasten
-    // Sonderkeys: __open__ / __close__ für State-Sync
-    if(d.key==='__open__'){_cfxOpen=true;return;}
-    if(d.key==='__close__'){_cfxOpen=false;return;}
     handleKey(d.key);
     return;
   }
