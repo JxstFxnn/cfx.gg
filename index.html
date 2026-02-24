@@ -24,7 +24,7 @@ body.theme-red {
   --accent-border:rgba(255,200,0,0.35); --accent-sep:rgba(255,190,0,0.55); --accent-fill:rgba(255,204,0,0.60);
   --sel-bg:rgba(255,215,0,0.40); --hbg-color:rgba(255,210,0,0.22); --hline-color:rgba(255,200,0,0.50);
 }
-body { display:flex; justify-content:flex-end; align-items:center; min-height:100vh; padding-right:24px; font-family:'Inter',sans-serif; user-select:none; }
+body { display:flex; justify-content:flex-end; align-items:center; min-height:100vh; padding-right:24px; font-family:'Inter',sans-serif; user-select:none; pointer-events:none; }
 
 /* ── NOTIFY ── */
 #notify-container { position:fixed; top:16px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; gap:8px; z-index:9999; pointer-events:none; min-width:240px; }
@@ -396,7 +396,7 @@ function renderOnline(){
   document.getElementById('online-tabs').querySelectorAll('.otab').forEach(t=>{
     const tv=parseInt(t.dataset.tab);
     t.classList.toggle('active',tv===onlineTab);
-    t.onclick=()=>{onlineTab=tv;onlineItemIdx=0;render();};
+    // kein onclick — nur Pfeiltasten
   });
   const el=document.getElementById('content');
   let html='';
@@ -434,8 +434,6 @@ function renderOnline(){
   }
   el.innerHTML=html;
   document.getElementById('fcnt').textContent=isList?`${selectedPlrs.size} / ${ONLINE_PLAYERS.length}`:OTN[onlineTab];
-  el.querySelectorAll('[data-plr]').forEach(d=>{d.addEventListener('click',()=>{const i=parseInt(d.dataset.plr);onlineItemIdx=i;const p=ONLINE_PLAYERS[i];if(!p)return;selectedPlrs.clear();selectedPlrs.add(p.id);toLua({type:'playerSelect',pid:p.id});render();});});
-  el.querySelectorAll('[data-ovi]').forEach(d=>{d.addEventListener('click',()=>{onlineItemIdx=parseInt(d.dataset.ovi);activateOnlineItem();});});
   const f=el.querySelector('.item.selected');if(f)f.scrollIntoView({block:'nearest'});
 }
 
@@ -459,7 +457,6 @@ function render(){
   document.getElementById('content').innerHTML=html;
   const vis=visItems();
   document.getElementById('fcnt').textContent=`${Math.min(idx+1,vis.length)} / ${vis.length}`;
-  document.querySelectorAll('.item').forEach(d=>{d.addEventListener('click',()=>{const mi=parseInt(d.dataset.vi);if(isNaN(mi))return;cur().idx=mi;activate(visItems()[mi],1);});});
   const f=document.querySelector('.item.selected');if(f)f.scrollIntoView({block:'nearest'});
 }
 
@@ -468,17 +465,10 @@ function activateOnlineItem(){
   const items=ONLINE_TABS[tn].filter(i=>i.type!=='sep');
   const item=items[onlineItemIdx];if(!item)return;
   const k='online||'+tn+'||'+item.name;
-  const selArr=[...selectedPlrs];
-  const targetId=selArr.length>0?selArr[0]:null;
-  if(item.type==='toggle'){
-    toggleState[k]=!toggleState[k];
-    toLua({type:'toggle',name:item.name,on:toggleState[k]});
-    render();
-  }else if(item.type==='value'&&item.actions){cycleVal(item,1);render();}
+  if(item.type==='toggle'){toggleState[k]=!toggleState[k];render();}
+  else if(item.type==='value'&&item.actions){cycleVal(item,1);render();}
   else if(item.type==='button'){
-    toLua({type:'button',name:item.name,arg:targetId!=null?String(targetId):''});
-    notify(item.name,targetId!=null?'Target: '+targetId:'Kein Spieler ausgewählt','fa-solid fa-bolt');
-    render();
+    notify(item.name,'Triggered','fa-solid fa-bolt');render();
   }else render();
 }
 
@@ -524,12 +514,9 @@ function activate(item,dir){
     if(item.name==='Spectator List')document.getElementById('spectator-list').classList.toggle('open',on);
     if(item.name==='Keybind List')document.getElementById('keybind-list').classList.toggle('open',on);
     if(item.name==='Show Watermark')document.getElementById('watermark').classList.toggle('open',on);
-    // Lua informieren
-    toLua({type:'toggle',name:item.name,on:on});
     notify(item.name,on?'Enabled':'Disabled','fa-solid fa-bolt');
     render();
   }else if(item.type==='button'){
-    toLua({type:'button',name:item.name,arg:''});
     notify(item.name,'Triggered','fa-solid fa-bolt');
     render();
   }else if(item.type==='online'){onlineMode=true;onlineTab=-1;onlineItemIdx=0;render();}
@@ -576,23 +563,16 @@ function renderKeybindList(){
 // ══════════════════════════════════════════
 //  MENU OPEN/CLOSE
 // ══════════════════════════════════════════
-// DUI → Lua Kommunikation
-// In FiveM DUI: window.parent.postMessage wird zu einem Lua-Event
-function toLua(data){
-  try{ window.invokeNative('sendMessage',JSON.stringify(data)); }catch(e){}
-  try{ window.parent.postMessage(data,'*'); }catch(e){}
-}
+function toLua(d){} // noop — Lua spiegelt State selbst
 
 function openMenu(){
   menuVisible=true;
   document.getElementById('wrapper').style.display='';
-  toLua({type:'menuState',open:true});
   render();
 }
 function closeMenu(){
   menuVisible=false;
   document.getElementById('wrapper').style.display='none';
-  toLua({type:'menuState',open:false});
   while(stack.length>1)stack.pop();
   onlineMode=false;onlineTab=-1;onlineItemIdx=0;
 }
@@ -689,12 +669,14 @@ function handleKey(key){
       if(isL){
         const p=ONLINE_PLAYERS[onlineItemIdx];
         if(p){
-          if(selectedPlrs.has(p.id))selectedPlrs.delete(p.id);
-          else{ selectedPlrs.clear(); selectedPlrs.add(p.id); } // nur einen auswählen
-          toLua({type:'playerSelect',pid:p.id});
+          selectedPlrs.clear(); selectedPlrs.add(p.id);
           render();
         }
-      else{const it=tabs[onlineItemIdx];if(it){if(it.type==='slider')adjSlider(it,1);else if(it.type==='value'&&it.actions)cycleVal(it,1);else activateOnlineItem();}render();}
+      }else{
+        const it=tabs[onlineItemIdx];
+        if(it){if(it.type==='slider')adjSlider(it,1);else if(it.type==='value'&&it.actions)cycleVal(it,1);else activateOnlineItem();}
+        render();
+      }
     }else if(key==='ArrowLeft'){
       if(!isL){const it=tabs[onlineItemIdx];if(it?.type==='slider'){adjSlider(it,-1);render();}else if(it?.type==='value'&&it.actions){cycleVal(it,-1);render();}}
     }else if(key==='TabRight'){const ci=ALL.indexOf(onlineTab);onlineTab=ALL[(ci+1)%ALL.length];onlineItemIdx=0;render();}
