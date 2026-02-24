@@ -603,14 +603,11 @@ function kpConfirm(){
 function handleKey(key){
 
   // ── KEYPICK MODE: Menu-Hotkey auswählen ──
-  // Läuft solange bis bestätigt. Akzeptiert JEDEN Key außer Enter (=bestätigen)
   if(kpMode){
     if(key==='Enter'){
-      // Enter bestätigt nur wenn schon ein Key ausgewählt wurde
       if(kpPending) kpConfirm();
       return;
     }
-    // ALLE anderen Keys zeigen (inkl. Arrows, Backspace, F-Keys, etc.)
     kpShowKey(key);
     return;
   }
@@ -636,7 +633,10 @@ function handleKey(key){
   }
 
   // ── MENU TOGGLE via Hotkey ──
-  if(key===menuHotkey){
+  // Insert öffnet immer das Menu (Lua schickt Insert)
+  // Zusätzlich: gewählter Hotkey aus Key-Pick
+  if(key==='Insert'||(menuHotkey&&key===menuHotkey)){
+    if(kpMode){kpConfirm();return;}  // Key-Pick: Insert = bestätigen
     if(menuVisible)closeMenu();else openMenu();
     return;
   }
@@ -739,6 +739,11 @@ window.addEventListener('message',function(ev){
   }
 
   if(d.type==='control'){
+    if(d.key==='__openMenu__'){
+      // Lua hat Menu geöffnet — falls Key-Pick noch aktiv, ignorieren
+      if(!kpMode) openMenu();
+      return;
+    }
     handleKey(d.key);
     return;
   }
