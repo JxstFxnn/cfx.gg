@@ -8,14 +8,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@600;700&family=Inter:wght@300;400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
 html,body{background:transparent!important;}
-:root{
-  --accent:#ff3daf;--accent-glow:rgba(255,20,147,0.7);--accent-dim:rgba(255,20,147,0.2);
-  --accent-border:rgba(255,20,147,0.28);--accent-sep:rgba(255,20,147,0.45);--accent-fill:rgba(255,20,147,0.4);
-  --sel-bg:rgba(255,20,145,0.41);--hbg-color:rgba(255,20,147,0.2);--hline-color:rgba(255,20,147,0.4);
-}
+:root{--accent:#ff3daf;--accent-glow:rgba(255,20,147,0.7);--accent-dim:rgba(255,20,147,0.2);--accent-border:rgba(255,20,147,0.28);--accent-sep:rgba(255,20,147,0.45);--accent-fill:rgba(255,20,147,0.4);--sel-bg:rgba(255,20,145,0.41);--hbg-color:rgba(255,20,147,0.2);--hline-color:rgba(255,20,147,0.4);}
 body.theme-grey{--accent:#8a8aaa;--accent-glow:rgba(138,138,170,0.7);--accent-dim:rgba(138,138,170,0.15);--accent-border:rgba(138,138,170,0.25);--accent-sep:rgba(138,138,170,0.45);--accent-fill:rgba(138,138,170,0.4);--sel-bg:rgba(138,138,170,0.3);--hbg-color:rgba(138,138,170,0.15);--hline-color:rgba(138,138,170,0.4);}
 body.theme-yellow{--accent:#ffd400;--accent-glow:rgba(255,212,0,0.65);--accent-dim:rgba(255,212,0,0.18);--accent-border:rgba(255,200,0,0.35);--accent-sep:rgba(255,190,0,0.55);--accent-fill:rgba(255,204,0,0.60);--sel-bg:rgba(255,215,0,0.40);--hbg-color:rgba(255,210,0,0.22);--hline-color:rgba(255,200,0,0.50);}
-/* NO pointer-events on body = no mouse clicks through menu */
 body{display:flex;justify-content:flex-end;align-items:center;min-height:100vh;padding-right:24px;font-family:'Inter',sans-serif;user-select:none;pointer-events:none;}
 #notify-container{position:fixed;top:16px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;gap:8px;z-index:9999;pointer-events:none;min-width:240px;}
 .notify{background:#0a0a12;border:1px solid rgba(255,255,255,0.09);border-left:2px solid var(--accent);padding:10px 16px 14px;border-radius:4px;min-width:240px;display:flex;flex-direction:column;animation:notifyIn .25s cubic-bezier(.22,1,.36,1);overflow:hidden;position:relative;box-shadow:0 8px 32px rgba(0,0,0,.9);}
@@ -24,12 +19,12 @@ body{display:flex;justify-content:flex-end;align-items:center;min-height:100vh;p
 .notify-header i{color:var(--accent);font-size:11px;}
 .notify-msg{font-size:10.5px;color:rgba(255,255,255,.45);margin-top:3px;padding-left:19px;}
 .notify-bar{height:2px;background:var(--accent);position:absolute;bottom:0;left:0;width:100%;box-shadow:0 0 6px var(--accent-glow);}
-#watermark{display:none;position:fixed;top:0;left:0;z-index:200;background:#0a0a12;border-right:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);border-radius:0 0 4px 0;font-family:'Courier New',monospace;}
+#watermark{display:none;position:fixed;top:0;left:0;z-index:200;background:#0a0a12;border-right:1px solid rgba(255,255,255,.05);border-bottom:1px solid rgba(255,255,255,.05);border-radius:0 0 4px 0;}
 #watermark.open{display:block;}
 .wm-bar{display:flex;align-items:center;height:22px;padding:0 10px 0 8px;}
 .wm-seg{display:flex;align-items:center;gap:6px;padding:0 8px;height:100%;border-right:1px solid rgba(255,255,255,.04);white-space:nowrap;flex-shrink:0;}
-.wm-seg:last-child{border-right:none;}
-.wm-seg.push{margin-left:auto;border-right:none;border-left:1px solid rgba(255,255,255,.04);}
+.wm-seg:last-child,.wm-seg.push{border-right:none;}
+.wm-seg.push{margin-left:auto;border-left:1px solid rgba(255,255,255,.04);}
 .wm-icon{width:11px;height:11px;fill:var(--accent);opacity:.8;}
 .wm-label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:lowercase;color:var(--accent);}
 .wm-val{font-size:9.5px;color:rgba(255,255,255,.42);}
@@ -70,13 +65,12 @@ body{display:flex;justify-content:flex-end;align-items:center;min-height:100vh;p
 .content{overflow-y:auto;max-height:400px;scrollbar-width:thin;scrollbar-color:var(--accent-fill) transparent;}
 .content::-webkit-scrollbar{width:3px;}
 .content::-webkit-scrollbar-thumb{background:var(--accent-fill);border-radius:2px;}
-/* items have pointer-events:none so mouse can't click them */
 .item{display:flex;align-items:center;justify-content:space-between;padding:0 14px;height:37px;border-bottom:1px solid rgba(255,255,255,.025);pointer-events:none;}
 .item.selected{background:var(--sel-bg);}
 .item.selected .iname{color:#fff;font-weight:500;}
 .iname{font-size:12.5px;color:#b8b8c8;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:170px;}
 .toggle{width:32px;height:16px;background:#20202e;border-radius:8px;position:relative;border:1px solid rgba(255,255,255,.05);flex-shrink:0;transition:background .22s;}
-.toggle::after{content:'';position:absolute;width:12px;height:12px;background:#353548;border-radius:50%;top:1px;left:1px;transition:left .22s cubic-bezier(.4,0,.2,1),background .22s;}
+.toggle::after{content:'';position:absolute;width:12px;height:12px;background:#353548;border-radius:50%;top:1px;left:1px;transition:left .22s,background .22s;}
 .toggle.on{background:var(--accent-dim);border-color:var(--accent-border);}
 .toggle.on::after{left:17px;background:var(--accent);box-shadow:0 0 7px var(--accent-glow);}
 .srow{display:flex;align-items:center;gap:8px;flex-shrink:0;}
@@ -93,9 +87,9 @@ body{display:flex;justify-content:flex-end;align-items:center;min-height:100vh;p
 .item.selected .arr{color:#aaa;}
 .fp{width:14px;height:14px;flex-shrink:0;opacity:.22;}
 .item.selected .fp{opacity:.65;}
-.plr-check{width:18px;height:18px;border-radius:50%;flex-shrink:0;border:1.5px solid #252540;background:#14142a;display:flex;align-items:center;justify-content:center;transition:all .18s;}
+.plr-check{width:18px;height:18px;border-radius:50%;flex-shrink:0;border:1.5px solid #252540;background:#14142a;transition:all .18s;}
 .plr-check.checked{border-color:var(--accent);background:var(--accent-dim);box-shadow:0 0 8px var(--accent-glow);}
-.plr-check.checked::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);display:block;}
+.plr-check.checked::after{content:'';width:8px;height:8px;border-radius:50%;background:var(--accent);display:block;margin:auto;margin-top:3px;}
 .sep{display:flex;align-items:center;gap:10px;padding:9px 14px 4px;font-size:8.5px;font-weight:500;letter-spacing:2px;color:var(--accent-sep);text-transform:uppercase;}
 .sep::before,.sep::after{content:'';flex:1;height:1px;background:var(--accent-dim);}
 .footer-gap{height:5px;background:#07070e;}
@@ -105,20 +99,18 @@ body{display:flex;justify-content:flex-end;align-items:center;min-height:100vh;p
 .fbrand{font-size:9px;color:rgba(255,255,255,.2);}
 .fbrand span{color:var(--accent-fill);}
 .fcnt{font-size:9px;color:#2a2a38;}
-/* KEY-PICK */
 #keypick-overlay{position:fixed;inset:0;z-index:9998;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:48px;pointer-events:none;}
 #keypick-overlay.hidden{display:none;}
-.kp-box{display:flex;flex-direction:column;align-items:center;gap:12px;background:#08080f;border:1px solid rgba(255,255,255,.08);border-top:2px solid var(--accent);border-radius:6px;padding:20px 36px 18px;box-shadow:0 0 0 1px rgba(255,255,255,.03),0 20px 60px rgba(0,0,0,.95);animation:kpIn .3s cubic-bezier(.22,1,.36,1);min-width:220px;text-align:center;}
+.kp-box{display:flex;flex-direction:column;align-items:center;gap:12px;background:#08080f;border:1px solid rgba(255,255,255,.08);border-top:2px solid var(--accent);border-radius:6px;padding:20px 36px 18px;box-shadow:0 20px 60px rgba(0,0,0,.95);animation:kpIn .3s cubic-bezier(.22,1,.36,1);min-width:220px;text-align:center;}
 @keyframes kpIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
 .kp-title{font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.3);}
-.kp-sub{font-size:10px;color:rgba(255,255,255,.15);letter-spacing:.5px;}
+.kp-sub{font-size:10px;color:rgba(255,255,255,.15);}
 .kp-waiting{font-size:11px;color:rgba(255,255,255,.18);animation:blink 1.4s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:.18;}50%{opacity:.5;}}
-.kp-pill{background:#0e0e1e;border:1px solid rgba(255,255,255,.14);border-bottom:3px solid rgba(255,255,255,.2);border-radius:5px;padding:6px 20px;font-size:18px;font-weight:700;letter-spacing:1.5px;color:var(--accent);font-family:'Rajdhani',sans-serif;box-shadow:0 0 20px var(--accent-dim);min-width:60px;animation:pillIn .2s cubic-bezier(.22,1,.36,1);}
+.kp-pill{background:#0e0e1e;border:1px solid rgba(255,255,255,.14);border-bottom:3px solid rgba(255,255,255,.2);border-radius:5px;padding:6px 20px;font-size:18px;font-weight:700;color:var(--accent);font-family:'Rajdhani',sans-serif;min-width:60px;animation:pillIn .2s cubic-bezier(.22,1,.36,1);}
 @keyframes pillIn{from{transform:scale(.85);opacity:0;}to{transform:scale(1);opacity:1;}}
 .kp-confirm{font-size:9.5px;color:rgba(255,255,255,.22);}
 .kp-confirm span{color:var(--accent);font-weight:600;}
-/* KEYBIND PICKER */
 #kbpick-overlay{position:fixed;inset:0;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:48px;pointer-events:none;}
 #kbpick-overlay.visible{display:flex;}
 </style>
@@ -129,18 +121,12 @@ body{display:flex;justify-content:flex-end;align-items:center;min-height:100vh;p
   <div class="wm-bar">
     <div class="wm-seg"><svg class="wm-icon" viewBox="0 0 16 16"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019z"/></svg><span class="wm-label">cfx.gg</span></div>
     <div class="wm-seg"><span class="wm-val">sweicon</span></div>
+    <div class="wm-seg"><span class="wm-val green">Never expires</span></div>
     <div class="wm-seg push"><span class="wm-time-val" id="wm-time">00:00:00</span></div>
   </div>
 </div>
-<div id="spectator-list">
-  <div class="spec-title">Spectators</div>
-  <div class="spec-row"><div class="spec-left"><span class="spec-dot"></span><span class="spec-name">xXSniper99Xx</span></div><span class="spec-dist">12m</span></div>
-</div>
-<div id="keybind-list">
-  <div class="kb-title">Keybinds</div>
-  <div id="kb-items"></div>
-</div>
-<!-- KEY-PICK OVERLAY -->
+<div id="spectator-list"><div class="spec-title">Spectators</div><div id="spec-items"></div></div>
+<div id="keybind-list"><div class="kb-title">Keybinds</div><div id="kb-items"></div></div>
 <div id="keypick-overlay">
   <div class="kp-box">
     <span class="kp-title">Menu Key festlegen</span>
@@ -148,7 +134,6 @@ body{display:flex;justify-content:flex-end;align-items:center;min-height:100vh;p
     <span id="kp-confirm" style="display:none" class="kp-confirm"><span id="kp-key-display"></span> — <span>Enter</span> zum Bestätigen</span>
   </div>
 </div>
-<!-- KEYBIND PICKER OVERLAY -->
 <div id="kbpick-overlay">
   <div class="kp-box" id="kbpick-box">
     <span class="kp-title">Keybind: <span id="kbpick-name" style="color:var(--accent)"></span></span>
@@ -156,7 +141,6 @@ body{display:flex;justify-content:flex-end;align-items:center;min-height:100vh;p
     <span id="kbpick-confirm" style="display:none" class="kp-confirm"><span id="kbpick-key-display"></span> — <span>Enter</span> bestätigen · <span style="color:#555">Backspace</span> löschen</span>
   </div>
 </div>
-<!-- MENU -->
 <div id="wrapper" style="display:none">
   <div id="menu">
     <div class="header">
@@ -177,92 +161,101 @@ body{display:flex;justify-content:flex-end;align-items:center;min-height:100vh;p
     <div class="footer">
       <div class="footer-left">
         <svg class="footer-icon" viewBox="0 0 16 16"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019z"/></svg>
-        <span class="fbrand"><span>cfx.gg</span></span>
+        <span class="fbrand"><span>discord.gg/cfxmenu</span></span>
       </div>
       <span class="fcnt" id="fcnt">1/1</span>
     </div>
   </div>
 </div>
 <script>
-// ═══════════════════════════════════════════════════
-// MENU DATA
-// ═══════════════════════════════════════════════════
 const t=(n)=>({type:'toggle',name:n});
 const b=(n)=>({type:'button',name:n});
 const s=(n,c)=>({type:'sub',name:n,children:{label:n,items:c}});
-const sl=(n,v,mn,mx)=>({type:'slider',name:n,val:v,min:mn,max:mx});
+const sl=(n,val,mn,mx)=>({type:'slider',name:n,val:val,min:mn,max:mx});
 const sp=(l)=>({type:'sep',label:l});
-const v=(n,val,a)=>({type:'value',name:n,val:val,actions:a});
-const FP=`<svg class="fp" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="4.5" stroke-linecap="round"><path d="M50 54C46 54 43 51 43 47C43 43 46 40 50 40C54 40 57 43 57 47C57 53 53 58 50 62C47 66 45 72 46 78"/><path d="M54 78C55 72 57 66 59 61C62 56 64 52 64 47C64 39 58 33 50 33C42 33 36 39 36 47C36 53 38 59 43 64"/></svg>`;
+const vl=(n,val,a)=>({type:'value',name:n,val:val,actions:a});
+const FP=`<svg class="fp" viewBox="0 0 100 100" fill="none" stroke="var(--accent)" stroke-width="4.5" stroke-linecap="round"><path d="M50 54C46 54 43 51 43 47C43 43 46 40 50 40C54 40 57 43 57 47C57 53 53 58 50 62C47 66 45 72 46 78"/><path d="M54 78C55 72 57 66 59 61C62 56 64 52 64 47C64 39 58 33 50 33C42 33 36 39 36 47C36 53 38 59 43 64"/><path d="M36 68C31 62 28 55 28 47C28 35 38 25 50 25C62 25 72 35 72 47C72 55 69 62 64 68"/></svg>`;
 
 const MAIN={label:'Main Menu',items:[
   s('Self Options',[
-    s('NoClip Options',[t('NoClip'),t('NoClip Invisibility'),sp('Settings'),sl('NoClip Speed',0.6,0.1,5)]),
-    s('Health',[t('Godmode'),t('Auto Revive'),b('Heal'),b('Armour'),b('Revive'),b('Suicide')]),
-    s('Basic Options',[t('Invisibility'),t('No Ragdoll'),t('Anti Headshot'),t('Seatbelt'),t('Infinite Stamina'),t('Infinite Jumps')]),
-    s('Teleport',[b('To Waypoint'),b('Teleport Back')]),
+    s('NoClip',[t('NoClip'),t('NoClip Invisibility'),sp('Speed'),sl('NoClip Speed',0.6,0.1,5),sl('Vertical Speed',1.0,0.1,5)]),
+    s('Health',[t('Godmode'),t('Anti Headshot'),t('Fake Lag'),sp('Actions'),b('Heal'),b('Full Armor'),b('Revive'),b('Suicide'),b('Fake Death')]),
+    s('Body',[t('Invisibility'),t('No Ragdoll'),t('Seatbelt'),t('Anti Stun'),t('No Water Drown'),sp('Movement'),t('Infinite Stamina'),t('Infinite Jumps'),t('Super Jump'),t('Fast Run'),t('Fast Swim'),sl('Run Speed',1.0,0.5,5),sl('Swim Speed',1.0,0.5,5)]),
+    s('Teleport',[b('To Waypoint'),b('To Objective'),b('Teleport Back'),sp('Locations'),b('Los Santos Airport'),b('Maze Bank Tower'),b('Mount Chiliad'),b('Chumash Beach'),b('Fort Zancudo'),b('Alamo Sea')]),
+    s('Appearance',[b('Random Outfit'),b('Invisible Outfit'),b('Max Wanted'),b('Clear Wanted'),sl('Wanted Level',0,0,5)]),
+    s('Misc Self',[t('Off Radar'),t('Ghost Organization'),t('Semi God'),t('Bullet Proof'),t('Fire Proof'),t('Explosion Proof'),t('Melee Proof')]),
   ]),
   {type:'online',name:'Online Options'},
   s('Weapon Options',[
-    b('Give All Weapons'),b('Refill Ammo'),t('Infinite Ammo'),t('No Reload'),
+    sp('Give'),b('Give All Weapons'),b('Give Pistols'),b('Give SMGs'),b('Give Rifles'),b('Give Snipers'),b('Give Shotguns'),b('Give Heavies'),b('Give Melees'),b('Remove All Weapons'),
+    sp('Ammo'),b('Refill Ammo'),b('Refill All Ammo'),t('Infinite Ammo'),t('No Reload'),t('Explosive Ammo'),t('Fire Ammo'),t('Rapid Fire'),
+    sp('Mods'),t('One Shot Kill'),t('No Spread'),t('No Recoil'),sl('Damage Modifier',1.0,1.0,10.0),
   ]),
   s('Vehicle Options',[
-    b('Repair'),b('Flip'),b('Delete Vehicle'),t('Vehicle Godmode'),t('Boost'),
+    sp('Spawn'),b('Spawn by Name'),b('Spawn Last'),
+    sp('Current Vehicle'),b('Repair'),b('Flip'),b('Delete Vehicle'),b('Change Plate'),b('Boost Forward'),
+    sp('Toggles'),t('Vehicle Godmode'),t('Boost'),t('Horn Boost'),t('Rainbow Car'),t('Invisible Vehicle'),t('Semi Truck Godmode'),
+    sp('Drive'),t('Auto Drive'),t('Auto Drive to Waypoint'),sl('Drive Speed',30,10,200),sl('Boost Speed',50,10,200),
+    sp('Mods'),b('Max Mods'),b('Remove Mods'),b('Fix Tyres'),sl('Vehicle Scale',1.0,0.5,3.0),
   ]),
-  s('Visual Options',[
-    t('Show Watermark'),t('Spectator List'),t('Keybind List'),
-    v('Theme','Default',['Default','Grey','Yellow']),
+  s('Combat Options',[
+    sp('Aimbot'),t('Enable Aimbot'),t('Visible Only'),t('Lock Bone Head'),t('Lock Bone Chest'),sl('Aimbot FOV',150,10,360),sl('Aimbot Smooth',5,1,20),
+    sp('Silent Aim'),t('Enable Silent Aim'),t('Silent NPCs'),sl('Silent FOV',150,10,360),sl('Silent Distance',200,10,500),
+    sp('Misc'),t('Fast Punch'),t('One Punch'),t('Super Punch'),t('No Punch Cooldown'),t('Instant Kill'),b('Kill Nearby NPCs'),b('Delete Nearby Vehicles'),
+  ]),
+  s('ESP / Visuals',[
+    s('Player ESP',[t('Enable Player ESP'),t('Show Names'),t('Show Distance'),t('Show Health'),t('Show Weapon'),t('Box ESP'),t('Skeleton ESP'),t('Snaplines')]),
+    s('Vehicle ESP',[t('Enable Vehicle ESP'),t('Show Names'),t('Show Distance'),t('Show Driver')]),
+    s('NPC ESP',[t('Enable NPC ESP'),t('Show Names'),t('Show Distance')]),
+    sp('UI'),t('Show Crosshair'),t('Speedometer'),t('Compass'),t('Show Watermark'),t('Show Clock'),vl('Theme','Default',['Default','Grey','Yellow']),
+  ]),
+  s('Misc Options',[
+    s('Time & Weather',[t('Lock Time'),sl('Hour',12,0,23),t('Lock Weather'),vl('Weather','CLEAR',['EXTRASUNNY','CLEAR','CLOUDS','OVERCAST','RAIN','THUNDER','CLEARING','NEUTRAL','SNOW','BLIZZARD','SNOWLIGHT','XMAS','HALLOWEEN'])]),
+    s('World',[b('Remove All NPCs'),b('Remove All Vehicles'),t('NPC Ignore Player'),t('No NPC Respawn'),t('Freeze World'),t('No Water'),sl('Field of View',70,40,120)]),
+    s('Money / RP',[b('Money Drop'),b('RP Drop'),b('CEO Money'),sl('Money Amount',10000,1000,1000000)]),
+    s('Trolling',[t('Hydra Rain'),t('Ufo Madness'),b('Spawn Explosion'),b('Spawn Hydra'),b('Spawn Rhino'),b('Send to Hospital')]),
+    sp('Settings'),t('Spectator List'),t('Keybind List'),
+    vl('Menu Scale','1.0',['0.8','0.9','1.0','1.1','1.2']),
+    vl('Menu Position','Right',['Right','Left']),
   ]),
   s('Settings',[
-    v('Menu Hotkey','F4',['F1','F2','F3','F4','F5','F6','F7','F8','Insert','Delete','Home']),
+    vl('Menu Hotkey','F4',['F1','F2','F3','F4','F5','F6','F7','F8','Insert','Delete','Home']),
+    vl('Theme','Default',['Default','Grey','Yellow']),
+    t('Blur Background'),sl('Menu Opacity',100,20,100),
+    sp('Misc'),b('Reset Settings'),b('Save Config'),b('Load Config'),
   ]),
 ]};
 
-const ONLINE_TABS={
-  Safe:[t('Spectate'),b('Teleport To Player'),b('Bring'),b('Kill Player'),b('Explode')],
-  Risk:[b('Silent Kill'),b('Crash')],
-  Vehicle:[b('Steal Vehicle'),b('Delete Vehicle'),t('Freeze Vehicle')],
-};
+const ONLINE_SAFE=[t('Spectate'),b('Teleport To Player'),b('Teleport To Me'),b('Bring Player'),b('Swap Position'),sp('Interact'),b('Copy Outfit'),b('Copy Weapons'),b('Drop Weapons'),b('Friend Request'),b('Message Player')];
+const ONLINE_RISK=[b('Kill Player'),b('Explode Player'),b('Kick Player'),b('Crash Player'),b('Freeze Player'),t('Freeze Loop'),b('Cage Player'),b('Launch Player'),b('Set On Fire'),b('Spawn Attacker'),b('UFO Abduct'),b('Lightning Strike')];
+const ONLINE_VEH=[b('Steal Vehicle'),b('Delete Vehicle'),b('Kick Driver'),b('Flip Vehicle'),b('Repair Vehicle'),b('Explode Vehicle'),t('Freeze Vehicle'),b('Launch Vehicle'),b('Max Mods Vehicle')];
+const ONLINE_TABS={Safe:ONLINE_SAFE,Risk:ONLINE_RISK,Vehicle:ONLINE_VEH};
 const OTN=['Safe','Risk','Vehicle'];
 
-// ═══════════════════════════════════════════════════
-// STATE
-// ═══════════════════════════════════════════════════
 let stack=[{menu:MAIN,idx:0}];
 let toggleState={};
 let selectedPlrs=new Set();
-let keybinds={};           // name → key string
+let keybinds={};
 let menuVisible=false;
 let onlineMode=false,onlineTab=-1,onlineItemIdx=0;
 let ONLINE_PLAYERS=[];
 let MY_ID=null;
-
-// KEY-PICK (beim Start — wählt Menu-Open-Key)
-// Zwei Zustände: 'waiting' (warte auf Taste) oder 'confirm' (Taste angezeigt, warte auf Enter)
-let kpState='waiting';   // 'waiting' | 'confirm' | 'done'
-let kpPending=null;      // die angezeigte Taste
-let menuHotkey=null;     // bestätigter Hotkey
-
-// KEYBIND-PICKER (F6 auf Item)
+let kpState='waiting';
+let kpPending=null;
+let menuHotkey=null;
 let kbMode=false;
-let kbPending=null;      // {item, key}
-
-// Keys die NICHT als Keybind erlaubt sind (nur Modifier/unbrauchbar)
-const KB_SKIP=new Set(['Shift','Control','Alt','Meta','CapsLock','Tab','Unidentified']);
+let kbPending=null;
+const KB_SKIP=new Set(['Shift','Control','Alt','Meta','CapsLock','Tab','Unidentified','']);
 
 function cur(){return stack[stack.length-1];}
-function allItems(){return cur().menu.items;}
-function visItems(){return allItems().filter(i=>i.type!=='sep');}
+function visItems(){return cur().menu.items.filter(i=>i.type!=='sep');}
 function makeKey(item){return stack.map(s=>s.menu.label).join('||')+'||'+item.name;}
 function cycleVal(item,dir){const ci=item.actions.indexOf(item.val);item.val=item.actions[(ci+dir+item.actions.length)%item.actions.length];}
 function sliderStep(i){return(i.max-i.min)<=2?0.1:1;}
 function sliderPct(i){return((i.val-i.min)/(i.max-i.min))*100;}
 function sliderFmt(i){return parseFloat(i.val).toFixed(sliderStep(i)<1?1:0);}
-function adjSlider(item,dir){const s=sliderStep(item);item.val=Math.min(item.max,Math.max(item.min,parseFloat((item.val+dir*s).toFixed(10))));}
+function adjSlider(item,dir){const s=sliderStep(item);item.val=Math.min(item.max,Math.max(item.min,+(item.val+dir*s).toFixed(10)));}
 
-// ═══════════════════════════════════════════════════
-// NOTIFY
-// ═══════════════════════════════════════════════════
 function notify(title,msg,icon){
   const c=document.getElementById('notify-container');
   while(c.children.length>=3)c.firstChild.remove();
@@ -271,48 +264,35 @@ function notify(title,msg,icon){
   c.appendChild(n);
   const bar=n.querySelector('.notify-bar');
   requestAnimationFrame(()=>{bar.style.transition='width 3s linear';bar.style.width='0%';});
-  setTimeout(()=>{n.style.opacity='0';n.style.transition='opacity .25s';setTimeout(()=>n.remove(),250);},3000);
+  setTimeout(()=>{n.style.transition='opacity .25s';n.style.opacity='0';setTimeout(()=>n.remove(),250);},3000);
 }
 
-// ═══════════════════════════════════════════════════
-// THEME
-// ═══════════════════════════════════════════════════
-function applyTheme(name){
-  document.body.className=name==='Grey'?'theme-grey':name==='Yellow'?'theme-yellow':'';
-}
+function applyTheme(name){document.body.className=name==='Grey'?'theme-grey':name==='Yellow'?'theme-yellow':'';}
 
-// ═══════════════════════════════════════════════════
-// RENDER
-// ═══════════════════════════════════════════════════
 function renderOnline(){
   document.getElementById('online-tabs').classList.add('visible');
-  document.getElementById('online-tabs').querySelectorAll('.otab').forEach(t=>{
-    t.classList.toggle('active',parseInt(t.dataset.tab)===onlineTab);
-  });
+  document.getElementById('online-tabs').querySelectorAll('.otab').forEach(t=>t.classList.toggle('active',parseInt(t.dataset.tab)===onlineTab));
   const el=document.getElementById('content');
   const isL=onlineTab===-1;
   let html='';
   if(isL){
-    document.getElementById('bc').textContent='Online — Players';
-    if(!ONLINE_PLAYERS.length){html='<div style="padding:16px;text-align:center;font-size:11px;color:rgba(255,255,255,0.2)">Keine Spieler</div>';}
+    document.getElementById('bc').textContent='Online Players';
+    if(!ONLINE_PLAYERS.length){html='<div style="padding:20px;text-align:center;font-size:11px;color:rgba(255,255,255,0.2)">Keine Spieler online</div>';}
     else ONLINE_PLAYERS.forEach((p,i)=>{
       const sel=i===onlineItemIdx,chk=selectedPlrs.has(p.id);
-      const ms=p.me?`style="color:var(--accent);font-weight:600"`:'';
-      const mt=p.me?` <span style="font-size:9px;color:var(--accent)">(me)</span>`:'';
-      html+=`<div class="item${sel?' selected':''}" data-i="${i}"><span class="iname" ${ms}>[${p.id}] ${p.name}${mt}</span><div class="plr-check${chk?' checked':''}"></div></div>`;
+      const ms=p.me?'style="color:var(--accent);font-weight:600"':'';
+      const mt=p.me?' <span style="font-size:9px;color:var(--accent)">(me)</span>':'';
+      html+=`<div class="item${sel?' selected':''}" ><span class="iname" ${ms}>[${p.id}] ${p.name}${mt}</span><div class="plr-check${chk?' checked':''}"></div></div>`;
     });
   }else{
     const tn=OTN[onlineTab];
-    document.getElementById('bc').textContent='Online — '+tn;
-    const tabs=ONLINE_TABS[tn].filter(i=>i.type!=='sep');
-    tabs.forEach((item,i)=>{
+    document.getElementById('bc').textContent='Online › '+tn;
+    ONLINE_TABS[tn].filter(i=>i.type!=='sep').forEach((item,i)=>{
       const sel=i===onlineItemIdx;
       const k='online||'+tn+'||'+item.name;
       const on=toggleState[k]||false;
-      let r='';
-      if(item.type==='toggle')r=`<div class="toggle${on?' on':''}"></div>`;
-      else if(item.type==='button')r=FP;
-      html+=`<div class="item${sel?' selected':''}" data-i="${i}"><span class="iname">${item.name}</span>${r}</div>`;
+      let r=item.type==='toggle'?`<div class="toggle${on?' on':''}"></div>`:FP;
+      html+=`<div class="item${sel?' selected':''}" ><span class="iname">${item.name}</span>${r}</div>`;
     });
   }
   el.innerHTML=html;
@@ -327,61 +307,50 @@ function render(){
   const vis=visItems();const idx=cur().idx;
   document.getElementById('bc').textContent=stack.map(s=>s.menu.label).join(' › ');
   let html='';
-  vis.forEach((item,mi)=>{
-    const sel=mi===idx;
-    const k=makeKey(item);
-    const on=toggleState[k]||false;
+  cur().menu.items.forEach((item,i)=>{
+    if(item.type==='sep'){html+=`<div class="sep">${item.label||''}</div>`;return;}
+    const mi=vis.indexOf(item);const sel=mi===idx;
+    const k=makeKey(item);const on=toggleState[k]||false;
     let r='';
     if(item.type==='toggle')r=`<div class="toggle${on?' on':''}"></div>`;
     else if(item.type==='slider'){const p=sliderPct(item),d=sliderFmt(item);r=`<div class="srow"><span class="sval">${d}</span><div class="slidertrack"><div class="sliderfill" style="width:${p}%"></div><div class="sliderthumb" style="left:${p}%"></div></div></div>`;}
     else if(item.type==='value')r=item.actions?`<span class="ival"><span class="ca">‹ </span>${item.val}<span class="ca"> ›</span></span>`:`<span class="ival">${item.val}</span>`;
     else if(item.type==='sub'||item.type==='online')r=`<span class="arr">»</span>`;
     else if(item.type==='button')r=FP;
-    html+=`<div class="item${sel?' selected':''}" data-i="${mi}"><span class="iname">${item.name}</span>${r}</div>`;
+    html+=`<div class="item${sel?' selected':''}" ><span class="iname">${item.name}</span>${r}</div>`;
   });
   document.getElementById('content').innerHTML=html;
   document.getElementById('fcnt').textContent=`${Math.min(idx+1,vis.length)}/${vis.length}`;
   document.getElementById('content').querySelector('.item.selected')?.scrollIntoView({block:'nearest'});
 }
 
-// ═══════════════════════════════════════════════════
-// KEYBIND LIST
-// ═══════════════════════════════════════════════════
 function renderKeybindList(){
   const el=document.getElementById('kb-items');if(!el)return;
-  const entries=Object.entries(keybinds);
-  if(!entries.length){el.innerHTML='<div class="kb-empty">Keine Keybinds<br><span style="opacity:.5;font-size:8px">F6 auf Item drücken</span></div>';return;}
-  el.innerHTML=entries.map(([name,key])=>{
+  const e=Object.entries(keybinds);
+  if(!e.length){el.innerHTML='<div class="kb-empty">Keine Keybinds<br><span style="opacity:.5;font-size:8px">F6 auf Item</span></div>';return;}
+  el.innerHTML=e.map(([name,key])=>{
     const mk=Object.keys(toggleState).find(k=>k.endsWith('||'+name));
-    const isT=mk!==undefined;
-    const on=isT&&toggleState[mk];
-    const st=isT?(on?'<span class="kb-status-on">ON</span>':'<span class="kb-status-off">OFF</span>'):'';
+    const on=mk&&toggleState[mk];
+    const st=mk?(on?'<span class="kb-status-on">ON</span>':'<span class="kb-status-off">OFF</span>'):'';
     return`<div class="kb-item"><span class="kb-item-name">${name}</span><div class="kb-item-right">${st}<span class="kb-key">${key}</span></div></div>`;
   }).join('');
 }
 
-// ═══════════════════════════════════════════════════
-// ACTIVATE
-// ═══════════════════════════════════════════════════
 function activate(item,dir){
   if(!item)return;
   const k=makeKey(item);
   if(item.type==='toggle'){
-    toggleState[k]=!toggleState[k];
-    const on=toggleState[k];
+    toggleState[k]=!toggleState[k];const on=toggleState[k];
     if(item.name==='Show Watermark')document.getElementById('watermark').classList.toggle('open',on);
     if(item.name==='Spectator List')document.getElementById('spectator-list').classList.toggle('open',on);
     if(item.name==='Keybind List')document.getElementById('keybind-list').classList.toggle('open',on);
     notify(item.name,on?'Enabled':'Disabled','fa-solid fa-bolt');
   }else if(item.type==='button'){
     notify(item.name,'Triggered','fa-solid fa-bolt');
-  }else if(item.type==='online'){
-    onlineMode=true;onlineTab=-1;onlineItemIdx=0;
-  }else if(item.type==='sub'){
-    stack.push({menu:item.children,idx:0});
-  }else if(item.type==='slider'){
-    adjSlider(item,dir);
-  }else if(item.type==='value'&&item.actions){
+  }else if(item.type==='online'){onlineMode=true;onlineTab=-1;onlineItemIdx=0;}
+  else if(item.type==='sub'){stack.push({menu:item.children,idx:0});}
+  else if(item.type==='slider'){adjSlider(item,dir);}
+  else if(item.type==='value'&&item.actions){
     cycleVal(item,dir);
     if(item.name==='Theme')applyTheme(item.val);
     if(item.name==='Menu Hotkey'){menuHotkey=item.val;notify('Hotkey',item.val,'fa-solid fa-keyboard');}
@@ -392,39 +361,23 @@ function activate(item,dir){
 function activateOnlineItem(){
   if(onlineTab===-1){
     const p=ONLINE_PLAYERS[onlineItemIdx];
-    if(p){selectedPlrs.clear();selectedPlrs.add(p.id);notify('Ausgewählt',p.name,'fa-solid fa-user');}
+    if(p){selectedPlrs.clear();selectedPlrs.add(p.id);notify('Ausgewählt','['+p.id+'] '+p.name,'fa-solid fa-user');}
   }else{
     const tn=OTN[onlineTab];
     const tabs=ONLINE_TABS[tn].filter(i=>i.type!=='sep');
     const item=tabs[onlineItemIdx];if(!item)return;
     const k='online||'+tn+'||'+item.name;
     if(item.type==='toggle'){toggleState[k]=!toggleState[k];notify(item.name,toggleState[k]?'Enabled':'Disabled','fa-solid fa-bolt');}
-    else if(item.type==='button'){notify(item.name,'Triggered','fa-solid fa-bolt');}
+    else{notify(item.name,'Triggered','fa-solid fa-bolt');}
   }
   renderOnline();
 }
 
-// ═══════════════════════════════════════════════════
-// OPEN / CLOSE
-// ═══════════════════════════════════════════════════
-function openMenu(){
-  menuVisible=true;
-  document.getElementById('wrapper').style.display='';
-  render();
-}
-function closeMenu(){
-  menuVisible=false;
-  document.getElementById('wrapper').style.display='none';
-  stack=[{menu:MAIN,idx:0}];
-  onlineMode=false;onlineTab=-1;onlineItemIdx=0;
-}
+function openMenu(){menuVisible=true;document.getElementById('wrapper').style.display='';render();}
+function closeMenu(){menuVisible=false;document.getElementById('wrapper').style.display='none';stack=[{menu:MAIN,idx:0}];onlineMode=false;onlineTab=-1;onlineItemIdx=0;}
 
-// ═══════════════════════════════════════════════════
-// KEY-PICK HELPERS
-// ═══════════════════════════════════════════════════
 function kpShowKey(key){
   kpPending=key;
-  // Replace or insert pill
   const box=document.querySelector('#keypick-overlay .kp-box');
   const old=box.querySelector('.kp-pill');if(old)old.remove();
   const pill=document.createElement('span');pill.className='kp-pill';pill.textContent=key;
@@ -434,16 +387,8 @@ function kpShowKey(key){
   document.getElementById('kp-confirm').style.display='';
   kpState='confirm';
 }
-function kpConfirm(){
-  menuHotkey=kpPending;
-  kpState='done';
-  document.getElementById('keypick-overlay').classList.add('hidden');
-  notify('Menu Key',kpPending+' = öffnen/schließen','fa-solid fa-keyboard');
-}
+function kpConfirm(){menuHotkey=kpPending;kpState='done';document.getElementById('keypick-overlay').classList.add('hidden');notify('Menu Key',kpPending+' = öffnen/schließen','fa-solid fa-keyboard');}
 
-// ═══════════════════════════════════════════════════
-// KEYBIND PICKER HELPERS
-// ═══════════════════════════════════════════════════
 function openKbPicker(item){
   kbMode=true;kbPending={item,key:null};
   document.getElementById('kbpick-name').textContent=item.name;
@@ -460,44 +405,24 @@ function confirmKbPicker(){
   notify('Keybind',kbPending.item.name+' → '+kbPending.key,'fa-solid fa-keyboard');
 }
 
-// ═══════════════════════════════════════════════════
-// HANDLE KEY — EINZIGE Eingabeverarbeitung
-// Wird aufgerufen von: Lua (via SendDuiMessage type=control)
-// NICHT von Maus, NICHT von keydown (das ist absichtlich)
-// ═══════════════════════════════════════════════════
 function handleKey(key){
-
-  // ── KEY-PICK MODE ──
+  // KEY-PICK
   if(kpState!=='done'){
     if(kpState==='confirm'){
       if(key==='Enter'){kpConfirm();return;}
-      if(key==='Backspace'){
-        // Zurück zu waiting
-        kpState='waiting';kpPending=null;
-        const old=document.querySelector('#keypick-overlay .kp-box .kp-pill');if(old)old.remove();
-        document.getElementById('kp-waiting').style.display='';
-        document.getElementById('kp-confirm').style.display='none';
-        return;
-      }
-      // Neue Taste → ersetzen
+      if(key==='Backspace'){kpState='waiting';kpPending=null;const old=document.querySelector('#keypick-overlay .kp-box .kp-pill');if(old)old.remove();document.getElementById('kp-waiting').style.display='';document.getElementById('kp-confirm').style.display='none';return;}
       kpShowKey(key);return;
     }
-    // waiting: jede Taste (außer Enter allein) zeigen
-    if(key==='Enter')return;  // Enter ohne Taste davor tut nichts
+    if(key==='Enter'||key==='Backspace')return;
     kpShowKey(key);return;
   }
-
-  // ── KEYBIND PICKER MODE ──
+  // KEYBIND PICKER
   if(kbMode){
-    if(key==='Escape'||key==='Backspace'){
-      if(key==='Backspace'&&kbPending?.key){delete keybinds[kbPending.item.name];closeKbPicker();renderKeybindList();return;}
-      closeKbPicker();return;
-    }
+    if(key==='Escape'||key==='Backspace'){if(key==='Backspace'&&kbPending?.key){delete keybinds[kbPending.item.name];closeKbPicker();renderKeybindList();return;}closeKbPicker();return;}
     if(key==='Enter'){confirmKbPicker();return;}
     if(KB_SKIP.has(key))return;
     kbPending.key=key;
-    const box=document.getElementById('kbpick-box');
-    const old=box.querySelector('.kp-pill');if(old)old.remove();
+    const box=document.getElementById('kbpick-box');const old=box.querySelector('.kp-pill');if(old)old.remove();
     const pill=document.createElement('span');pill.className='kp-pill';pill.textContent=key;
     box.insertBefore(pill,document.getElementById('kbpick-confirm'));
     document.getElementById('kbpick-waiting').style.display='none';
@@ -505,77 +430,47 @@ function handleKey(key){
     document.getElementById('kbpick-confirm').style.display='';
     return;
   }
-
-  // ── HOTKEY TOGGLE ──
-  if(menuHotkey&&key===menuHotkey){
-    if(menuVisible)closeMenu();else openMenu();
-    return;
-  }
-
-  // ── KEYBIND TRIGGER (Menu zu) ──
+  // HOTKEY
+  if(menuHotkey&&key===menuHotkey){if(menuVisible)closeMenu();else openMenu();return;}
+  // KEYBIND TRIGGER
   if(!menuVisible){
-    if(keybinds){
-      for(const[name,k] of Object.entries(keybinds)){
-        if(key!==k)continue;
-        // Finde Item im Baum
-        const find=(menu)=>{for(const it of menu.items){if(it.name===name)return it;if(it.type==='sub'&&it.children){const f=find(it.children);if(f)return f;}}return null;};
-        const it=find(MAIN);if(!it)continue;
-        if(it.type==='toggle'){
-          const mk=Object.keys(toggleState).find(mk2=>mk2.endsWith('||'+name))||('Main Menu||'+name);
-          toggleState[mk]=!toggleState[mk];
-          if(it.name==='Show Watermark')document.getElementById('watermark').classList.toggle('open',toggleState[mk]);
-          if(it.name==='Spectator List')document.getElementById('spectator-list').classList.toggle('open',toggleState[mk]);
-          if(it.name==='Keybind List')document.getElementById('keybind-list').classList.toggle('open',toggleState[mk]);
-          renderKeybindList();
-          notify(name,toggleState[mk]?'Enabled':'Disabled','fa-solid fa-bolt');
-        }else if(it.type==='button'){
-          notify(name,'Triggered','fa-solid fa-bolt');
-        }
-        return;
-      }
+    for(const[name,k] of Object.entries(keybinds)){
+      if(key!==k)continue;
+      const find=(menu)=>{for(const it of menu.items){if(it.name===name)return it;if(it.type==='sub'&&it.children){const f=find(it.children);if(f)return f;}}return null;};
+      const it=find(MAIN);if(!it)continue;
+      const mk=Object.keys(toggleState).find(mk2=>mk2.endsWith('||'+name))||('Main Menu||'+name);
+      if(it.type==='toggle'){toggleState[mk]=!toggleState[mk];if(it.name==='Show Watermark')document.getElementById('watermark').classList.toggle('open',toggleState[mk]);renderKeybindList();notify(name,toggleState[mk]?'Enabled':'Disabled','fa-solid fa-bolt');}
+      else if(it.type==='button'){notify(name,'Triggered','fa-solid fa-bolt');}
+      return;
     }
     return;
   }
-
-  // ── ONLINE MODE ──
+  // ONLINE MODE
   if(onlineMode){
     const isL=onlineTab===-1;
     const tabs=isL?[]:ONLINE_TABS[OTN[onlineTab]].filter(i=>i.type!=='sep');
     if(key==='ArrowDown'){onlineItemIdx=Math.min(onlineItemIdx+1,(isL?ONLINE_PLAYERS.length:tabs.length)-1);renderOnline();}
     else if(key==='ArrowUp'){onlineItemIdx=Math.max(onlineItemIdx-1,0);renderOnline();}
-    else if(key==='ArrowRight'||key==='Enter'){activateOnlineItem();}
-    else if(key==='ArrowLeft'||key==='Backspace'){
-      if(!isL){onlineTab=-1;onlineItemIdx=0;renderOnline();}
-      else{onlineMode=false;render();}
-    }
-    else if(key==='TabRight'){const ci=[-1,0,1,2].indexOf(onlineTab);onlineTab=[-1,0,1,2][(ci+1)%4];onlineItemIdx=0;renderOnline();}
-    else if(key==='TabLeft'){const ci=[-1,0,1,2].indexOf(onlineTab);onlineTab=[-1,0,1,2][(ci-1+4)%4];onlineItemIdx=0;renderOnline();}
+    else if(key==='Enter'||key==='ArrowRight'){activateOnlineItem();}
+    else if(key==='ArrowLeft'||key==='Backspace'){if(!isL){onlineTab=-1;onlineItemIdx=0;renderOnline();}else{onlineMode=false;render();}}
+    else if(key==='TabRight'){const ALL=[-1,0,1,2];const ci=ALL.indexOf(onlineTab);onlineTab=ALL[(ci+1)%4];onlineItemIdx=0;renderOnline();}
+    else if(key==='TabLeft'){const ALL=[-1,0,1,2];const ci=ALL.indexOf(onlineTab);onlineTab=ALL[(ci-1+4)%4];onlineItemIdx=0;renderOnline();}
     return;
   }
-
-  // ── NORMAL MODE ──
+  // NORMAL MODE
   const vis=visItems();const st=cur();const it=vis[st.idx];
-
-  if(key==='F6'&&it&&it.type!=='sep'&&it.type!=='sub'&&it.type!=='online'){
-    openKbPicker(it);return;
-  }
+  if(key==='F6'&&it&&it.type!=='sep'&&it.type!=='sub'&&it.type!=='online'){openKbPicker(it);return;}
   if(key==='ArrowDown'){cur().idx=Math.min(st.idx+1,vis.length-1);render();}
   else if(key==='ArrowUp'){cur().idx=Math.max(st.idx-1,0);render();}
-  else if(key==='ArrowRight'||key==='Enter'){activate(it,1);}
+  else if(key==='Enter'||key==='ArrowRight'){activate(it,1);}
   else if(key==='ArrowLeft'){
     if(it?.type==='slider'){adjSlider(it,-1);render();}
     else if(it?.type==='value'&&it.actions){cycleVal(it,-1);if(it.name==='Theme')applyTheme(it.val);if(it.name==='Menu Hotkey'){menuHotkey=it.val;notify('Hotkey',it.val,'fa-solid fa-keyboard');}render();}
     else if(stack.length>1){stack.pop();render();}
   }
-  else if(key==='Backspace'){
-    if(stack.length>1){stack.pop();render();}
-    else closeMenu();
-  }
+  else if(key==='Backspace'){if(stack.length>1){stack.pop();render();}else closeMenu();}
 }
 
-// ═══════════════════════════════════════════════════
-// MESSAGE HANDLER — Lua → HTML (einziger Input-Kanal)
-// ═══════════════════════════════════════════════════
 window.addEventListener('message',function(ev){
   const d=ev.data;if(!d?.type)return;
   if(d.type==='control'){handleKey(d.key);return;}
@@ -588,12 +483,7 @@ window.addEventListener('message',function(ev){
   }
 });
 
-// Uhr
-setInterval(()=>{
-  const el=document.getElementById('wm-time');if(!el)return;
-  const n=new Date();
-  el.textContent=[n.getHours(),n.getMinutes(),n.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');
-},1000);
+setInterval(()=>{const el=document.getElementById('wm-time');if(!el)return;const n=new Date();el.textContent=[n.getHours(),n.getMinutes(),n.getSeconds()].map(x=>String(x).padStart(2,'0')).join(':');},1000);
 </script>
 </body>
 </html>
