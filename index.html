@@ -2,12 +2,19 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>cfx.gg Menu</title>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>cfx.gg Menu</title>
+
 <style>
+
+/* ── FONT AWESOME FALLBACK (DUI hat kein Internet) ── */
+.fa-solid, .fa-regular, .fa-brands { font-family: inherit; font-style: normal; }
+/* specific icon overrides */
+
+
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{background:transparent;min-height:100vh;font-family:'DM Sans',sans-serif;user-select:none;overflow:hidden;}
+html,body{background:rgba(0,0,0,0);min-height:100vh;font-family:'DM Sans',-apple-system,BlinkMacSystemFont,'Segoe UI',Arial,sans-serif;user-select:none;overflow:hidden;}
 :root{--accent:#ff3daf;--ag:rgba(255,61,175,.65);--ad:rgba(255,61,175,.16);--ab:rgba(255,61,175,.3);--as2:rgba(255,61,175,.5);--af:rgba(255,61,175,.4);--sel:rgba(255,61,175,.12);--hb:rgba(255,61,175,.1);--hl:rgba(255,61,175,.35);}
 body.t-pink  {--accent:#ff3daf;--ag:rgba(255,61,175,.65);--ad:rgba(255,61,175,.16);--ab:rgba(255,61,175,.3);--as2:rgba(255,61,175,.5);--af:rgba(255,61,175,.4);--sel:rgba(255,61,175,.12);--hb:rgba(255,61,175,.1);--hl:rgba(255,61,175,.35);}
 body.t-grey  {--accent:#9090b0;--ag:rgba(144,144,176,.6);--ad:rgba(144,144,176,.14);--ab:rgba(144,144,176,.26);--as2:rgba(144,144,176,.5);--af:rgba(144,144,176,.38);--sel:rgba(144,144,176,.11);--hb:rgba(144,144,176,.08);--hl:rgba(144,144,176,.28);}
@@ -16,7 +23,7 @@ body.t-cyan  {--accent:#00e5d4;--ag:rgba(0,229,212,.65);--ad:rgba(0,229,212,.14)
 body.t-red   {--accent:#cc1010;--ag:rgba(204,16,16,.7);--ad:rgba(204,16,16,.18);--ab:rgba(204,16,16,.32);--as2:rgba(204,16,16,.55);--af:rgba(204,16,16,.44);--sel:rgba(204,16,16,.15);--hb:rgba(204,16,16,.12);--hl:rgba(204,16,16,.38);}
 body.t-green {--accent:#39ff14;--ag:rgba(57,255,20,.65);--ad:rgba(57,255,20,.13);--ab:rgba(57,255,20,.28);--as2:rgba(57,255,20,.5);--af:rgba(57,255,20,.38);--sel:rgba(57,255,20,.09);--hb:rgba(57,255,20,.07);--hl:rgba(57,255,20,.28);}
 body.t-blue  {--accent:#3d9fff;--ag:rgba(61,159,255,.65);--ad:rgba(61,159,255,.14);--ab:rgba(61,159,255,.28);--as2:rgba(61,159,255,.5);--af:rgba(61,159,255,.38);--sel:rgba(61,159,255,.1);--hb:rgba(61,159,255,.08);--hl:rgba(61,159,255,.28);}
-body{display:flex;align-items:center;justify-content:flex-end;padding:20px;background:transparent;}
+body{display:flex;align-items:center;justify-content:flex-end;padding:20px;background:rgba(0,0,0,0);}
 #menu{width:292px;background:#0d0d16;border-radius:10px;box-shadow:0 0 0 1px rgba(255,255,255,.055),0 2px 0 0 var(--accent),0 30px 80px rgba(0,0,0,.97);overflow:hidden;position:fixed;right:20px;top:50%;transform:translateY(-50%);}
 #menu::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);box-shadow:0 0 18px var(--ag);border-radius:50%;z-index:10;}
 .banner{position:relative;height:91px;overflow:hidden;background:#09090f;}
@@ -39,8 +46,7 @@ body{display:flex;align-items:center;justify-content:flex-end;padding:20px;backg
 .item{display:flex;align-items:center;padding:0 13px;height:35px;border-bottom:1px solid rgba(255,255,255,.022);gap:9px;cursor:pointer;transition:background .1s;position:relative;}
 .item:hover{background:rgba(255,255,255,.022);}
 .item.sel{background:var(--sel);}
-.item.sel::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:2px;background:var(--accent);border-radius:0 2px 2px 0;box-shadow:0 0 8px var(--ag);}
-.ii{width:15px;text-align:center;font-size:10px;flex-shrink:0;color:rgba(255,255,255,.16);transition:color .12s;}
+.item.ii{width:15px;text-align:center;font-size:10px;flex-shrink:0;color:rgba(255,255,255,.16);transition:color .12s;}
 .item.sel .ii{color:var(--accent);filter:drop-shadow(0 0 4px var(--ag));}
 .in{font-size:12px;font-weight:400;color:#a0a0bc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;transition:color .12s;text-align:left;}
 .item.sel .in{color:#fff;font-weight:500;}
