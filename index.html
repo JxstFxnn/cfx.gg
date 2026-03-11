@@ -7,7 +7,7 @@
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{background:#08080f;min-height:100vh;font-family:'DM Sans',sans-serif;user-select:none;overflow:hidden;}
+html,body{background:transparent;min-height:100vh;font-family:'DM Sans',sans-serif;user-select:none;overflow:hidden;}
 :root{--accent:#ff3daf;--ag:rgba(255,61,175,.65);--ad:rgba(255,61,175,.16);--ab:rgba(255,61,175,.3);--as2:rgba(255,61,175,.5);--af:rgba(255,61,175,.4);--sel:rgba(255,61,175,.12);--hb:rgba(255,61,175,.1);--hl:rgba(255,61,175,.35);}
 body.t-pink  {--accent:#ff3daf;--ag:rgba(255,61,175,.65);--ad:rgba(255,61,175,.16);--ab:rgba(255,61,175,.3);--as2:rgba(255,61,175,.5);--af:rgba(255,61,175,.4);--sel:rgba(255,61,175,.12);--hb:rgba(255,61,175,.1);--hl:rgba(255,61,175,.35);}
 body.t-grey  {--accent:#9090b0;--ag:rgba(144,144,176,.6);--ad:rgba(144,144,176,.14);--ab:rgba(144,144,176,.26);--as2:rgba(144,144,176,.5);--af:rgba(144,144,176,.38);--sel:rgba(144,144,176,.11);--hb:rgba(144,144,176,.08);--hl:rgba(144,144,176,.28);}
@@ -16,7 +16,7 @@ body.t-cyan  {--accent:#00e5d4;--ag:rgba(0,229,212,.65);--ad:rgba(0,229,212,.14)
 body.t-red   {--accent:#cc1010;--ag:rgba(204,16,16,.7);--ad:rgba(204,16,16,.18);--ab:rgba(204,16,16,.32);--as2:rgba(204,16,16,.55);--af:rgba(204,16,16,.44);--sel:rgba(204,16,16,.15);--hb:rgba(204,16,16,.12);--hl:rgba(204,16,16,.38);}
 body.t-green {--accent:#39ff14;--ag:rgba(57,255,20,.65);--ad:rgba(57,255,20,.13);--ab:rgba(57,255,20,.28);--as2:rgba(57,255,20,.5);--af:rgba(57,255,20,.38);--sel:rgba(57,255,20,.09);--hb:rgba(57,255,20,.07);--hl:rgba(57,255,20,.28);}
 body.t-blue  {--accent:#3d9fff;--ag:rgba(61,159,255,.65);--ad:rgba(61,159,255,.14);--ab:rgba(61,159,255,.28);--as2:rgba(61,159,255,.5);--af:rgba(61,159,255,.38);--sel:rgba(61,159,255,.1);--hb:rgba(61,159,255,.08);--hl:rgba(61,159,255,.28);}
-body{display:flex;align-items:center;justify-content:center;padding:20px;}
+body{display:flex;align-items:center;justify-content:flex-end;padding-right:24px;}
 #menu{width:292px;background:#0d0d16;border-radius:10px;box-shadow:0 0 0 1px rgba(255,255,255,.055),0 2px 0 0 var(--accent),0 30px 80px rgba(0,0,0,.97);overflow:hidden;position:relative;}
 #menu::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);box-shadow:0 0 18px var(--ag);border-radius:50%;z-index:10;}
 .banner{position:relative;height:91px;overflow:hidden;background:#09090f;}
@@ -599,7 +599,6 @@ function handleKey(key){
       kpShowKey(key);
       return;
     }
-    if(key==='Escape')return;
     kpShowKey(key);
     return;
   }
@@ -642,8 +641,8 @@ function handleKey(key){
     if(key==='ArrowDown'){onlineItemIdx=Math.min(onlineItemIdx+1,vis.length-1);renderOnline();}
     else if(key==='ArrowUp'){onlineItemIdx=Math.max(onlineItemIdx-1,0);renderOnline();}
     else if(key==='Enter'||key==='ArrowRight'){activateOnlineItem();}
-    else if(key==='q'||key==='Q'){onlineTab=onlineTab===-1?2:onlineTab-1;onlineItemIdx=0;renderOnline();}
-    else if(key==='e'||key==='E'){onlineTab=onlineTab===2?-1:onlineTab+1;onlineItemIdx=0;renderOnline();}
+    else if(key==='q'||key==='Q'||key==='TabLeft'){onlineTab=(onlineTab===-1)?2:((onlineTab-1+3)%3);onlineItemIdx=0;renderOnline();}
+    else if(key==='e'||key==='E'||key==='TabRight'){onlineTab=(onlineTab===2)?-1:((onlineTab+1)%3);onlineItemIdx=0;renderOnline();}
     else if(key==='ArrowLeft'||key==='Backspace'){
       if(!isL){onlineTab=-1;onlineItemIdx=0;renderOnline();}
       else{onlineMode=false;render();}
@@ -672,7 +671,7 @@ function handleKey(key){
     if(stack.length>1){stack.pop();render();}
     else closeMenu();
   }
-  else if(key==='Escape'){closeMenu();}
+}
 }
 
 // ── LUA DUI MESSAGES ──
