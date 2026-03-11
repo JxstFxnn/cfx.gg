@@ -98,7 +98,7 @@ body{display:flex;align-items:center;justify-content:flex-end;padding-right:24px
 .n-bar{position:absolute;bottom:0;left:0;height:1.5px;width:100%;background:var(--accent);opacity:.5;}
 
 /* ── KEY PICKER ── */
-#kpo{position:fixed;inset:0;z-index:9998;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;pointer-events:all;background:rgba(0,0,0,.5);backdrop-filter:blur(3px);}
+#kpo{position:fixed;inset:0;z-index:9998;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;pointer-events:all;background:transparent;backdrop-filter:none;}
 #kpo.hidden{display:none;}
 .kpb{display:flex;flex-direction:column;align-items:center;gap:13px;background:#0a0a14;border:1px solid rgba(255,255,255,.08);border-top:2px solid var(--accent);border-radius:10px;padding:20px 38px 18px;box-shadow:0 20px 60px rgba(0,0,0,.97);animation:kpI .28s cubic-bezier(.22,1,.36,1);min-width:225px;text-align:center;}
 @keyframes kpI{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
@@ -111,7 +111,7 @@ body{display:flex;align-items:center;justify-content:flex-end;padding-right:24px
 .kpc span{color:var(--accent);font-weight:600;}
 .skip-btn{margin-top:2px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:4px 14px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.2);cursor:pointer;font-family:inherit;transition:all .15s;}
 .skip-btn:hover{color:rgba(255,255,255,.45);background:rgba(255,255,255,.06);}
-#kbpo{position:fixed;inset:0;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;background:rgba(0,0,0,.45);backdrop-filter:blur(2px);}
+#kbpo{position:fixed;inset:0;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;background:transparent;backdrop-filter:none;}
 #kbpo.vis{display:flex;}
 
 /* ── SHARED PANEL (keybind list + spectator list) ── */
@@ -550,7 +550,13 @@ function activateOnlineItem(){
   renderOnline();
 }
 
-function openMenu(){menuVisible=true;document.getElementById('menu').style.display='';render();}
+function openMenu(){
+  menuVisible=true;
+  stack=[{menu:MAIN,idx:0}];
+  onlineMode=false;
+  document.getElementById('menu').style.display='';
+  render();
+}
 function closeMenu(){menuVisible=false;document.getElementById('menu').style.display='none';stack=[{menu:MAIN,idx:0}];onlineMode=false;}
 
 // ── KEY PICKER ──────────────────────────────────────────────────
@@ -640,18 +646,11 @@ window.addEventListener('message',ev=>{
   if(d.type==='control'){handleKey(d.key);return;}
   if(d.type==='notify'){notify(d.title||'',d.msg||'');return;}
   if(d.type==='updatePlayers'){ONLINE_PLAYERS=d.players||[];if(onlineMode&&onlineTab===-1)renderOnline();return;}
+  if(d.type==='updateSpectators'){SPEC_PLAYERS.length=0;(d.players||[]).forEach(p=>SPEC_PLAYERS.push(p));renderSpecPanel();return;}
   if(d.type==='luaOpen'){kpState='done';openMenu();return;}
   if(d.type==='luaClose'){closeMenu();return;}
 });
 document.getElementById('otabs').querySelectorAll('.ot').forEach(el=>el.addEventListener('click',()=>{onlineTab=parseInt(el.dataset.tab);onlineItemIdx=0;renderOnline();}));
-
-window.addEventListener('message',ev=>{
-  const d=ev.data;if(!d?.type)return;
-  if(d.type==='control'){handleKey(d.key);return;}
-  if(d.type==='notify'){notify(d.title||'',d.msg||'');return;}
-  if(d.type==='updatePlayers'){ONLINE_PLAYERS=d.players||[];if(onlineMode&&onlineTab===-1)renderOnline();return;}
-  if(d.type==='updateSpectators'){SPEC_PLAYERS.length=0;(d.players||[]).forEach(p=>SPEC_PLAYERS.push(p));renderSpecPanel();return;}
-});
 
 // ── INIT ──────────────────────────────────────────────────────
 updateBanner();
