@@ -519,20 +519,20 @@ function activate(item,dir){
     toggleState[k]=!toggleState[k];const on=toggleState[k];
     if(item.name==='Keybind List'){document.getElementById('kl').classList.toggle('open',on);renderKBList();}
     if(item.name==='Spectator List'){document.getElementById('sl-panel').classList.toggle('open',on);renderSpecPanel();}
-    // Send to Lua
-    window.parent.postMessage({type:'action',action:'toggle',name:item.name,state:on},'*');
+    // Send to Lua via DUI
+    console.log('Toggle:',item.name,on);
     notify(item.name,on?'ON':'OFF');
   }else if(item.type==='button'){
     if(item.name==='Reset Menu'){stack=[{menu:MAIN,idx:0}];toggleState={};render();notify('Menu','Reset');return;}
-    // Send to Lua
-    window.parent.postMessage({type:'action',action:'button',name:item.name},'*');
+    // Send to Lua via DUI
+    console.log('Button:',item.name);
     notify(item.name,'Executed');
   }else if(item.type==='online'){onlineMode=true;onlineTab=-1;onlineItemIdx=0;}
   else if(item.type==='sub'){stack.push({menu:item.children,idx:0});}
   else if(item.type==='slider'){adjSl(item,dir);}
   else if(item.type==='cv'&&item.actions){
     if(dir===0){
-      window.parent.postMessage({type:'action',action:'spawn',name:item.val},'*');
+      console.log('Spawn:',item.val);
       notify('Spawn',item.val);
     }else cycleVal(item,dir);
   }else if(item.type==='value'&&item.actions){
@@ -583,7 +583,12 @@ function kpShowKey(key){
   document.getElementById('kpcf').style.display='';
   kpState='confirm';
 }
-function kpConfirm(){menuHotkey=kpPending;kpState='done';document.getElementById('kpo').classList.add('hidden');notify('Hotkey set',menuHotkey+' opens/closes menu');openMenu();}
+function kpConfirm(){
+  menuHotkey=kpPending;
+  kpState='done';
+  document.getElementById('kpo').classList.add('hidden');
+  notify('Hotkey set',menuHotkey+' to open menu');
+}
 function kpReset(){kpState='waiting';kpPending=null;const old=document.querySelector('#kpo .kpb .kpp');if(old)old.remove();document.getElementById('kpw').style.display='';document.getElementById('kpcf').style.display='none';}
 
 function openKbPicker(item){
