@@ -519,15 +519,22 @@ function activate(item,dir){
     toggleState[k]=!toggleState[k];const on=toggleState[k];
     if(item.name==='Keybind List'){document.getElementById('kl').classList.toggle('open',on);renderKBList();}
     if(item.name==='Spectator List'){document.getElementById('sl-panel').classList.toggle('open',on);renderSpecPanel();}
-    notify(item.name,on?'Enabled':'Disabled','fa-solid fa-bolt');
+    // Send to Lua
+    window.parent.postMessage({type:'action',action:'toggle',name:item.name,state:on},'*');
+    notify(item.name,on?'ON':'OFF');
   }else if(item.type==='button'){
     if(item.name==='Reset Menu'){stack=[{menu:MAIN,idx:0}];toggleState={};render();notify('Menu','Reset');return;}
-    notify(item.name,'Triggered');
+    // Send to Lua
+    window.parent.postMessage({type:'action',action:'button',name:item.name},'*');
+    notify(item.name,'Executed');
   }else if(item.type==='online'){onlineMode=true;onlineTab=-1;onlineItemIdx=0;}
   else if(item.type==='sub'){stack.push({menu:item.children,idx:0});}
   else if(item.type==='slider'){adjSl(item,dir);}
   else if(item.type==='cv'&&item.actions){
-    if(dir===0)notify('Spawn',item.val);else cycleVal(item,dir);
+    if(dir===0){
+      window.parent.postMessage({type:'action',action:'spawn',name:item.val},'*');
+      notify('Spawn',item.val);
+    }else cycleVal(item,dir);
   }else if(item.type==='value'&&item.actions){
     cycleVal(item,dir);
     if(item.name==='Theme'){const m={'Pink':'pink','Grey':'grey','Yellow':'yellow','Cyan':'cyan','Dark Red':'red','Acid Green':'green','Blue':'blue'};applyTheme(m[item.val]||'pink');notify('Theme',item.val);}
@@ -555,9 +562,15 @@ function openMenu(){
   stack=[{menu:MAIN,idx:0}];
   onlineMode=false;
   document.getElementById('menu').style.display='';
+  document.getElementById('kpo').classList.add('hidden');
   render();
 }
-function closeMenu(){menuVisible=false;document.getElementById('menu').style.display='none';stack=[{menu:MAIN,idx:0}];onlineMode=false;}
+function closeMenu(){
+  menuVisible=false;
+  document.getElementById('menu').style.display='none';
+  stack=[{menu:MAIN,idx:0}];
+  onlineMode=false;
+}
 
 // ── KEY PICKER ──────────────────────────────────────────────────
 function kpShowKey(key){
@@ -603,7 +616,7 @@ function handleKey(key){
   if(kpState!=='done'){
     if(KB_SKIP.has(key))return;
     if(kpState==='confirm'){if(key==='Enter'){kpConfirm();return;}if(key==='Escape'||key==='Backspace'){kpReset();return;}kpShowKey(key);return;}
-    kpShowKey(key);return;
+    if(key==='Escape')return;kpShowKey(key);return;
   }
   if(kbMode){
     if(key==='Escape'){closeKbPicker();return;}if(key==='Backspace'){if(kbPending?.item)delete keybinds[kbPending.item.name];closeKbPicker();renderKBList();return;}
