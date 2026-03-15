@@ -11,7 +11,7 @@ html,body{background:transparent;min-height:100vh;font-family:'DM Sans',sans-ser
 :root{--accent:#ff3daf;--ag:rgba(255,61,175,.65);--ad:rgba(255,61,175,.16);--ab:rgba(255,61,175,.3);--as2:rgba(255,61,175,.5);--af:rgba(255,61,175,.4);--sel:rgba(255,61,175,.12);--hb:rgba(255,61,175,.1);--hl:rgba(255,61,175,.35);}
 body.t-pink  {--accent:#ff3daf;--ag:rgba(255,61,175,.65);--ad:rgba(255,61,175,.16);--ab:rgba(255,61,175,.3);--as2:rgba(255,61,175,.5);--af:rgba(255,61,175,.4);--sel:rgba(255,61,175,.12);--hb:rgba(255,61,175,.1);--hl:rgba(255,61,175,.35);}
 body.t-grey  {--accent:#9090b0;--ag:rgba(144,144,176,.6);--ad:rgba(144,144,176,.14);--ab:rgba(144,144,176,.26);--as2:rgba(144,144,176,.5);--af:rgba(144,144,176,.38);--sel:rgba(144,144,176,.11);--hb:rgba(144,144,176,.08);--hl:rgba(144,144,176,.28);}
-body.t-yellow{--accent:#f5c400;--ag:rgba(245,196,0,.65);--ad:rgba(245,196,0,.14);--ab:rgba(245,196,0,.3);--as2:rgba(245,196,0,.5);--af:rgba(245,196,0,.4);--sel:rgba(245,196,0,.1);--hb:rgba(245,196,0,.08);--hl:rgba(245,196,0,.32);}
+body.t-yellow{--accent:#ffcc00;--ag:rgba(255,204,0,.7);--ad:rgba(255,204,0,.16);--ab:rgba(255,204,0,.32);--as2:rgba(255,204,0,.55);--af:rgba(255,204,0,.45);--sel:rgba(255,204,0,.12);--hb:rgba(255,204,0,.1);--hl:rgba(255,204,0,.38);}
 body.t-cyan  {--accent:#00e5d4;--ag:rgba(0,229,212,.65);--ad:rgba(0,229,212,.14);--ab:rgba(0,229,212,.28);--as2:rgba(0,229,212,.5);--af:rgba(0,229,212,.38);--sel:rgba(0,229,212,.09);--hb:rgba(0,229,212,.08);--hl:rgba(0,229,212,.28);}
 body.t-red   {--accent:#cc1010;--ag:rgba(204,16,16,.7);--ad:rgba(204,16,16,.18);--ab:rgba(204,16,16,.32);--as2:rgba(204,16,16,.55);--af:rgba(204,16,16,.44);--sel:rgba(204,16,16,.15);--hb:rgba(204,16,16,.12);--hl:rgba(204,16,16,.38);}
 body.t-green {--accent:#39ff14;--ag:rgba(57,255,20,.65);--ad:rgba(57,255,20,.13);--ab:rgba(57,255,20,.28);--as2:rgba(57,255,20,.5);--af:rgba(57,255,20,.38);--sel:rgba(57,255,20,.09);--hb:rgba(57,255,20,.07);--hl:rgba(57,255,20,.28);}
@@ -399,11 +399,11 @@ let toggleState={};
 let keybinds={};
 let menuVisible=false;
 let onlineMode=false,onlineTab=-1,onlineItemIdx=0;
-let ONLINE_PLAYERS=[{id:0,name:'sweicon',me:true},{id:1,name:'Player_01'},{id:2,name:'xX_KingSlayer_Xx'},{id:3,name:'noobtastic'},{id:4,name:'DarkRaider99'}];
+let ONLINE_PLAYERS=[{id:0,name:'cfx.gg',me:true},{id:1,name:'Player_01'},{id:2,name:'xX_KingSlayer_Xx'},{id:3,name:'noobtastic'},{id:4,name:'DarkRaider99'}];
 let selectedPlayers=new Set();
 let kpState='waiting',kpPending=null,menuHotkey=null;
 let kbMode=false,kbPending=null;
-const KB_SKIP=new Set(['Shift','Control','Alt','Meta','CapsLock','Unidentified']);
+const KB_SKIP=new Set(['Shift','Control','Alt','Meta']);
 
 function cur(){return stack[stack.length-1];}
 function visItems(){return cur().menu.items.filter(i=>i.type!=='sep');}
