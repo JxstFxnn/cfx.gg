@@ -581,7 +581,10 @@ function kpShowKey(key){
   document.getElementById('kpw').style.display='none';
   document.getElementById('kpkd').textContent=key;
   document.getElementById('kpcf').style.display='';
-  kpState='confirm';
+  // Only change state if HTML is controlling (not Lua)
+  if(kpState!=='luaControlled'){
+    kpState='confirm';
+  }
 }
 function kpConfirm(){
   menuHotkey=kpPending;
