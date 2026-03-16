@@ -665,22 +665,18 @@ window.addEventListener('message',ev=>{
   if(d.type==='notify'){notify(d.title||'',d.msg||'');return;}
   if(d.type==='updatePlayers'){ONLINE_PLAYERS=d.players||[];if(onlineMode&&onlineTab===-1)renderOnline();return;}
   if(d.type==='updateSpectators'){SPEC_PLAYERS.length=0;(d.players||[]).forEach(p=>SPEC_PLAYERS.push(p));renderSpecPanel();return;}
-  if(d.type==='kpDone'){
-    // Lua tells us keybind picker is done
-    menuHotkey=d.key;
+  if(d.type==='pickerDone'){
+    // Lua tells us picker is complete and gives us the hotkey
+    menuHotkey=d.hotkey;
     kpState='done';
     document.getElementById('kpo').classList.add('hidden');
     return;
   }
-  if(d.type==='luaOpen'){kpState='done';openMenu();return;}
+  if(d.type==='luaOpen'){openMenu();return;}
   if(d.type==='luaClose'){closeMenu();return;}
   if(d.type==='menuSync'){
-    // Lua sends us the navigation state
-    // We just update our display to match
     if(d.toggles){
-      Object.keys(d.toggles).forEach(k=>{
-        toggleState[k]=d.toggles[k];
-      });
+      Object.keys(d.toggles).forEach(k=>{toggleState[k]=d.toggles[k];});
     }
     render();
     return;
