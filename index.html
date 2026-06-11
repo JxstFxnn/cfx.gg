@@ -165,7 +165,6 @@ const sl = (n,v,mn,mx) => ({type:'slider', name:n, val:v, min:mn, max:mx});
 const sp = l => ({type:'sep', label:l});
 const vl = (n,val,a) => ({type:'value', name:n, val:val, actions:a});
 const cv = (n,a) => ({type:'cv', name:n, val:a[0], actions:a});
-
 const FP=`<i class="fa-solid fa-play fp-icon"></i>`;
 
 const CAT_ICONS={
@@ -188,7 +187,6 @@ let currentTheme='pink';
 function updateBanner(){const f=THEME_BANNERS[currentTheme];document.getElementById('banner-content').innerHTML=`<img class="banner-img" src="${f}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="banner-fallback" style="display:none">cfx.gg</div>`;}
 function applyTheme(n){currentTheme=n;document.body.className=THEME_CLASSES[n]||'t-pink';updateBanner();}
 
-// ── FULL GTA V VEHICLE LIST ──
 const MAIN={label:'Main Menu',items:[
   s('Self Options',[
     s('NoClip',[t('Enable NoClip'),sl('NoClip Speed',0.6,0.1,5.0),t('Invisible'),t('Full Invisible')]),
@@ -228,125 +226,23 @@ const MAIN={label:'Main Menu',items:[
   ],'fa-solid fa-gun'),
   s('Vehicle Options',[
     s('Spawner',[
-      cv('Sports',[
-        'Elegy RH8','Elegy Retro Custom','Sultan','Sultan RS','Sultan Classic','Banshee','Banshee 900R',
-        'Comet','Comet SR','Comet S2','Comet Safari','Feltzer','Futo','Futo GTX','Jester','Jester Classic',
-        'Jester RR','Kuruma','Kuruma Armoured','Lynx','Massacro','Massacro Racecar','Oracle','Oracle XS',
-        'Rapid GT','Rapid GT Classic','Schafter V12','Schafter LWB','Schwartzer','Stirling GT','Surano',
-        'Tampa','Tampa Drift','Tigon','Neon','Pariah','Itali RSX','Calico GTF','Imorgon','Cypher',
-        'Rebla GTS','Komoda','Growler','Ignus','Specter','Specter Custom','Streiter','Champion',
-      ]),
-      cv('Super',[
-        'Adder','Cheetah','Cheetah Classic','Entity XF','Entity XXR','Infernus','Infernus Classic',
-        'Osiris','T20','Turismo R','Zentorno','ETR1','FMJ','Nero','Nero Custom','Paragon R',
-        'Paragon R Armoured','Reaper','Tyrant','Vagner','Visione','X80 Proto','Deveste Eight',
-        'Emerus','Autarch','Krieger','Scramjet','S80RR','Tezeract','Thrax','Vigilante',
-        'Pfister 811','Voltic','Rocket Voltic','Cyclone','Tempesta','Zorrusso','Revolter',
-        'Ruston','Le Chiffre','Overflod Entity','GP1','GR1','Schlagen GT','DR1',
-      ]),
-      cv('Muscle',[
-        'Buffalo','Buffalo S','Buffalo STX','Dominator','Dominator GTT','Dominator ASP','Dominator Carbon',
-        'Dukes','Dukes O Death','Gauntlet','Gauntlet Classic','Gauntlet Hellfire','Sabre Turbo',
-        'Sabre Turbo Custom','Vigero','Vigero ZX','Virgo','Virgo Classic','Virgo Classic Custom',
-        'Impaler','Impaler LX','Faction','Faction Custom','Faction Custom Donk','Buccaneer',
-        'Buccaneer Custom','Chino','Chino Custom','Coquette BlackFin','Lurcher','Voodoo',
-        'Voodoo Custom','Hermes','Hustler','Ellie','Tulip','Tulip M-100','Yosemite','Yosemite Rancher',
-        'Picador','Slamvan','Slamvan Custom','Ruiner','Ruiner 2000','Ruiner 3',
-      ]),
-      cv('Sports Classics',[
-        'Coquette','Coquette Classic','JB 700','JB 700W','Monroe','Peyote','Peyote Custom','Peyote Gasser',
-        'Pigalle','Stinger','Stinger GT','Torero','Torero XO','Tornado','Tornado Custom','Tornado Rat Rod',
-        'Tornado Beater','Z-Type','Stirling GT','Turismo Classic','GT500','Manana','Manana Custom',
-        'Greenwood','Casco','Deluxo','Mamba','Michelli GT','Nebula Turbo','Retinue','Retinue Mk II',
-        'Swinger','Viseris','Zion','Zion Cabrio',
-      ]),
-      cv('Sedans',[
-        'Asea','Asea Custom','Asterope','Emperor','Emperor Beater','Fugitive','Glendale','Glendale Custom',
-        'Ingot','Intruder','Limo','Oracle XS','Premier','Primo','Primo Custom','Regina','Schafter','Schafter V12',
-        'Stafford','Stanier','Tailgater','Tailgater S','Washington',
-      ]),
-      cv('SUVs',[
-        'Baller','Baller LE','Baller LE LWB','Baller ST','Cavalcade','Cavalcade Mk2','Contender',
-        'FQ 2','Granger','Granger 3600LX','Huntley S','Landstalker','Landstalker XL','Mesa',
-        'Mesa Merryweather','Patriot','Patriot Mil-Spec','Patriot Stretch','Radius','Rebla GTS',
-        'Rocoto','Seminole','Seminole Frontier','Serrano','Toros','XLS','XLS Armoured',
-      ]),
-      cv('Off-Road',[
-        'BF400','Bifta','Blazer','Blazer Aqua','Blazer Lifeguard','Brawler','Brutus','Caracara',
-        'Caracara 4x4','Desert Raid','Dubsta','Dubsta 6x6','Dune Buggy','Dune FAV','Freecrawler',
-        'Insurgent','Insurgent Custom','Insurgent Pick-Up','Insurgent Pick-Up Custom','Kamacho',
-        'Marshall','Maverick','Nightshark','Outlaw','Ramp Buggy','RC Bandito','Rebel','Rebel Rusty',
-        'Riata','Sandking XL','Sandking SWB','Trophytruck','Trophytruck Flatbed','Vagrant','Verus',
-        'Winky','ZR380',
-      ]),
-      cv('Vans',[
-        'Bison','Bison Utility','Boxville','Boxville Gang','Brickade','Brickade 6x6','Burrito',
-        'Burrito Civilian','Burrito Gang','Festival Bus','Gang Burrito','Minivan','Minivan Custom',
-        'Moonbeam','Moonbeam Custom','Paradise','Pony','Rumpo','Rumpo Custom','Speedo','Speedo Custom',
-        'Stockade','Surfer','Surfer Rusty','Taco Van','Youga','Youga Classic','Youga Classic 4x4',
-      ]),
-      cv('Motorcycles',[
-        'Akuma','Bagger','Bati 801','Bati 801RR','BF400','Carbon RS','Chimera','Cliffhanger',
-        'Daemon','Daemon Custom','Defiler','Delinquent','Double T','Esskey','Faggio','Faggio Mod',
-        'Faggio Sport','FCR 1000','FCR 1000 Custom','Gargoyle','Hakuchou','Hakuchou Drift',
-        'Hexer','Innovation','Manchez','Manchez Scout','Manchez Scout C','Nemesis','Nightblade',
-        'Oppressor','Oppressor Mk II','Rat Bike','Ruffian','Sanchez','Sanchez Livery','Sanctus',
-        'Shotaro','Sovereign','Stryder','Thrust','Vader','Vindicator','Wolfsbane','Zombie Bobber',
-        'Zombie Chopper',
-      ]),
-      cv('Muscle (Low-End)',[
-        'Bobcat XL','BF Injection','Bodhi','Duneloader','Journey','Mesa','Rancher XL','Sadler',
-        'Sadler Rusty','Savage','Speeder','Stratum',
-      ]),
-      cv('Compacts',[
-        'Blista','Blista Kanjo','Brioso 300','Brioso R/A','Club','Dilettante','Dilettante Patrol',
-        'Issi','Issi Classic','Issi Sport','Panto','Prairie','Rhapsody',
-      ]),
-      cv('Coupes',[
-        'Cognoscenti Cabrio','Exemplar','F620','Felon','Felon GT','Jackal','Lycan','Previon',
-        'Sentinel','Sentinel Classic','Sentinel XS','Windsor','Windsor Drop','Zion','Zion Cabrio',
-      ]),
-      cv('Emergency',[
-        'Ambulance','Firetruk','FIB','FIB 2','Police','Police 2','Police 3','Police Rancher',
-        'Police Riot','Police Transporter','Policeb','Polmav','Predator','RCV','Sheriff',
-        'Sheriff 2','Stockade','Unmarked Cruiser',
-      ]),
-      cv('Military',[
-        'APC','Barrage','Chernobog','HVY Menacer','Half-Track','Insurgent Pick-Up Custom',
-        'Khanjali','Nightshark','Rhino','TM-02 Khanjali','Thruster','Stromberg',
-      ]),
-      cv('Helicopters',[
-        'Akula','Annihilator','Buzzard','Buzzard Attack','Cargobob','Cargobob Jetsam',
-        'FH-1 Hunter','Frogger','Frogger FIB','Havok','Howard NX-25','Maverick','Military Maverick',
-        'Savage','Sea Sparrow','Sparrow','Swift','Swift Deluxe','Supervolito','Supervolito Carbon',
-        'Volatus','Skylift','Police Maverick','Air Ambulance',
-      ]),
-      cv('Planes',[
-        'Besra','B-11 Strikeforce','Bombushka','Cargo Plane','Cuban 800','Dodo','Duster',
-        'Howard NX-25','Hydra','Jet','Jobuilt P-996 LAZER','LF-22 Starling','Luxor',
-        'Luxor Deluxe','Mammatus','Miljet','Nimbus','P-45 Nokota','Pyro','Rogue','Seabreeze',
-        'Shamal','Smuggler','Tula','Ultralight','V-65 Molotok','Velum','Velum 5-Seater',
-        'Vestra','Western Rogue','RM-10 Bombushka','Alpha-Z1','Avenger','Alkonost',
-      ]),
-      cv('Boats',[
-        'Avisa','Buckingham Tug','Dinghy','Dinghy 2-Seat','Dinghy 4-Seat','Dinghy Military',
-        'Jetmax','Kosatka','Longfin','Marquis','Police Predator','Seashark','Seashark Lifeguard',
-        'Seashark Sport','Speeder','Speeder 2','Squalo','Submersible','Submersible Kraken',
-        'Suntrap','Tiger Shark','Toro','Toro 2','Tropic','Tropic 2','Weaponized Dinghy',
-      ]),
-      cv('Utility',[
-        'APC','Armored Boxville','Blazer','Bulldozer','Caddy','Caddy 2','Caddy Military',
-        'Cutter','Docktug','Dump','Flatbed','Forklift','Handler','HVY Barracks','Industrial',
-        'Lawnmower','Mixer','Mixer 2','Mower','Packer','Rental Shuttle Bus','Ripley',
-        'Sadler','Scrap Truck','Tractor','Tractor 2','Tractor 3','Trailers','Trash Truck',
-        'Trolley Bus','Utility Truck','Wastelander',
-      ]),
+      cv('Sports',['Elegy RH8','Elegy Retro Custom','Sultan','Sultan RS','Sultan Classic','Banshee','Banshee 900R','Comet','Comet SR','Comet S2','Comet Safari','Feltzer','Futo','Futo GTX','Jester','Jester Classic','Jester RR','Kuruma','Kuruma Armoured','Lynx','Massacro','Massacro Racecar','Oracle','Oracle XS','Rapid GT','Rapid GT Classic','Schafter V12','Schafter LWB','Schwartzer','Stirling GT','Surano','Tampa','Tampa Drift','Tigon','Neon','Pariah','Itali RSX','Calico GTF','Imorgon','Cypher','Rebla GTS','Komoda','Growler','Ignus','Specter','Specter Custom','Streiter','Champion']),
+      cv('Super',['Adder','Cheetah','Cheetah Classic','Entity XF','Entity XXR','Infernus','Infernus Classic','Osiris','T20','Turismo R','Zentorno','ETR1','FMJ','Nero','Nero Custom','Paragon R','Paragon R Armoured','Reaper','Tyrant','Vagner','Visione','X80 Proto','Deveste Eight','Emerus','Autarch','Krieger','Scramjet','S80RR','Tezeract','Thrax','Vigilante','Pfister 811','Voltic','Rocket Voltic','Cyclone','Tempesta','Zorrusso','Revolter','Ruston','Le Chiffre','Overflod Entity','GP1','GR1','Schlagen GT','DR1']),
+      cv('Muscle',['Buffalo','Buffalo S','Buffalo STX','Dominator','Dominator GTT','Dominator ASP','Dominator Carbon','Dukes','Dukes O Death','Gauntlet','Gauntlet Classic','Gauntlet Hellfire','Sabre Turbo','Sabre Turbo Custom','Vigero','Vigero ZX','Virgo','Virgo Classic','Virgo Classic Custom','Impaler','Impaler LX','Faction','Faction Custom','Faction Custom Donk','Buccaneer','Buccaneer Custom','Chino','Chino Custom','Coquette BlackFin','Lurcher','Voodoo','Voodoo Custom','Hermes','Hustler','Ellie','Tulip','Tulip M-100','Yosemite','Yosemite Rancher','Picador','Slamvan','Slamvan Custom','Ruiner','Ruiner 2000','Ruiner 3']),
+      cv('Motorcycles',['Akuma','Bagger','Bati 801','Bati 801RR','BF400','Carbon RS','Chimera','Cliffhanger','Daemon','Daemon Custom','Defiler','Delinquent','Double T','Esskey','Faggio','Faggio Mod','Faggio Sport','FCR 1000','FCR 1000 Custom','Gargoyle','Hakuchou','Hakuchou Drift','Hexer','Innovation','Manchez','Manchez Scout','Manchez Scout C','Nemesis','Nightblade','Oppressor','Oppressor Mk II','Rat Bike','Ruffian','Sanchez','Sanchez Livery','Sanctus','Shotaro','Sovereign','Stryder','Thrust','Vader','Vindicator','Wolfsbane','Zombie Bobber','Zombie Chopper']),
+      cv('SUVs',['Baller','Baller LE','Baller LE LWB','Baller ST','Cavalcade','Cavalcade Mk2','Contender','FQ 2','Granger','Granger 3600LX','Huntley S','Landstalker','Landstalker XL','Mesa','Mesa Merryweather','Patriot','Patriot Mil-Spec','Patriot Stretch','Radius','Rebla GTS','Rocoto','Seminole','Seminole Frontier','Serrano','Toros','XLS','XLS Armoured']),
+      cv('Off-Road',['BF400','Bifta','Blazer','Blazer Aqua','Blazer Lifeguard','Brawler','Brutus','Caracara','Caracara 4x4','Desert Raid','Dubsta','Dubsta 6x6','Dune Buggy','Dune FAV','Freecrawler','Insurgent','Insurgent Custom','Insurgent Pick-Up','Insurgent Pick-Up Custom','Kamacho','Marshall','Maverick','Nightshark','Outlaw','Ramp Buggy','RC Bandito','Rebel','Rebel Rusty','Riata','Sandking XL','Sandking SWB','Trophytruck','Trophytruck Flatbed','Vagrant','Verus','Winky','ZR380']),
+      cv('Helicopters',['Akula','Annihilator','Buzzard','Buzzard Attack','Cargobob','Cargobob Jetsam','FH-1 Hunter','Frogger','Frogger FIB','Havok','Howard NX-25','Maverick','Military Maverick','Savage','Sea Sparrow','Sparrow','Swift','Swift Deluxe','Supervolito','Supervolito Carbon','Volatus','Skylift','Police Maverick','Air Ambulance']),
+      cv('Planes',['Besra','B-11 Strikeforce','Bombushka','Cargo Plane','Cuban 800','Dodo','Duster','Hydra','Jet','Jobuilt P-996 LAZER','LF-22 Starling','Luxor','Luxor Deluxe','Mammatus','Miljet','Nimbus','P-45 Nokota','Pyro','Rogue','Seabreeze','Shamal','Smuggler','Tula','Ultralight','V-65 Molotok','Velum','Velum 5-Seater','Vestra','Western Rogue','RM-10 Bombushka','Alpha-Z1','Avenger','Alkonost']),
+      cv('Boats',['Avisa','Buckingham Tug','Dinghy','Dinghy 2-Seat','Dinghy 4-Seat','Dinghy Military','Jetmax','Kosatka','Longfin','Marquis','Police Predator','Seashark','Seashark Lifeguard','Seashark Sport','Speeder','Speeder 2','Squalo','Submersible','Submersible Kraken','Suntrap','Tiger Shark','Toro','Toro 2','Tropic','Tropic 2','Weaponized Dinghy']),
+      cv('Emergency',['Ambulance','Firetruk','FIB','FIB 2','Police','Police 2','Police 3','Police Rancher','Police Riot','Police Transporter','Policeb','Polmav','Predator','RCV','Sheriff','Sheriff 2','Stockade','Unmarked Cruiser']),
+      cv('Military',['APC','Barrage','Chernobog','HVY Menacer','Half-Track','Insurgent Pick-Up Custom','Khanjali','Nightshark','Rhino','TM-02 Khanjali','Thruster','Stromberg']),
+      cv('Utility',['APC','Armored Boxville','Blazer','Bulldozer','Caddy','Caddy 2','Caddy Military','Cutter','Docktug','Dump','Flatbed','Forklift','Handler','HVY Barracks','Industrial','Lawnmower','Mixer','Mixer 2','Mower','Packer','Rental Shuttle Bus','Ripley','Sadler','Scrap Truck','Tractor','Tractor 2','Tractor 3','Trailers','Trash Truck','Trolley Bus','Utility Truck','Wastelander']),
       cv('Trains',['Freight Train','Metro Train','Tram']),
     ]),
     b('Repair'),b('Flip'),b('Delete'),b('Change Plate'),
     t('Godmode'),t('Boost'),t('Jump'),t('Auto Pilot'),t('Lock / Unlock'),t('Force Engine On'),t('Horn Boost'),
     sl('Horn Boost Speed',20,5,100),
-    s('Radar',[b('Vehicle List')]),
     s('Tuning',[
       sp('Performance'),
       vl('Engine','Stock',['Stock','EMS 1','EMS 2','EMS 3','EMS 4']),
@@ -358,10 +254,6 @@ const MAIN={label:'Main Menu',items:[
       vl('Window Tint','None',['None','Pure Black','Dark Smoke','Light Smoke','Stock','Limo','Green']),
       vl('Neon','Off',['Off','Front','Back','Left','Right','All']),
       b('Apply Max Performance'),b('Apply Full Visual'),
-    ]),
-    s('Troll',[
-      b('Force Drag Out'),t('Physgun'),t('Kick Mode'),t('Pit Mode'),t('Tow Truck'),
-      t('Rainbow'),t('Carry'),sl('Throw Force',10,1,50),sl('Carry Distance',3,1,15),sl('Control Speed',1.0,0.5,3.0),b('Spawn RC Car'),
     ]),
   ],'fa-solid fa-car-side'),
   s('Trigger Options',[
@@ -390,18 +282,19 @@ const ONLINE_TABS={
   Vehicle:[b('Steal Vehicle'),b('Kick Driver'),b('Kick Driver #2'),b('Delete Vehicle'),b('Freeze Vehicle'),b('Glitch Vehicle'),b('TP to Void'),b('NPC Hijack'),b('Launch Vehicle'),b('Break Vehicle')],
 };
 const OTN=['Safe','Risk','Vehicle'];
+const SPEC_PLAYERS=[];
 
-// Spectator demo players
-const SPEC_PLAYERS=[{name:'Player 1'},{name:'Player 2'},{name:'Player 3'}];
-
+// ── STATE ──
 let stack=[{menu:MAIN,idx:0}];
 let toggleState={};
 let keybinds={};
 let menuVisible=false;
 let onlineMode=false,onlineTab=-1,onlineItemIdx=0;
-let ONLINE_PLAYERS=[{id:0,name:'cfx.gg',me:true},{id:1,name:'Player_01'},{id:2,name:'xX_KingSlayer_Xx'},{id:3,name:'noobtastic'},{id:4,name:'DarkRaider99'}];
+let ONLINE_PLAYERS=[{id:0,name:'cfx.gg',me:true}];
 let selectedPlayers=new Set();
-let kpState='luaControlled',kpPending=null,menuHotkey=null;
+// kpDone: false = Picker aktiv, true = Hotkey gewählt
+let kpDone=false;
+let kpShownKey=null;
 let kbMode=false,kbPending=null;
 const KB_SKIP=new Set(['Shift','Control','Alt','Meta']);
 
@@ -414,8 +307,8 @@ function spct(i){return((i.val-i.min)/(i.max-i.min))*100;}
 function sfmt(i){return parseFloat(i.val).toFixed(sstp(i)<1?1:0);}
 function adjSl(it,d){const ss=sstp(it);it.val=Math.min(it.max,Math.max(it.min,parseFloat((it.val+d*ss).toFixed(10))));}
 
-// ── NOTIFY (clean) ──────────────────────────────────────────
-function notify(title,msg,icon){
+// ── NOTIFY ──
+function notify(title,msg){
   const c=document.getElementById('nc');
   while(c.children.length>=3)c.firstChild.remove();
   const nd=document.createElement('div');nd.className='notify';
@@ -426,14 +319,39 @@ function notify(title,msg,icon){
   setTimeout(()=>{nd.style.opacity='0';nd.style.transition='opacity .18s';setTimeout(()=>nd.remove(),200);},3000);
 }
 
-// ── SPECTATOR PANEL ──────────────────────────────────────────
+// ── SEND TO LUA ──
+// FiveM DUI: HTML->Lua geht via fetch mit resource-name als host
+function sendToLua(data){
+  try{ fetch('https://cfx-gg-menu/dui:message',{method:'POST',body:JSON.stringify(data)}); }catch(e){}
+}
+
+// ── KEY PICKER anzeigen (Lua schickt den Key-Namen) ──
+function pickerShowKey(key){
+  kpShownKey=key;
+  const box=document.querySelector('#kpo .kpb');
+  const old=box.querySelector('.kpp'); if(old)old.remove();
+  const pill=document.createElement('span');pill.className='kpp';pill.textContent=key;
+  box.insertBefore(pill,document.getElementById('kpcf'));
+  document.getElementById('kpw').style.display='none';
+  document.getElementById('kpkd').textContent=key;
+  document.getElementById('kpcf').style.display='';
+}
+
+// ── PICKER FERTIG (Lua bestätigt) ──
+function pickerDone(hotkey){
+  kpDone=true;
+  document.getElementById('kpo').classList.add('hidden');
+  openMenu();
+}
+
+// ── SPECTATOR PANEL ──
 function renderSpecPanel(){
-  const el=document.getElementById('sl-items'); if(!el)return;
+  const el=document.getElementById('sl-items');if(!el)return;
   if(!SPEC_PLAYERS.length){el.innerHTML='<div class="pe">No spectators</div>';return;}
   el.innerHTML=SPEC_PLAYERS.map(p=>`<div class="pi"><span class="pin">${p.name}</span></div>`).join('');
 }
 
-// ── RENDER ONLINE ──────────────────────────────────────────────
+// ── RENDER ONLINE ──
 function renderOnline(){
   document.getElementById('otabs').classList.add('vis');
   document.getElementById('otabs').querySelectorAll('.ot').forEach(ot=>ot.classList.toggle('act',parseInt(ot.dataset.tab)===onlineTab));
@@ -452,7 +370,7 @@ function renderOnline(){
     const tn=OTN[onlineTab];
     document.getElementById('bc').textContent='Online — '+tn;
     document.getElementById('bc-icon').className='bc-icon fa-solid fa-globe';
-    const items=ONLINE_TABS[tn]; let vi=0;
+    const items=ONLINE_TABS[tn];let vi=0;
     items.forEach(item=>{
       if(item.type==='sep'){html+=`<div class="sep">${item.label}</div>`;return;}
       const mi=vi++,sel=mi===onlineItemIdx,k='online||'+tn+'||'+item.name,on=toggleState[k]||false;
@@ -466,7 +384,7 @@ function renderOnline(){
   attachClickHandlers();
 }
 
-// ── RENDER MAIN ────────────────────────────────────────────────
+// ── RENDER MAIN ──
 function render(){
   if(!menuVisible)return;
   if(onlineMode){renderOnline();return;}
@@ -511,7 +429,7 @@ function attachClickHandlers(){
   });
 }
 
-// ── ACTIVATE ───────────────────────────────────────────────────
+// ── ACTIVATE ──
 function activate(item,dir){
   if(!item)return;
   const k=makeKey(item);
@@ -529,14 +447,12 @@ function activate(item,dir){
   else if(item.type==='sub'){stack.push({menu:item.children,idx:0});}
   else if(item.type==='slider'){adjSl(item,dir);sendToLua({type:'slider',name:item.name,val:item.val});}
   else if(item.type==='cv'&&item.actions){
-    if(dir===0){
-      console.log('Spawn:',item.val);
-      notify('Spawn',item.val);
-    }else cycleVal(item,dir);
+    if(dir===0){sendToLua({type:'button',name:item.val});notify('Spawn',item.val);}
+    else cycleVal(item,dir);
   }else if(item.type==='value'&&item.actions){
     cycleVal(item,dir);
     if(item.name==='Theme'){const m={'Pink':'pink','Grey':'grey','Yellow':'yellow','Cyan':'cyan','Dark Red':'red','Acid Green':'green','Blue':'blue'};applyTheme(m[item.val]||'pink');notify('Theme',item.val);}
-    if(item.name==='Menu Hotkey'){menuHotkey=item.val;notify('Hotkey',item.val);}
+    sendToLua({type:'value',name:item.name,val:item.val});
   }
   render();
 }
@@ -550,7 +466,7 @@ function activateOnlineItem(){
     const tn=OTN[onlineTab],vis=ONLINE_TABS[tn].filter(i=>i.type!=='sep'),item=vis[onlineItemIdx];if(!item)return;
     const k='online||'+tn+'||'+item.name;
     if(item.type==='toggle'){toggleState[k]=!toggleState[k];const on2=toggleState[k];sendToLua({type:'toggle',name:item.name,state:on2});notify(item.name,on2?'Enabled':'Disabled');}
-    else{const t=[...selectedPlayers].join(', ')||'no selection';sendToLua({type:'button',name:item.name});notify(item.name,'→ '+t);}
+    else{sendToLua({type:'button',name:item.name});notify(item.name,'Executed');}
   }
   renderOnline();
 }
@@ -570,31 +486,7 @@ function closeMenu(){
   onlineMode=false;
 }
 
-// ── KEY PICKER ──────────────────────────────────────────────────
-function kpShowKey(key){
-  kpPending=key;
-  const box=document.querySelector('#kpo .kpb'),old=box.querySelector('.kpp');if(old)old.remove();
-  const pill=document.createElement('span');pill.className='kpp';pill.textContent=key;
-  box.insertBefore(pill,document.getElementById('kpcf'));
-  document.getElementById('kpw').style.display='none';
-  document.getElementById('kpkd').textContent=key;
-  document.getElementById('kpcf').style.display='';
-  // Only change state if HTML is controlling (not Lua)
-  if(kpState!=='luaControlled'){
-    kpState='confirm';
-  }
-}
-function kpConfirm(){
-  menuHotkey=kpPending;
-  kpState='done';
-  document.getElementById('kpo').classList.add('hidden');
-  // Lua informieren welchen Key der User gewählt hat
-  sendToLua({type:'hotkeySelected',key:menuHotkey});
-  notify('Hotkey',menuHotkey+' — Menü öffnen/schließen');
-  openMenu();
-}
-function kpReset(){kpState='waiting';kpPending=null;const old=document.querySelector('#kpo .kpb .kpp');if(old)old.remove();document.getElementById('kpw').style.display='';document.getElementById('kpcf').style.display='none';}
-
+// ── KEYBIND LIST ──
 function openKbPicker(item){
   kbMode=true;kbPending={item,key:null};
   document.getElementById('kbpn').textContent=item.name;
@@ -620,38 +512,17 @@ function renderKBList(){
   }).join('');
 }
 
-// ── SEND TO LUA VIA DUI ──────────────────────────────────────────
-function sendToLua(data){
-  try{
-    window.invokeNative('sendMessage', JSON.stringify(data));
-  }catch(e){}
-  // FiveM DUI -> Lua via NuiCallback (fetch endpoint = resource name + callback name)
-  const endpoint = data.type==='hotkeySelected' ? 'hotkeySelected' : 'dui:message';
-  try{
-    fetch('https://cfx-gg-menu/'+endpoint,{method:'POST',body:JSON.stringify(data)});
-  }catch(e){}
-}
-
-// ── HANDLE KEY ──────────────────────────────────────────────────
+// ── MAIN KEY HANDLER ──
+// Wird aufgerufen von: window.message (Lua via SendDuiMessage/SK)
 function handleKey(key){
-  // LUA CONTROLS KEYBIND PICKER - HTML only displays
-  // Key Picker wird von Lua gesteuert - HTML zeigt nur an
-  if(kpState==='luaControlled'){
-    // SK() von Lua schickt den Key rein - nur visuell anzeigen
-    if(key && !['Enter','Backspace','Escape'].includes(key)){
-      kpPending=key;
-      const box=document.querySelector('#kpo .kpb'),old2=box.querySelector('.kpp');
-      if(old2)old2.remove();
-      const pill=document.createElement('span');pill.className='kpp';pill.textContent=key;
-      box.insertBefore(pill,document.getElementById('kpcf'));
-      document.getElementById('kpw').style.display='none';
-      document.getElementById('kpkd').textContent=key;
-      document.getElementById('kpcf').style.display='';
-    }
-    return; // Lua übernimmt alles - HTML macht nichts
+  // Picker aktiv: Lua schickt Key-Namen zum Anzeigen und pickerDone zum Abschliessen
+  // HTML macht hier NICHTS ausser anzeigen - Lua steuert komplett
+  if(!kpDone){
+    // Key nur anzeigen wenn Lua ihn schickt (passiert in pickerShowKey)
+    return;
   }
-  
-  // Item keybind picker (F6 on items)
+
+  // Keybind-Picker (F6 auf Items)
   if(kbMode){
     if(key==='Escape'){closeKbPicker();return;}
     if(key==='Backspace'){if(kbPending?.item)delete keybinds[kbPending.item.name];closeKbPicker();renderKBList();return;}
@@ -666,87 +537,90 @@ function handleKey(key){
     document.getElementById('kbpcf').style.display='';
     return;
   }
-  
-  // Menu hotkey toggle (handled by Lua, this is just fallback)
-  if(menuHotkey&&key===menuHotkey){
-    if(menuVisible)closeMenu();else openMenu();
-    return;
-  }
-  
+
   if(!menuVisible)return;
+
   if(onlineMode){
     const isL=onlineTab===-1,vis=isL?ONLINE_PLAYERS:ONLINE_TABS[OTN[onlineTab]].filter(i=>i.type!=='sep');
     if(key==='ArrowDown'){onlineItemIdx=Math.min(onlineItemIdx+1,vis.length-1);renderOnline();}
     else if(key==='ArrowUp'){onlineItemIdx=Math.max(onlineItemIdx-1,0);renderOnline();}
     else if(key==='Enter'||key==='ArrowRight'){activateOnlineItem();}
-    else if(key==='q'||key==='Q'||key==='TabLeft'){onlineTab=onlineTab===-1?2:onlineTab-1;onlineItemIdx=0;renderOnline();}
-    else if(key==='e'||key==='E'||key==='TabRight'){onlineTab=onlineTab===2?-1:onlineTab+1;onlineItemIdx=0;renderOnline();}
-    else if(key==='ArrowLeft'||key==='Backspace'){if(!isL){onlineTab=-1;onlineItemIdx=0;renderOnline();}else{onlineMode=false;render();}}
+    else if(key==='Q'||key==='E'){
+      if(key==='Q')onlineTab=onlineTab===-1?2:onlineTab-1;
+      else onlineTab=onlineTab===2?-1:onlineTab+1;
+      onlineItemIdx=0;renderOnline();
+    }
+    else if(key==='ArrowLeft'||key==='Backspace'){
+      if(!isL){onlineTab=-1;onlineItemIdx=0;renderOnline();}
+      else{onlineMode=false;render();}
+    }
+    else if(key==='Escape'){closeMenu();}
     return;
   }
+
   const vis=visItems(),st=cur(),it=vis[st.idx];
   if(key==='F6'&&it&&it.type!=='sep'&&it.type!=='sub'&&it.type!=='online'&&it.type!=='cv'){openKbPicker(it);return;}
   if(key==='ArrowDown'){cur().idx=Math.min(st.idx+1,vis.length-1);render();}
   else if(key==='ArrowUp'){cur().idx=Math.max(st.idx-1,0);render();}
   else if(key==='Enter'){if(it?.type==='cv'){activate(it,0);}else activate(it,1);}
-  else if(key==='ArrowRight'){if(it?.type==='cv'){cycleVal(it,1);render();}else if(it?.type==='slider'){adjSl(it,1);sendToLua({type:'slider',name:it.name,val:it.val});render();}else activate(it,1);}
+  else if(key==='ArrowRight'){
+    if(it?.type==='slider'){adjSl(it,1);sendToLua({type:'slider',name:it.name,val:it.val});render();}
+    else if(it?.type==='cv'){cycleVal(it,1);render();}
+    else activate(it,1);
+  }
   else if(key==='ArrowLeft'){
-    if(it?.type==='cv'){cycleVal(it,-1);render();}
-    else if(it?.type==='slider'){adjSl(it,-1);render();}
-    else if(it?.type==='value'&&it.actions){cycleVal(it,-1);if(it.name==='Theme'){const m={'Pink':'pink','Grey':'grey','Yellow':'yellow','Cyan':'cyan','Dark Red':'red','Acid Green':'green','Blue':'blue'};applyTheme(m[it.val]||'pink');}if(it.name==='Menu Hotkey'){menuHotkey=it.val;}render();}
+    if(it?.type==='slider'){adjSl(it,-1);sendToLua({type:'slider',name:it.name,val:it.val});render();}
+    else if(it?.type==='cv'){cycleVal(it,-1);render();}
+    else if(it?.type==='value'&&it.actions){
+      cycleVal(it,-1);
+      if(it.name==='Theme'){const m={'Pink':'pink','Grey':'grey','Yellow':'yellow','Cyan':'cyan','Dark Red':'red','Acid Green':'green','Blue':'blue'};applyTheme(m[it.val]||'pink');}
+      sendToLua({type:'value',name:it.name,val:it.val});render();
+    }
     else if(stack.length>1){stack.pop();render();}
   }
   else if(key==='Backspace'){if(stack.length>1){stack.pop();render();}else closeMenu();}
   else if(key==='Escape'){closeMenu();}
 }
 
+// ── MESSAGES VON LUA (SendDuiMessage -> window message event) ──
 window.addEventListener('message',ev=>{
-  const d=ev.data;if(!d?.type)return;
-  if(d.type==='control'){handleKey(d.key);return;}
+  const d=ev.data;if(!d||!d.type)return;
+
+  if(d.type==='control'){
+    // Lua schickt Tastennamen: ArrowDown, ArrowUp, Enter, Backspace, Escape, Q, E
+    handleKey(d.key);
+    return;
+  }
   if(d.type==='notify'){notify(d.title||'',d.msg||'');return;}
   if(d.type==='updatePlayers'){ONLINE_PLAYERS=d.players||[];if(onlineMode&&onlineTab===-1)renderOnline();return;}
   if(d.type==='updateSpectators'){SPEC_PLAYERS.length=0;(d.players||[]).forEach(p=>SPEC_PLAYERS.push(p));renderSpecPanel();return;}
-  if(d.type==='pickerDone'){
-    menuHotkey=d.hotkey;
-    kpState='done';
-    document.getElementById('kpo').classList.add('hidden');
-    openMenu();
+
+  // Lua: Key Picker zeigt gewählten Key an
+  if(d.type==='pickerShowKey'){
+    pickerShowKey(d.key);
     return;
   }
+  // Lua: Picker abgeschlossen, Menü öffnen
+  if(d.type==='pickerDone'){
+    pickerDone(d.hotkey);
+    return;
+  }
+
   if(d.type==='luaOpen'){openMenu();return;}
   if(d.type==='luaClose'){closeMenu();return;}
-  if(d.type==='menuSync'){
-    if(d.toggles){
-      Object.keys(d.toggles).forEach(k=>{toggleState[k]=d.toggles[k];});
-    }
-    render();
-    return;
-  }
 });
+
 document.getElementById('otabs').querySelectorAll('.ot').forEach(el=>el.addEventListener('click',()=>{onlineTab=parseInt(el.dataset.tab);onlineItemIdx=0;renderOnline();}));
 
-// ── INIT ──────────────────────────────────────────────────────
+// ── INIT ──
 updateBanner();
 document.getElementById('skip-kp').addEventListener('click',()=>{
-  menuHotkey='F4';kpState='done';
+  kpDone=true;
   document.getElementById('kpo').classList.add('hidden');
-  sendToLua({type:'hotkeySelected',key:'F4'});
+  // Lua informieren dass F4 gewählt wurde
+  sendToLua({type:'skipPicker'});
   notify('Hotkey','F4 — Menü öffnen/schließen');
   openMenu();
-});
-
-// ── GLOBALER KEYBOARD LISTENER (fehlte komplett) ──
-document.addEventListener('keydown',function(e){
-  // Lua sendet auch Keys via message - hier fangen wir direkte Browser-Keys ab
-  // (z.B. wenn das DUI im Browser getestet wird oder Lua-Weiterleitung fehlt)
-  const key=e.key;
-  // Verhindere Browser-Standardaktion bei Navigationstasten wenn Menü offen
-  if(menuVisible||kpState==='waiting'||kpState==='confirm'||kbMode){
-    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Enter','Backspace','Escape'].includes(key)){
-      e.preventDefault();
-    }
-  }
-  handleKey(key);
 });
 </script>
 </body>
