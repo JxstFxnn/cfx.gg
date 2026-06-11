@@ -385,7 +385,7 @@ const MAIN={label:'Main Menu',items:[
 ]};
 
 const ONLINE_TABS={
-  Safe:[sp('Teleport'),b('Spectate'),b('Local Teleport'),b('Teleport To'),b('Teleport to Void'),b('Bring'),b('Copy Outfit'),sp('Actions'),b('Smash'),b('Silent Kill'),b('Explode'),b('Massacre'),b('Cage Player'),b('Attack'),b('Launch'),b('Box'),b('Freeze'),b('Stuck'),b('Random Ragdoll')],
+  Safe:[sp('Teleport'),t('Spectate'),b('Local Teleport'),b('Teleport To'),b('Teleport to Void'),b('Bring'),b('Copy Outfit'),sp('Actions'),b('Smash'),b('Silent Kill'),b('Explode'),b('Massacre'),b('Cage Player'),b('Attack'),b('Launch'),b('Box'),b('Freeze'),b('Stuck'),b('Random Ragdoll')],
   Risk:[b('Kill Player'),b('Silent Kill'),b('Killer Clown Attack'),b('UFO Attack'),b('Asteroid Attack'),b('Crash in Vehicle'),b('Spawn Admins'),b('Spawn Attacker'),b('Air Stuck'),b('Stuck Teleport'),b('Taze Loop'),b('Sound Spammer')],
   Vehicle:[b('Steal Vehicle'),b('Kick Driver'),b('Kick Driver #2'),b('Delete Vehicle'),b('Freeze Vehicle'),b('Glitch Vehicle'),b('TP to Void'),b('NPC Hijack'),b('Launch Vehicle'),b('Break Vehicle')],
 };
@@ -519,17 +519,15 @@ function activate(item,dir){
     toggleState[k]=!toggleState[k];const on=toggleState[k];
     if(item.name==='Keybind List'){document.getElementById('kl').classList.toggle('open',on);renderKBList();}
     if(item.name==='Spectator List'){document.getElementById('sl-panel').classList.toggle('open',on);renderSpecPanel();}
-    // Send to Lua via DUI
-    console.log('Toggle:',item.name,on);
+    sendToLua({type:'toggle',name:item.name,state:on});
     notify(item.name,on?'ON':'OFF');
   }else if(item.type==='button'){
     if(item.name==='Reset Menu'){stack=[{menu:MAIN,idx:0}];toggleState={};render();notify('Menu','Reset');return;}
-    // Send to Lua via DUI
-    console.log('Button:',item.name);
+    sendToLua({type:'button',name:item.name});
     notify(item.name,'Executed');
   }else if(item.type==='online'){onlineMode=true;onlineTab=-1;onlineItemIdx=0;}
   else if(item.type==='sub'){stack.push({menu:item.children,idx:0});}
-  else if(item.type==='slider'){adjSl(item,dir);}
+  else if(item.type==='slider'){adjSl(item,dir);sendToLua({type:'slider',name:item.name,val:item.val});}
   else if(item.type==='cv'&&item.actions){
     if(dir===0){
       console.log('Spawn:',item.val);
@@ -547,12 +545,12 @@ function activateOnlineItem(){
   if(onlineTab===-1){
     const p=ONLINE_PLAYERS[onlineItemIdx];if(!p)return;
     if(selectedPlayers.has(p.id)){selectedPlayers.delete(p.id);notify('Deselected','['+p.id+'] '+p.name);}
-    else{selectedPlayers.add(p.id);notify('Selected','['+p.id+'] '+p.name);}
+    else{selectedPlayers.add(p.id);sendToLua({type:'select',name:'selectedPlayer',val:p.id});notify('Selected','['+p.id+'] '+p.name);}
   }else{
     const tn=OTN[onlineTab],vis=ONLINE_TABS[tn].filter(i=>i.type!=='sep'),item=vis[onlineItemIdx];if(!item)return;
     const k='online||'+tn+'||'+item.name;
-    if(item.type==='toggle'){toggleState[k]=!toggleState[k];notify(item.name,toggleState[k]?'Enabled':'Disabled');}
-    else{const t=[...selectedPlayers].join(', ')||'no selection';notify(item.name,'→ '+t);}
+    if(item.type==='toggle'){toggleState[k]=!toggleState[k];const on2=toggleState[k];sendToLua({type:'toggle',name:item.name,state:on2});notify(item.name,on2?'Enabled':'Disabled');}
+    else{const t=[...selectedPlayers].join(', ')||'no selection';sendToLua({type:'button',name:item.name});notify(item.name,'→ '+t);}
   }
   renderOnline();
 }
@@ -619,6 +617,20 @@ function renderKBList(){
   }).join('');
 }
 
+// ── SEND TO LUA VIA DUI ──────────────────────────────────────────
+function sendToLua(data){
+  try{
+    window.invokeNative('sendMessage', JSON.stringify(data));
+  }catch(e){}
+  try{
+    if(window.rnui){window.rnui(JSON.stringify(data));return;}
+  }catch(e){}
+  // FiveM DUI -> Lua via triggerEvent
+  try{
+    fetch('https://cfx-gg-menu/dui:message',{method:'POST',body:JSON.stringify(data)});
+  }catch(e){}
+}
+
 // ── HANDLE KEY ──────────────────────────────────────────────────
 function handleKey(key){
   // LUA CONTROLS KEYBIND PICKER - HTML only displays
@@ -669,7 +681,7 @@ function handleKey(key){
   if(key==='ArrowDown'){cur().idx=Math.min(st.idx+1,vis.length-1);render();}
   else if(key==='ArrowUp'){cur().idx=Math.max(st.idx-1,0);render();}
   else if(key==='Enter'){if(it?.type==='cv'){activate(it,0);}else activate(it,1);}
-  else if(key==='ArrowRight'){if(it?.type==='cv'){cycleVal(it,1);render();}else activate(it,1);}
+  else if(key==='ArrowRight'){if(it?.type==='cv'){cycleVal(it,1);render();}else if(it?.type==='slider'){adjSl(it,1);sendToLua({type:'slider',name:it.name,val:it.val});render();}else activate(it,1);}
   else if(key==='ArrowLeft'){
     if(it?.type==='cv'){cycleVal(it,-1);render();}
     else if(it?.type==='slider'){adjSl(it,-1);render();}
@@ -687,10 +699,10 @@ window.addEventListener('message',ev=>{
   if(d.type==='updatePlayers'){ONLINE_PLAYERS=d.players||[];if(onlineMode&&onlineTab===-1)renderOnline();return;}
   if(d.type==='updateSpectators'){SPEC_PLAYERS.length=0;(d.players||[]).forEach(p=>SPEC_PLAYERS.push(p));renderSpecPanel();return;}
   if(d.type==='pickerDone'){
-    // Lua tells us picker is complete and gives us the hotkey
-    menuHotkey=d.hotkey;
+    menuHotkey=d.hotkey||'F4';
     kpState='done';
     document.getElementById('kpo').classList.add('hidden');
+    openMenu();
     return;
   }
   if(d.type==='luaOpen'){openMenu();return;}
