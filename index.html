@@ -401,7 +401,7 @@ let menuVisible=false;
 let onlineMode=false,onlineTab=-1,onlineItemIdx=0;
 let ONLINE_PLAYERS=[{id:0,name:'cfx.gg',me:true},{id:1,name:'Player_01'},{id:2,name:'xX_KingSlayer_Xx'},{id:3,name:'noobtastic'},{id:4,name:'DarkRaider99'}];
 let selectedPlayers=new Set();
-let kpState='waiting',kpPending=null,menuHotkey=null;
+let kpState='luaControlled',kpPending=null,menuHotkey=null;
 let kbMode=false,kbPending=null;
 const KB_SKIP=new Set(['Shift','Control','Alt','Meta']);
 
@@ -635,20 +635,22 @@ function sendToLua(data){
 // ── HANDLE KEY ──────────────────────────────────────────────────
 function handleKey(key){
   // LUA CONTROLS KEYBIND PICKER - HTML only displays
-  // (luaControlled state removed - picker is always HTML-controlled)
+  // Key Picker wird von Lua gesteuert - HTML zeigt nur an
+  if(kpState==='luaControlled'){
+    // SK() von Lua schickt den Key rein - nur visuell anzeigen
+    if(key && !['Enter','Backspace','Escape'].includes(key)){
+      kpPending=key;
+      const box=document.querySelector('#kpo .kpb'),old2=box.querySelector('.kpp');
+      if(old2)old2.remove();
+      const pill=document.createElement('span');pill.className='kpp';pill.textContent=key;
+      box.insertBefore(pill,document.getElementById('kpcf'));
+      document.getElementById('kpw').style.display='none';
+      document.getElementById('kpkd').textContent=key;
+      document.getElementById('kpcf').style.display='';
+    }
+    return; // Lua übernimmt alles - HTML macht nichts
+  }
   
-  // Key Picker (Hotkey setzen am Anfang)
-  if(kpState==='waiting'){
-    if(KB_SKIP.has(key)||key==='Escape')return;
-    kpShowKey(key);
-    return;
-  }
-  if(kpState==='confirm'){
-    if(key==='Enter'){kpConfirm();return;}
-    if(key==='Escape'){kpReset();return;}
-    return;
-  }
-
   // Item keybind picker (F6 on items)
   if(kbMode){
     if(key==='Escape'){closeKbPicker();return;}
@@ -705,10 +707,10 @@ window.addEventListener('message',ev=>{
   if(d.type==='updatePlayers'){ONLINE_PLAYERS=d.players||[];if(onlineMode&&onlineTab===-1)renderOnline();return;}
   if(d.type==='updateSpectators'){SPEC_PLAYERS.length=0;(d.players||[]).forEach(p=>SPEC_PLAYERS.push(p));renderSpecPanel();return;}
   if(d.type==='pickerDone'){
-    // Wird von Lua nicht mehr gesendet, nur als Fallback
-    menuHotkey=d.hotkey||'F4';
+    menuHotkey=d.hotkey;
     kpState='done';
     document.getElementById('kpo').classList.add('hidden');
+    openMenu();
     return;
   }
   if(d.type==='luaOpen'){openMenu();return;}
