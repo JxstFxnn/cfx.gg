@@ -401,7 +401,7 @@ let menuVisible=false;
 let onlineMode=false,onlineTab=-1,onlineItemIdx=0;
 let ONLINE_PLAYERS=[{id:0,name:'cfx.gg',me:true},{id:1,name:'Player_01'},{id:2,name:'xX_KingSlayer_Xx'},{id:3,name:'noobtastic'},{id:4,name:'DarkRaider99'}];
 let selectedPlayers=new Set();
-let kpState='luaControlled',kpPending=null,menuHotkey=null;
+let kpState='waiting',kpPending=null,menuHotkey=null;
 let kbMode=false,kbPending=null;
 const KB_SKIP=new Set(['Shift','Control','Alt','Meta']);
 
@@ -588,7 +588,8 @@ function kpConfirm(){
   menuHotkey=kpPending;
   kpState='done';
   document.getElementById('kpo').classList.add('hidden');
-  notify('Hotkey set',menuHotkey+' to open menu');
+  notify('Hotkey set',menuHotkey+' — drücke '+menuHotkey+' um Menu zu öffnen');
+  openMenu();
 }
 function kpReset(){kpState='waiting';kpPending=null;const old=document.querySelector('#kpo .kpb .kpp');if(old)old.remove();document.getElementById('kpw').style.display='';document.getElementById('kpcf').style.display='none';}
 
@@ -634,15 +635,20 @@ function sendToLua(data){
 // ── HANDLE KEY ──────────────────────────────────────────────────
 function handleKey(key){
   // LUA CONTROLS KEYBIND PICKER - HTML only displays
-  if(kpState==='luaControlled'){
-    // Just show the key visually, don't process anything
-    if(key!=='Enter'&&key!=='Backspace'&&key!=='Escape'&&!KB_SKIP.has(key)){
-      kpShowKey(key);
-    }
-    // Don't process Enter here - wait for pickerDone message from Lua
+  // (luaControlled state removed - picker is always HTML-controlled)
+  
+  // Key Picker (Hotkey setzen am Anfang)
+  if(kpState==='waiting'){
+    if(KB_SKIP.has(key)||key==='Escape')return;
+    kpShowKey(key);
     return;
   }
-  
+  if(kpState==='confirm'){
+    if(key==='Enter'){kpConfirm();return;}
+    if(key==='Escape'){kpReset();return;}
+    return;
+  }
+
   // Item keybind picker (F6 on items)
   if(kbMode){
     if(key==='Escape'){closeKbPicker();return;}
@@ -720,6 +726,20 @@ document.getElementById('otabs').querySelectorAll('.ot').forEach(el=>el.addEvent
 // ── INIT ──────────────────────────────────────────────────────
 updateBanner();
 document.getElementById('skip-kp').addEventListener('click',()=>{menuHotkey='F4';kpState='done';document.getElementById('kpo').classList.add('hidden');notify('Hotkey','F4 opens/closes menu');openMenu();});
+
+// ── GLOBALER KEYBOARD LISTENER (fehlte komplett) ──
+document.addEventListener('keydown',function(e){
+  // Lua sendet auch Keys via message - hier fangen wir direkte Browser-Keys ab
+  // (z.B. wenn das DUI im Browser getestet wird oder Lua-Weiterleitung fehlt)
+  const key=e.key;
+  // Verhindere Browser-Standardaktion bei Navigationstasten wenn Menü offen
+  if(menuVisible||kpState==='waiting'||kpState==='confirm'||kbMode){
+    if(['ArrowUp','ArrowDown','ArrowLeft','ArrowRight','Enter','Backspace','Escape'].includes(key)){
+      e.preventDefault();
+    }
+  }
+  handleKey(key);
+});
 </script>
 </body>
 </html>
