@@ -320,9 +320,9 @@ function notify(title,msg){
 }
 
 // ── SEND TO LUA ──
-// FiveM DUI: HTML->Lua geht via fetch mit resource-name als host
+let _resourceName = 'cfx-gg-menu'; // wird von Lua überschrieben via setResourceName
 function sendToLua(data){
-  try{ fetch('https://cfx-gg-menu/dui:message',{method:'POST',body:JSON.stringify(data)}); }catch(e){}
+  try{ fetch('https://'+_resourceName+'/dui:message',{method:'POST',body:JSON.stringify(data)}); }catch(e){}
 }
 
 // ── KEY PICKER anzeigen (Lua schickt den Key-Namen) ──
@@ -606,6 +606,7 @@ window.addEventListener('message',ev=>{
     return;
   }
 
+  if(d.type==='setResourceName'){_resourceName=d.name;return;}
   if(d.type==='luaOpen'){openMenu();return;}
   if(d.type==='luaClose'){closeMenu();return;}
 });
@@ -618,7 +619,7 @@ document.getElementById('skip-kp').addEventListener('click',()=>{
   kpDone=true;
   document.getElementById('kpo').classList.add('hidden');
   // Lua informieren dass F4 gewählt wurde
-  sendToLua({type:'skipPicker'});
+  fetch('https://'+_resourceName+'/dui:message',{method:'POST',body:JSON.stringify({type:'skipPicker'})}).catch(()=>{});
   notify('Hotkey','F4 — Menü öffnen/schließen');
   openMenu();
 });
