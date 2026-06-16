@@ -20,7 +20,6 @@ body{display:flex;align-items:center;justify-content:flex-end;padding-right:24px
 #menu{width:292px;background:#0d0d16;border-radius:10px;box-shadow:0 0 0 1px rgba(255,255,255,.055),0 2px 0 0 var(--accent),0 30px 80px rgba(0,0,0,.97);overflow:hidden;position:relative;}
 #menu::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--accent),transparent);box-shadow:0 0 18px var(--ag);border-radius:50%;z-index:10;}
 .banner{position:relative;height:91px;overflow:hidden;background:#09090f;}
-.banner-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;opacity:.92;position:relative;z-index:2;}
 .banner-fallback{position:absolute;inset:0;z-index:2;display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-size:32px;font-weight:800;letter-spacing:6px;color:transparent;-webkit-text-stroke:1.5px var(--accent);animation:bglow 3s ease-in-out infinite;}
 @keyframes bglow{0%,100%{filter:drop-shadow(0 0 10px var(--ag));}50%{filter:drop-shadow(0 0 24px var(--ag));}}
 .banner-overlay{position:absolute;inset:0;z-index:3;background:linear-gradient(to bottom,transparent 45%,rgba(13,13,22,.85) 100%);}
@@ -31,38 +30,33 @@ body{display:flex;align-items:center;justify-content:flex-end;padding-right:24px
 .bc-count{font-size:8.5px;color:rgba(255,255,255,.16);font-family:monospace;flex-shrink:0;}
 #otabs{display:none;background:#0a0a12;border-bottom:1px solid rgba(255,255,255,.04);}
 #otabs.vis{display:flex;}
-.ot{flex:1;height:31px;display:flex;align-items:center;justify-content:center;gap:4px;font-size:8.5px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.2);border-bottom:2px solid transparent;transition:all .15s;cursor:pointer;}
+.ot{flex:1;height:31px;display:flex;align-items:center;justify-content:center;gap:4px;font-size:8.5px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:rgba(255,255,255,.2);border-bottom:2px solid transparent;transition:all .15s;}
 .ot i{font-size:8px;}
 .ot.act{color:#fff;border-bottom-color:var(--accent);text-shadow:0 0 8px var(--ag);}
 .cnt{overflow-y:auto;max-height:370px;scrollbar-width:thin;scrollbar-color:var(--af) transparent;}
 .cnt::-webkit-scrollbar{width:2px;}.cnt::-webkit-scrollbar-thumb{background:var(--af);border-radius:2px;}
-.item{display:flex;align-items:center;padding:0 13px;height:35px;border-bottom:1px solid rgba(255,255,255,.022);gap:9px;cursor:pointer;transition:background .1s;position:relative;}
-.item:hover{background:rgba(255,255,255,.022);}
+.item{display:flex;align-items:center;padding:0 13px;height:35px;border-bottom:1px solid rgba(255,255,255,.022);gap:9px;position:relative;}
 .item.sel{background:var(--sel);}
 .item.sel::before{content:'';position:absolute;left:0;top:22%;bottom:22%;width:2px;background:var(--accent);border-radius:0 2px 2px 0;box-shadow:0 0 8px var(--ag);}
-.ii{width:15px;text-align:center;font-size:10px;flex-shrink:0;color:rgba(255,255,255,.16);transition:color .12s;}
+.ii{width:15px;text-align:center;font-size:10px;flex-shrink:0;color:rgba(255,255,255,.16);}
 .item.sel .ii{color:var(--accent);filter:drop-shadow(0 0 4px var(--ag));}
-.in{font-size:12px;font-weight:400;color:#a0a0bc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;transition:color .12s;text-align:left;}
+.in{font-size:12px;font-weight:400;color:#a0a0bc;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1;min-width:0;text-align:left;}
 .item.sel .in{color:#fff;font-weight:500;}
 .tgl{width:30px;height:15px;background:#191927;border-radius:8px;position:relative;border:1px solid rgba(255,255,255,.055);flex-shrink:0;transition:background .2s,border-color .2s;}
 .tgl::after{content:'';position:absolute;width:11px;height:11px;background:#2a2a40;border-radius:50%;top:1px;left:1px;transition:left .2s,background .2s,box-shadow .2s;}
 .tgl.on{background:var(--ad);border-color:var(--ab);}
 .tgl.on::after{left:16px;background:var(--accent);box-shadow:0 0 7px var(--ag);}
-.ar{font-size:9px;color:rgba(255,255,255,.18);flex-shrink:0;transition:color .12s,transform .12s;}
+.ar{font-size:9px;color:rgba(255,255,255,.18);flex-shrink:0;}
 .item.sel .ar{color:rgba(255,255,255,.45);}
-.item.sel:hover .ar{transform:translateX(2px);}
 .srow{display:flex;align-items:center;gap:6px;flex-shrink:0;}
-.sv{font-size:9.5px;color:#4a4a62;min-width:26px;text-align:right;transition:color .12s;}
+.sv{font-size:9.5px;color:#4a4a62;min-width:26px;text-align:right;}
 .item.sel .sv{color:var(--accent);}
 .str{width:60px;height:2.5px;background:#1c1c2c;border-radius:2px;position:relative;flex-shrink:0;}
 .sf{height:100%;background:linear-gradient(90deg,var(--ad),var(--accent));border-radius:2px;}
 .sth{position:absolute;width:10px;height:10px;background:var(--accent);border-radius:50%;top:50%;transform:translate(-50%,-50%);box-shadow:0 0 6px var(--ag);}
-.iv{font-size:10px;color:#333348;font-weight:300;flex-shrink:0;white-space:nowrap;transition:color .12s;}
-.iv .ca{color:#28283c;font-size:9px;}
-.item.sel .iv{color:#888;}.item.sel .iv .ca{color:#555;}
-.fp-icon{font-size:9px;color:rgba(255,255,255,.18);flex-shrink:0;transition:color .12s;}
+.fp-icon{font-size:9px;color:rgba(255,255,255,.18);flex-shrink:0;}
 .item.sel .fp-icon{color:var(--accent);}
-.cv-val{font-size:10px;color:rgba(255,255,255,.3);flex-shrink:0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:2px 7px;white-space:nowrap;max-width:115px;overflow:hidden;text-overflow:ellipsis;transition:color .12s,border-color .12s;}
+.cv-val{font-size:10px;color:rgba(255,255,255,.3);flex-shrink:0;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:4px;padding:2px 7px;white-space:nowrap;max-width:115px;overflow:hidden;text-overflow:ellipsis;}
 .item.sel .cv-val{color:var(--accent);border-color:var(--ab);background:var(--ad);}
 .pc{width:15px;height:15px;border-radius:50%;flex-shrink:0;border:1.5px solid #1c1c30;background:#10101e;display:flex;align-items:center;justify-content:center;transition:all .14s;}
 .pc.chk{border-color:var(--accent);background:var(--ad);box-shadow:0 0 7px var(--ag);}
@@ -77,74 +71,54 @@ body{display:flex;align-items:center;justify-content:flex-end;padding-right:24px
 .footer-nav{display:flex;gap:8px;font-size:8px;color:rgba(255,255,255,.13);margin-left:auto;}
 .footer-nav span{display:flex;align-items:center;gap:2px;}
 .footer-nav i{font-size:7.5px;}
-
-/* ── NOTIFICATIONS (clean redesign) ── */
 #nc{position:fixed;bottom:14px;right:14px;display:flex;flex-direction:column-reverse;gap:6px;z-index:9999;pointer-events:none;width:210px;}
-.notify{
-  background:#0b0b16;
-  border:1px solid rgba(255,255,255,.07);
-  border-radius:8px;
-  padding:9px 11px 9px 11px;
-  display:flex;align-items:center;gap:9px;
-  animation:nIn .2s cubic-bezier(.22,1,.36,1);
-  overflow:hidden;position:relative;
-  box-shadow:0 4px 20px rgba(0,0,0,.85);
-}
+.notify{background:#0b0b16;border:1px solid rgba(255,255,255,.07);border-radius:8px;padding:9px 11px;display:flex;align-items:center;gap:9px;animation:nIn .2s cubic-bezier(.22,1,.36,1);overflow:hidden;position:relative;box-shadow:0 4px 20px rgba(0,0,0,.85);}
 @keyframes nIn{from{transform:translateX(12px);opacity:0;}to{transform:translateX(0);opacity:1;}}
 .n-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);flex-shrink:0;box-shadow:0 0 6px var(--ag);}
 .n-body{display:flex;flex-direction:column;flex:1;min-width:0;}
 .n-title{font-size:10.5px;font-weight:600;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .n-msg{font-size:9px;color:rgba(255,255,255,.35);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-top:1px;}
 .n-bar{position:absolute;bottom:0;left:0;height:1.5px;width:100%;background:var(--accent);opacity:.5;}
-
-/* ── KEY PICKER ── */
-#kpo{position:fixed;inset:0;z-index:9998;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;pointer-events:all;background:transparent;backdrop-filter:none;}
+#kpo{position:fixed;inset:0;z-index:9998;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;}
 #kpo.hidden{display:none;}
-.kpb{display:flex;flex-direction:column;align-items:center;gap:13px;background:#0a0a14;border:1px solid rgba(255,255,255,.08);border-top:2px solid var(--accent);border-radius:10px;padding:20px 38px 18px;box-shadow:0 20px 60px rgba(0,0,0,.97);animation:kpI .28s cubic-bezier(.22,1,.36,1);min-width:225px;text-align:center;}
-@keyframes kpI{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+.kpb{display:flex;flex-direction:column;align-items:center;gap:13px;background:#0a0a14;border:1px solid rgba(255,255,255,.08);border-top:2px solid var(--accent);border-radius:10px;padding:20px 38px 18px;box-shadow:0 20px 60px rgba(0,0,0,.97);min-width:225px;text-align:center;}
 .kpt{font-size:8px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.22);}
 .kpw{font-size:10.5px;color:rgba(255,255,255,.14);animation:blk 1.4s ease-in-out infinite;}
 @keyframes blk{0%,100%{opacity:.14;}50%{opacity:.42;}}
-.kpp{background:#0e0e1e;border:1px solid rgba(255,255,255,.11);border-bottom:3px solid var(--accent);border-radius:7px;padding:5px 20px;font-size:19px;font-weight:700;letter-spacing:2px;color:var(--accent);font-family:'Syne',sans-serif;box-shadow:0 0 20px var(--ad);min-width:56px;animation:kpP .16s cubic-bezier(.22,1,.36,1);}
-@keyframes kpP{from{transform:scale(.8);opacity:0;}to{transform:scale(1);opacity:1;}}
+.kpp{background:#0e0e1e;border:1px solid rgba(255,255,255,.11);border-bottom:3px solid var(--accent);border-radius:7px;padding:5px 20px;font-size:19px;font-weight:700;letter-spacing:2px;color:var(--accent);font-family:'Syne',sans-serif;box-shadow:0 0 20px var(--ad);min-width:56px;}
 .kpc{font-size:8.5px;color:rgba(255,255,255,.18);}
 .kpc span{color:var(--accent);font-weight:600;}
-.skip-btn{margin-top:2px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:4px 14px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.2);cursor:pointer;font-family:inherit;transition:all .15s;}
-.skip-btn:hover{color:rgba(255,255,255,.45);background:rgba(255,255,255,.06);}
-#kbpo{position:fixed;inset:0;z-index:9997;display:none;flex-direction:column;align-items:center;justify-content:flex-end;padding-bottom:40px;background:transparent;backdrop-filter:none;}
-#kbpo.vis{display:flex;}
-
-/* ── SHARED PANEL (keybind list + spectator list) ── */
-.panel{position:fixed;top:14px;right:14px;width:165px;z-index:200;background:#0d0d18;border:1px solid rgba(255,255,255,.05);border-radius:7px;overflow:hidden;display:none;box-shadow:0 8px 28px rgba(0,0,0,.8);}
-.panel.open{display:block;}
-.pt{padding:5px 10px 4px;font-size:7.5px;letter-spacing:2.5px;font-weight:600;color:var(--as2);text-transform:uppercase;border-bottom:1px solid rgba(255,255,255,.04);background:#0a0a12;display:flex;align-items:center;gap:6px;}
-.pt i{font-size:8px;color:var(--accent);opacity:.7;}
-.pi{padding:0 10px;height:27px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid rgba(255,255,255,.022);gap:5px;}
-.pin{flex:1;font-size:9px;color:#666;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.pir{display:flex;align-items:center;gap:4px;}
-.pon{font-size:7.5px;font-weight:600;color:#3dff8a;}.pof{font-size:7.5px;font-weight:600;color:var(--accent);opacity:.4;}
-.pk{background:#14142a;border:1px solid rgba(255,255,255,.06);border-radius:3px;padding:1px 5px;font-size:8px;color:#888;font-family:monospace;}
-.pe{padding:9px;font-size:8.5px;color:rgba(255,255,255,.1);text-align:center;}
-
-/* keybind list on left, spectator on right — they can't both show at once */
-#kl{left:14px;right:auto;}
-#sl-panel{left:auto;right:14px;}
+.skip-btn{margin-top:2px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);border-radius:6px;padding:4px 14px;font-size:8.5px;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,255,255,.2);cursor:pointer;font-family:inherit;}
 </style>
 </head>
 <body class="t-pink">
+
 <div id="nc"></div>
-<!-- keybind list -->
-<div id="kl" class="panel"><div class="pt"><i class="fa-solid fa-keyboard"></i>Keybinds</div><div id="kl-items"></div></div>
-<!-- spectator list -->
-<div id="sl-panel" class="panel"><div class="pt"><i class="fa-solid fa-eye"></i>Spectators</div><div id="sl-items"></div></div>
+
 <!-- KEY PICKER -->
-<div id="kpo"><div class="kpb"><span class="kpt">Set Menu Hotkey</span><span class="kpw" id="kpw">press any key...</span><span id="kpcf" style="display:none" class="kpc"><span id="kpkd"></span> — <span>Enter</span> confirm · <span style="color:#333">Esc</span> retry</span><button class="skip-btn" id="skip-kp">skip — use F4</button></div></div>
-<!-- KEYBIND PICKER -->
-<div id="kbpo"><div class="kpb" id="kbpb"><span class="kpt">Bind: <span id="kbpn" style="color:var(--accent)"></span></span><span class="kpw" id="kbpw">press any key...</span><span id="kbpcf" style="display:none" class="kpc"><span id="kbpkd"></span> — <span>Enter</span> confirm · <span style="color:#333">Backspace</span> clear</span></div></div>
+<div id="kpo">
+  <div class="kpb">
+    <span class="kpt">Set Menu Hotkey</span>
+    <span class="kpw" id="kpw">press any key...</span>
+    <span id="kpcf" style="display:none" class="kpc">
+      <span id="kpkd"></span> — <span>Enter</span> confirm · <span style="color:#333">Esc</span> retry
+    </span>
+    <button class="skip-btn" id="skip-kp">skip — use F4</button>
+  </div>
+</div>
+
 <!-- MENU -->
 <div id="menu" style="display:none">
-  <div class="banner"><div class="banner-radial"></div><div id="banner-content"></div><div class="banner-overlay"></div></div>
-  <div class="breadcrumb"><i class="bc-icon fa-solid fa-house" id="bc-icon"></i><span class="bc-text" id="bc"></span><span class="bc-count" id="fct"></span></div>
+  <div class="banner">
+    <div class="banner-radial"></div>
+    <div class="banner-fallback" id="banner-text">cfx.gg</div>
+    <div class="banner-overlay"></div>
+  </div>
+  <div class="breadcrumb">
+    <i class="bc-icon fa-solid fa-house" id="bc-icon"></i>
+    <span class="bc-text" id="bc"></span>
+    <span class="bc-count" id="fct"></span>
+  </div>
   <div id="otabs">
     <div class="ot act" data-tab="-1"><i class="fa-solid fa-users"></i> Players</div>
     <div class="ot" data-tab="0"><i class="fa-solid fa-shield"></i> Safe</div>
@@ -153,475 +127,181 @@ body{display:flex;align-items:center;justify-content:flex-end;padding-right:24px
   </div>
   <div class="cnt" id="cnt"></div>
   <div class="footer">
-    <div class="footer-l"><svg class="footer-logo" viewBox="0 0 16 16"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019z"/></svg><span class="footer-brand"><span>cfx.gg</span></span></div>
-    <div class="footer-nav"><span><i class="fa-solid fa-arrow-up"></i><i class="fa-solid fa-arrow-down"></i></span><span><i class="fa-solid fa-arrow-right"></i> open</span><span><i class="fa-solid fa-delete-left"></i> back</span></div>
+    <div class="footer-l">
+      <svg class="footer-logo" viewBox="0 0 16 16"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.249.594.05.05 0 0 0-.03.03.052.052 0 0 0 .003.041c.24.465.515.909.817 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019z"/></svg>
+      <span class="footer-brand"><span>cfx.gg</span></span>
+    </div>
+    <div class="footer-nav">
+      <span><i class="fa-solid fa-arrow-up"></i><i class="fa-solid fa-arrow-down"></i></span>
+      <span><i class="fa-solid fa-arrow-right"></i> open</span>
+      <span><i class="fa-solid fa-delete-left"></i> back</span>
+    </div>
   </div>
 </div>
+
 <script>
-const t  = n => ({type:'toggle', name:n});
-const b  = n => ({type:'button', name:n});
-const s  = (n,c,ci) => ({type:'sub', name:n, catIcon:ci||null, children:{label:n,items:c}});
-const sl = (n,v,mn,mx) => ({type:'slider', name:n, val:v, min:mn, max:mx});
-const sp = l => ({type:'sep', label:l});
-const vl = (n,val,a) => ({type:'value', name:n, val:val, actions:a});
-const cv = (n,a) => ({type:'cv', name:n, val:a[0], actions:a});
-const FP=`<i class="fa-solid fa-play fp-icon"></i>`;
+// ── ALLES WIRD VON LUA GESTEUERT ──
+// HTML ist nur ein dummes Display.
+// Lua schickt Messages via SendDuiMessage -> window.message event.
+// HTML rendert was Lua sagt, schickt NICHTS zurück.
 
-const CAT_ICONS={
-  'Self Options':'fa-solid fa-user','Visual Options':'fa-solid fa-eye','Online Options':'fa-solid fa-globe',
-  'Combat Options':'fa-solid fa-gun','Weapon Options':'fa-solid fa-gun','Vehicle Options':'fa-solid fa-car-side',
-  'Trigger Options':'fa-solid fa-bolt','Misc Options':'fa-solid fa-bars','Bypasses':'fa-solid fa-shield-halved','Settings':'fa-solid fa-gear',
-  'NoClip':'fa-solid fa-wind','Health':'fa-solid fa-heart','Appearance':'fa-solid fa-shirt','Basic Options':'fa-solid fa-sliders',
-  'Teleport':'fa-solid fa-location-crosshairs','ESP':'fa-solid fa-border-all','NPCs':'fa-solid fa-person','Vehicles':'fa-solid fa-truck',
-  'Crosshair':'fa-solid fa-crosshairs','ESP Colors':'fa-solid fa-palette','Aimbot':'fa-solid fa-bullseye',
-  'Silent Aim':'fa-solid fa-ghost','Rage Bot':'fa-solid fa-robot','Give Weapons':'fa-solid fa-box-open',
-  'Radar':'fa-solid fa-satellite-dish','Troll':'fa-solid fa-face-grin-squint','Loaded Triggers':'fa-solid fa-list',
-  'Free Cam':'fa-solid fa-video','Destroyer Options':'fa-solid fa-bomb','Freeze Resource':'fa-solid fa-snowflake',
-  'Time & Weather':'fa-solid fa-cloud-sun','Menu':'fa-solid fa-window-maximize','Config':'fa-solid fa-floppy-disk',
-  'Spawner':'fa-solid fa-car','Tuning':'fa-solid fa-wrench',
+const menu   = document.getElementById('menu');
+const cnt    = document.getElementById('cnt');
+const bc     = document.getElementById('bc');
+const bcIcon = document.getElementById('bc-icon');
+const fct    = document.getElementById('fct');
+const otabs  = document.getElementById('otabs');
+const kpo    = document.getElementById('kpo');
+const kpw    = document.getElementById('kpw');
+const kpcf   = document.getElementById('kpcf');
+const kpkd   = document.getElementById('kpkd');
+const nc     = document.getElementById('nc');
+
+// ── THEME ──
+const THEMES = {
+  pink:'t-pink', grey:'t-grey', yellow:'t-yellow',
+  cyan:'t-cyan', red:'t-red', green:'t-green', blue:'t-blue'
 };
-
-const THEME_BANNERS={pink:'banner.png',grey:'banner2.png',yellow:'banner3.png',cyan:'banner4.png',red:'banner5.png',green:'banner6.png',blue:'banner7.png'};
-const THEME_CLASSES={pink:'t-pink',grey:'t-grey',yellow:'t-yellow',cyan:'t-cyan',red:'t-red',green:'t-green',blue:'t-blue'};
-let currentTheme='pink';
-function updateBanner(){const f=THEME_BANNERS[currentTheme];document.getElementById('banner-content').innerHTML=`<img class="banner-img" src="${f}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'"><div class="banner-fallback" style="display:none">cfx.gg</div>`;}
-function applyTheme(n){currentTheme=n;document.body.className=THEME_CLASSES[n]||'t-pink';updateBanner();}
-
-const MAIN={label:'Main Menu',items:[
-  s('Self Options',[
-    s('NoClip',[t('Enable NoClip'),sl('NoClip Speed',0.6,0.1,5.0),t('Invisible'),t('Full Invisible')]),
-    s('Health',[t('Godmode'),t('Auto Revive'),t('Fake Dead'),b('Revive'),b('Heal'),b('Armour'),b('Suicide')]),
-    s('Appearance',[b('Ped Changer'),b('Outfit'),b('Admin Outfit'),b('Random Outfit'),b('Saved Outfit'),b('Skin Editor')]),
-    s('Basic Options',[t('Invisibility'),t('No Ragdoll'),t('Infinite Stamina'),b('Solo Session'),t('Spinbot'),sl('Run Speed',1.0,0.5,3.0)]),
-    s('Teleport',[b('Waypoint'),b('To Coords'),b('Back'),b('Airport'),b('Beach'),b('Maze Bank'),b('Mount Chiliad')]),
-  ],'fa-solid fa-user'),
-  s('Visual Options',[
-    s('ESP',[sp('Player'),t('Self ESP'),t('Exclude Dead'),t('Nametags'),t('Skeleton'),t('Box ESP'),t('Health Bar'),t('Distance ESP'),t('Weapon ESP')]),
-    s('NPCs',[sp('NPC'),t('NPC ESP'),t('Exclude Dead'),t('Nametags'),t('Skeleton'),t('Box ESP'),t('Health Bar'),t('Distance ESP'),t('Weapon ESP')]),
-    s('Vehicles',[sp('Vehicle'),t('Vehicle ESP'),t('Exclude Dead'),t('Nametags'),t('Box ESP')]),
-    s('Crosshair',[t('Crosshair'),vl('Mode','Dot',['Dot','Cross','Circle','Square']),vl('Color','White',['White','Red','Green','Blue','Cyan']),sl('Thickness',2,1,6)]),
-    s('ESP Colors',[vl('Box Color','White',['White','Red','Green','Blue','Yellow']),vl('Skeleton Color','White',['White','Red','Green','Blue','Yellow']),vl('Health Bar Style','Bar',['Bar','Text','Both'])]),
-  ],'fa-solid fa-eye'),
-  {type:'online',name:'Online Options'},
-  s('Combat Options',[
-    t('Fast Punch'),t('One Punch'),t('One Shot'),
-    s('Aimbot',[t('Enable Aimbot'),t('Ignore Vehicles'),t('Visible Only'),vl('Key','RMB',['RMB','LMB','MB3','F','G','H']),vl('Target Bone','Head',['Head','Neck','Chest','Stomach','Leg']),sl('Smoothing',1.0,0.1,5.0),sp('FOV'),t('Show FOV'),t('Filled FOV'),sl('FOV Size',60,10,180),sl('Fill Opacity',0.2,0.0,1.0),sp('Colors'),vl('FOV Color','White',['White','Red','Green','Blue','Cyan']),vl('Fill Color','White',['White','Red','Green','Blue','Cyan'])]),
-    s('Silent Aim',[t('Enable Silent Aim'),t('Target NPCs'),t('Visible Check'),vl('Key','RMB',['RMB','LMB','MB3','F','G']),vl('Mode','Nearest',['Nearest','FOV','Distance']),vl('Aim Bone','Head',['Head','Neck','Chest']),sp('Targeting'),sl('FOV',60,10,180),sl('Distance',100,10,500),sl('Hit Chance',100,10,100),sp('Visual'),t('Show FOV'),t('Filled FOV'),sl('Fill Opacity',0.2,0,1)]),
-    s('Rage Bot',[t('Enable Rage'),t('Target NPCs'),vl('Type','Nearest',['Nearest','FOV','LowHP']),vl('Bullet','Default',['Default','Explosive','Fire']),sl('FOV',60,10,180),t('Show FOV'),vl('FOV Color','Red',['Red','White','Green','Blue'])]),
-  ],'fa-solid fa-gun'),
-  s('Weapon Options',[
-    s('Give Weapons',[
-      cv('Pistols',['Pistol','Combat Pistol','AP Pistol','Pistol .50','SNS Pistol','Heavy Pistol','Vintage Pistol','Flare Gun','Marksman Pistol','Heavy Revolver','Double Action Revolver','Up-n-Atomizer','Ceramic Pistol','Navy Revolver','Perico Pistol','WM 29 Pistol','Pistol Mk II','Combat Pistol Mk II','Heavy Revolver Mk II']),
-      cv('SMGs',['Micro SMG','SMG','Assault SMG','Combat PDW','Machine Pistol','Mini SMG','Unholy Hellbringer','SMG Mk II']),
-      cv('Rifles',['Assault Rifle','Carbine Rifle','Advanced Rifle','Special Carbine','Bullpup Rifle','Compact Rifle','Military Rifle','Heavy Rifle','Assault Rifle Mk II','Carbine Rifle Mk II','Special Carbine Mk II','Bullpup Rifle Mk II']),
-      cv('Snipers',['Sniper Rifle','Heavy Sniper','Semi-Auto Sniper','Marksman Rifle','Heavy Sniper Mk II','Marksman Rifle Mk II']),
-      cv('Shotguns',['Pump Shotgun','Sawn-Off Shotgun','Heavy Shotgun','Bullpup Shotgun','Assault Shotgun','Musket','Double Barrel Shotgun','Sweeper Shotgun','Combat Shotgun','Pump Shotgun Mk II']),
-      cv('Heavy',['Minigun','RPG','Grenade Launcher','Grenade Launcher Smoke','Compact EMP Launcher','Railgun','Homing Launcher','Firework Launcher','Unholy Hellbringer','Widowmaker','Compact Grenade Launcher']),
-      cv('Melee',['Knife','Nightstick','Hammer','Baseball Bat','Crowbar','Bottle','Dagger','Hatchet','Machete','Flashlight','Knuckle Dusters','Broken Bottle','Wrench','Battle Axe','Pool Cue','Stone Hatchet','Antique Cavalry Dagger']),
-      cv('Explosives',['Grenade','Sticky Bomb','Proximity Mine','BZ Gas','Molotov','Fire Extinguisher','Pipe Bomb','Ball','Snowball','Flare','Jerry Can','Hazardous Jerry Can']),
-      cv('Special',['Stun Gun','Tear Gas','Parachute','Ball','Fire Extinguisher','Jerry Can']),
-    ]),
-    b('Give All Weapons'),b('Remove All Weapons'),b('Upgrade Weapons'),b('Refill Ammo'),
-    t('No Reload'),t('Infinite Ammo'),
-  ],'fa-solid fa-gun'),
-  s('Vehicle Options',[
-    s('Spawner',[
-      cv('Sports',['Elegy RH8','Elegy Retro Custom','Sultan','Sultan RS','Sultan Classic','Banshee','Banshee 900R','Comet','Comet SR','Comet S2','Comet Safari','Feltzer','Futo','Futo GTX','Jester','Jester Classic','Jester RR','Kuruma','Kuruma Armoured','Lynx','Massacro','Massacro Racecar','Oracle','Oracle XS','Rapid GT','Rapid GT Classic','Schafter V12','Schafter LWB','Schwartzer','Stirling GT','Surano','Tampa','Tampa Drift','Tigon','Neon','Pariah','Itali RSX','Calico GTF','Imorgon','Cypher','Rebla GTS','Komoda','Growler','Ignus','Specter','Specter Custom','Streiter','Champion']),
-      cv('Super',['Adder','Cheetah','Cheetah Classic','Entity XF','Entity XXR','Infernus','Infernus Classic','Osiris','T20','Turismo R','Zentorno','ETR1','FMJ','Nero','Nero Custom','Paragon R','Paragon R Armoured','Reaper','Tyrant','Vagner','Visione','X80 Proto','Deveste Eight','Emerus','Autarch','Krieger','Scramjet','S80RR','Tezeract','Thrax','Vigilante','Pfister 811','Voltic','Rocket Voltic','Cyclone','Tempesta','Zorrusso','Revolter','Ruston','Le Chiffre','Overflod Entity','GP1','GR1','Schlagen GT','DR1']),
-      cv('Muscle',['Buffalo','Buffalo S','Buffalo STX','Dominator','Dominator GTT','Dominator ASP','Dominator Carbon','Dukes','Dukes O Death','Gauntlet','Gauntlet Classic','Gauntlet Hellfire','Sabre Turbo','Sabre Turbo Custom','Vigero','Vigero ZX','Virgo','Virgo Classic','Virgo Classic Custom','Impaler','Impaler LX','Faction','Faction Custom','Faction Custom Donk','Buccaneer','Buccaneer Custom','Chino','Chino Custom','Coquette BlackFin','Lurcher','Voodoo','Voodoo Custom','Hermes','Hustler','Ellie','Tulip','Tulip M-100','Yosemite','Yosemite Rancher','Picador','Slamvan','Slamvan Custom','Ruiner','Ruiner 2000','Ruiner 3']),
-      cv('Motorcycles',['Akuma','Bagger','Bati 801','Bati 801RR','BF400','Carbon RS','Chimera','Cliffhanger','Daemon','Daemon Custom','Defiler','Delinquent','Double T','Esskey','Faggio','Faggio Mod','Faggio Sport','FCR 1000','FCR 1000 Custom','Gargoyle','Hakuchou','Hakuchou Drift','Hexer','Innovation','Manchez','Manchez Scout','Manchez Scout C','Nemesis','Nightblade','Oppressor','Oppressor Mk II','Rat Bike','Ruffian','Sanchez','Sanchez Livery','Sanctus','Shotaro','Sovereign','Stryder','Thrust','Vader','Vindicator','Wolfsbane','Zombie Bobber','Zombie Chopper']),
-      cv('SUVs',['Baller','Baller LE','Baller LE LWB','Baller ST','Cavalcade','Cavalcade Mk2','Contender','FQ 2','Granger','Granger 3600LX','Huntley S','Landstalker','Landstalker XL','Mesa','Mesa Merryweather','Patriot','Patriot Mil-Spec','Patriot Stretch','Radius','Rebla GTS','Rocoto','Seminole','Seminole Frontier','Serrano','Toros','XLS','XLS Armoured']),
-      cv('Off-Road',['BF400','Bifta','Blazer','Blazer Aqua','Blazer Lifeguard','Brawler','Brutus','Caracara','Caracara 4x4','Desert Raid','Dubsta','Dubsta 6x6','Dune Buggy','Dune FAV','Freecrawler','Insurgent','Insurgent Custom','Insurgent Pick-Up','Insurgent Pick-Up Custom','Kamacho','Marshall','Maverick','Nightshark','Outlaw','Ramp Buggy','RC Bandito','Rebel','Rebel Rusty','Riata','Sandking XL','Sandking SWB','Trophytruck','Trophytruck Flatbed','Vagrant','Verus','Winky','ZR380']),
-      cv('Helicopters',['Akula','Annihilator','Buzzard','Buzzard Attack','Cargobob','Cargobob Jetsam','FH-1 Hunter','Frogger','Frogger FIB','Havok','Howard NX-25','Maverick','Military Maverick','Savage','Sea Sparrow','Sparrow','Swift','Swift Deluxe','Supervolito','Supervolito Carbon','Volatus','Skylift','Police Maverick','Air Ambulance']),
-      cv('Planes',['Besra','B-11 Strikeforce','Bombushka','Cargo Plane','Cuban 800','Dodo','Duster','Hydra','Jet','Jobuilt P-996 LAZER','LF-22 Starling','Luxor','Luxor Deluxe','Mammatus','Miljet','Nimbus','P-45 Nokota','Pyro','Rogue','Seabreeze','Shamal','Smuggler','Tula','Ultralight','V-65 Molotok','Velum','Velum 5-Seater','Vestra','Western Rogue','RM-10 Bombushka','Alpha-Z1','Avenger','Alkonost']),
-      cv('Boats',['Avisa','Buckingham Tug','Dinghy','Dinghy 2-Seat','Dinghy 4-Seat','Dinghy Military','Jetmax','Kosatka','Longfin','Marquis','Police Predator','Seashark','Seashark Lifeguard','Seashark Sport','Speeder','Speeder 2','Squalo','Submersible','Submersible Kraken','Suntrap','Tiger Shark','Toro','Toro 2','Tropic','Tropic 2','Weaponized Dinghy']),
-      cv('Emergency',['Ambulance','Firetruk','FIB','FIB 2','Police','Police 2','Police 3','Police Rancher','Police Riot','Police Transporter','Policeb','Polmav','Predator','RCV','Sheriff','Sheriff 2','Stockade','Unmarked Cruiser']),
-      cv('Military',['APC','Barrage','Chernobog','HVY Menacer','Half-Track','Insurgent Pick-Up Custom','Khanjali','Nightshark','Rhino','TM-02 Khanjali','Thruster','Stromberg']),
-      cv('Utility',['APC','Armored Boxville','Blazer','Bulldozer','Caddy','Caddy 2','Caddy Military','Cutter','Docktug','Dump','Flatbed','Forklift','Handler','HVY Barracks','Industrial','Lawnmower','Mixer','Mixer 2','Mower','Packer','Rental Shuttle Bus','Ripley','Sadler','Scrap Truck','Tractor','Tractor 2','Tractor 3','Trailers','Trash Truck','Trolley Bus','Utility Truck','Wastelander']),
-      cv('Trains',['Freight Train','Metro Train','Tram']),
-    ]),
-    b('Repair'),b('Flip'),b('Delete'),b('Change Plate'),
-    t('Godmode'),t('Boost'),t('Jump'),t('Auto Pilot'),t('Lock / Unlock'),t('Force Engine On'),t('Horn Boost'),
-    sl('Horn Boost Speed',20,5,100),
-    s('Tuning',[
-      sp('Performance'),
-      vl('Engine','Stock',['Stock','EMS 1','EMS 2','EMS 3','EMS 4']),
-      vl('Brakes','Stock',['Stock','Street','Sport','Race']),
-      vl('Transmission','Stock',['Stock','Street','Sport','Race']),
-      vl('Turbo','Off',['Off','On']),
-      sp('Visual'),
-      vl('Wheels','Stock',['Stock','Sport','Muscle','Lowrider','SUV','Offroad','Tuner','Bike']),
-      vl('Window Tint','None',['None','Pure Black','Dark Smoke','Light Smoke','Stock','Limo','Green']),
-      vl('Neon','Off',['Off','Front','Back','Left','Right','All']),
-      b('Apply Max Performance'),b('Apply Full Visual'),
-    ]),
-  ],'fa-solid fa-car-side'),
-  s('Trigger Options',[
-    b('Load Triggers'),
-    s('Loaded Triggers',[b('Trigger #1'),b('Trigger #2'),b('Trigger #3'),b('Trigger #4'),b('Trigger #5')]),
-  ],'fa-solid fa-bolt'),
-  s('Misc Options',[
-    t('Spectator List'),t('Keybind List'),
-    s('Free Cam',[t('Enable Freecam'),sl('Speed',1.0,0.1,5.0),b('Adjust Keys')]),
-    s('Destroyer Options',[b('Lag Server'),b('Kick to Air'),b('Local TP All'),b('Infinite Voice Range'),b('Silent Kill All'),b('Kill All'),b('Massacre All')]),
-    s('Freeze Resource',[b('Resource #1'),b('Resource #2'),b('Resource #3'),b('Resource #4'),b('Resource #5')]),
-    s('Time & Weather',[t('Force Time'),sl('Hour',12,0,23),t('Force Weather'),vl('Weather','Clear',['Clear','Extrasunny','Clouds','Overcast','Rain','Thunder','Foggy','Snow','Xmas'])]),
-    b('Check Anticheats'),
-  ],'fa-solid fa-bars'),
-  s('Bypasses',[t('Anti Teleport'),t('Anti Block Control'),t('Alt Vehicle Spawn')],'fa-solid fa-shield-halved'),
-  s('Settings',[
-    s('Menu',[vl('Menu Hotkey','F4',['F1','F2','F3','F4','F5','F6','F7','F8','Insert','Delete','Home']),b('Reset Menu')]),
-    s('Appearance',[vl('Theme','Pink',['Pink','Grey','Yellow','Cyan','Dark Red','Acid Green','Blue'])]),
-    s('Config',[b('Save Config'),b('Load Config #1'),b('Load Config #2'),b('Load Config #3')]),
-  ],'fa-solid fa-gear'),
-]};
-
-const ONLINE_TABS={
-  Safe:[sp('Teleport'),t('Spectate'),b('Local Teleport'),b('Teleport To'),b('Teleport to Void'),b('Bring'),b('Copy Outfit'),sp('Actions'),b('Smash'),b('Silent Kill'),b('Explode'),b('Massacre'),b('Cage Player'),b('Attack'),b('Launch'),b('Box'),b('Freeze'),b('Stuck'),b('Random Ragdoll')],
-  Risk:[b('Kill Player'),b('Silent Kill'),b('Killer Clown Attack'),b('UFO Attack'),b('Asteroid Attack'),b('Crash in Vehicle'),b('Spawn Admins'),b('Spawn Attacker'),b('Air Stuck'),b('Stuck Teleport'),b('Taze Loop'),b('Sound Spammer')],
-  Vehicle:[b('Steal Vehicle'),b('Kick Driver'),b('Kick Driver #2'),b('Delete Vehicle'),b('Freeze Vehicle'),b('Glitch Vehicle'),b('TP to Void'),b('NPC Hijack'),b('Launch Vehicle'),b('Break Vehicle')],
-};
-const OTN=['Safe','Risk','Vehicle'];
-const SPEC_PLAYERS=[];
-
-// ── STATE ──
-let stack=[{menu:MAIN,idx:0}];
-let toggleState={};
-let keybinds={};
-let menuVisible=false;
-let onlineMode=false,onlineTab=-1,onlineItemIdx=0;
-let ONLINE_PLAYERS=[{id:0,name:'cfx.gg',me:true}];
-let selectedPlayers=new Set();
-// kpDone: false = Picker aktiv, true = Hotkey gewählt
-let kpDone=false;
-let kpShownKey=null;
-let kbMode=false,kbPending=null;
-const KB_SKIP=new Set(['Shift','Control','Alt','Meta']);
-
-function cur(){return stack[stack.length-1];}
-function visItems(){return cur().menu.items.filter(i=>i.type!=='sep');}
-function makeKey(item){return stack.map(s=>s.menu.label).join('||')+'||'+item.name;}
-function cycleVal(it,d){const ci=it.actions.indexOf(it.val);it.val=it.actions[(ci+d+it.actions.length)%it.actions.length];}
-function sstp(i){return(i.max-i.min)<=2?0.1:1;}
-function spct(i){return((i.val-i.min)/(i.max-i.min))*100;}
-function sfmt(i){return parseFloat(i.val).toFixed(sstp(i)<1?1:0);}
-function adjSl(it,d){const ss=sstp(it);it.val=Math.min(it.max,Math.max(it.min,parseFloat((it.val+d*ss).toFixed(10))));}
+function setTheme(t){ document.body.className = THEMES[t] || 't-pink'; }
 
 // ── NOTIFY ──
-function notify(title,msg){
-  const c=document.getElementById('nc');
-  while(c.children.length>=3)c.firstChild.remove();
-  const nd=document.createElement('div');nd.className='notify';
-  nd.innerHTML=`<div class="n-dot"></div><div class="n-body"><div class="n-title">${title}</div>${msg?`<div class="n-msg">${msg}</div>`:''}</div><div class="n-bar"></div>`;
-  c.appendChild(nd);
-  const bar=nd.querySelector('.n-bar');
-  requestAnimationFrame(()=>{bar.style.transition='width 3s linear';bar.style.width='0%';});
-  setTimeout(()=>{nd.style.opacity='0';nd.style.transition='opacity .18s';setTimeout(()=>nd.remove(),200);},3000);
+function notify(title, msg){
+  while(nc.children.length >= 3) nc.firstChild.remove();
+  const d = document.createElement('div');
+  d.className = 'notify';
+  d.innerHTML = `<div class="n-dot"></div><div class="n-body"><div class="n-title">${title}</div>${msg?`<div class="n-msg">${msg}</div>`:''}</div><div class="n-bar"></div>`;
+  nc.appendChild(d);
+  const bar = d.querySelector('.n-bar');
+  requestAnimationFrame(()=>{ bar.style.transition='width 3s linear'; bar.style.width='0%'; });
+  setTimeout(()=>{ d.style.opacity='0'; d.style.transition='opacity .18s'; setTimeout(()=>d.remove(),200); }, 3000);
 }
 
-// ── SEND TO LUA ──
-let _resourceName = 'cfx-gg-menu'; // wird von Lua überschrieben via setResourceName
-function sendToLua(data){
-  try{ fetch('https://'+_resourceName+'/dui:message',{method:'POST',body:JSON.stringify(data)}); }catch(e){}
-}
+// ── KEY PICKER ──
+// Lua schickt: pickerShowKey, pickerDone
+// Skip-Button: Lua hat keinen Handler dafür nötig —
+// wir schicken nichts zurück, Lua erkennt selbst wenn Skip gedrückt wird
+// (Skip ist im Lua-Thread als F4 direkt wählbar)
+// ABER: skip-btn klick -> wir zeigen nur "F4" an, Lua erkennt das selbst
+document.getElementById('skip-kp').addEventListener('click', ()=>{
+  // Lua erkennt F4 selbst im Key-Picker-Thread
+  // Wir zeigen nur visuell an
+  kpkd.textContent = 'F4';
+  kpw.style.display = 'none';
+  kpcf.style.display = '';
+});
 
-// ── KEY PICKER anzeigen (Lua schickt den Key-Namen) ──
-function pickerShowKey(key){
-  kpShownKey=key;
-  const box=document.querySelector('#kpo .kpb');
-  const old=box.querySelector('.kpp'); if(old)old.remove();
-  const pill=document.createElement('span');pill.className='kpp';pill.textContent=key;
-  box.insertBefore(pill,document.getElementById('kpcf'));
-  document.getElementById('kpw').style.display='none';
-  document.getElementById('kpkd').textContent=key;
-  document.getElementById('kpcf').style.display='';
-}
+// ── ITEM RENDER ──
+// Lua schickt items als Array von Objekten:
+// {name, type, right} wobei right = html-string für den rechten Teil
+// Lua baut das komplett zusammen, HTML rendert nur
+function renderItems(items, selIdx, breadcrumb, icon, counter, showOtabs, activeTab){
+  // Breadcrumb
+  bc.textContent     = breadcrumb || '';
+  bcIcon.className   = 'bc-icon ' + (icon || 'fa-solid fa-house');
+  fct.textContent    = counter   || '';
 
-// ── PICKER FERTIG (Lua bestätigt) ──
-function pickerDone(hotkey){
-  kpDone=true;
-  document.getElementById('kpo').classList.add('hidden');
-  openMenu();
-}
-
-// ── SPECTATOR PANEL ──
-function renderSpecPanel(){
-  const el=document.getElementById('sl-items');if(!el)return;
-  if(!SPEC_PLAYERS.length){el.innerHTML='<div class="pe">No spectators</div>';return;}
-  el.innerHTML=SPEC_PLAYERS.map(p=>`<div class="pi"><span class="pin">${p.name}</span></div>`).join('');
-}
-
-// ── RENDER ONLINE ──
-function renderOnline(){
-  document.getElementById('otabs').classList.add('vis');
-  document.getElementById('otabs').querySelectorAll('.ot').forEach(ot=>ot.classList.toggle('act',parseInt(ot.dataset.tab)===onlineTab));
-  const isL=onlineTab===-1;
-  let html='';
-  if(isL){
-    document.getElementById('bc').textContent='Online — Players';
-    document.getElementById('bc-icon').className='bc-icon fa-solid fa-globe';
-    ONLINE_PLAYERS.forEach((p,i)=>{
-      const sel=i===onlineItemIdx,picked=selectedPlayers.has(p.id);
-      const ms=p.me?'style="color:var(--accent)"':'';
-      const mt=p.me?' <span style="font-size:8px;opacity:.5">(me)</span>':'';
-      html+=`<div class="item${sel?' sel':''}" data-i="${i}"><span class="in" ${ms}>[${p.id}] ${p.name}${mt}</span><div class="pc${picked?' chk':''}"></div></div>`;
+  // Online Tabs
+  if(showOtabs){
+    otabs.classList.add('vis');
+    otabs.querySelectorAll('.ot').forEach(el=>{
+      el.classList.toggle('act', el.dataset.tab == activeTab);
     });
-  }else{
-    const tn=OTN[onlineTab];
-    document.getElementById('bc').textContent='Online — '+tn;
-    document.getElementById('bc-icon').className='bc-icon fa-solid fa-globe';
-    const items=ONLINE_TABS[tn];let vi=0;
-    items.forEach(item=>{
-      if(item.type==='sep'){html+=`<div class="sep">${item.label}</div>`;return;}
-      const mi=vi++,sel=mi===onlineItemIdx,k='online||'+tn+'||'+item.name,on=toggleState[k]||false;
-      let r=item.type==='toggle'?`<div class="tgl${on?' on':''}"></div>`:FP;
-      html+=`<div class="item${sel?' sel':''}" data-i="${mi}"><span class="in">${item.name}</span>${r}</div>`;
-    });
+  } else {
+    otabs.classList.remove('vis');
   }
-  document.getElementById('cnt').innerHTML=html;
-  document.querySelector('.item.sel')?.scrollIntoView({block:'nearest'});
-  document.getElementById('fct').textContent=isL?`${selectedPlayers.size?selectedPlayers.size+' sel / ':''}${ONLINE_PLAYERS.length} online`:OTN[onlineTab];
-  attachClickHandlers();
-}
 
-// ── RENDER MAIN ──
-function render(){
-  if(!menuVisible)return;
-  if(onlineMode){renderOnline();return;}
-  document.getElementById('otabs').classList.remove('vis');
-  const vis=visItems(),idx=cur().idx,isRoot=stack.length===1;
-  const pathParts=stack.slice(1).map(s=>s.menu.label);
-  document.getElementById('bc').textContent=pathParts.join(' › ');
-  const curLabel=cur().menu.label;
-  document.getElementById('bc-icon').className='bc-icon '+(isRoot?'fa-solid fa-house':(CAT_ICONS[curLabel]||'fa-solid fa-folder'));
-  let html='';
-  cur().menu.items.forEach(item=>{
-    if(item.type==='sep'){html+=`<div class="sep">${item.label}</div>`;return;}
-    const mi=vis.indexOf(item),sel=mi===idx,k=makeKey(item),on=toggleState[k]||false;
-    let iconHtml=isRoot?`<i class="ii ${item.catIcon||CAT_ICONS[item.name]||'fa-solid fa-circle'}"></i>`:'';
-    let r='';
-    if(item.type==='toggle')r=`<div class="tgl${on?' on':''}"></div>`;
-    else if(item.type==='slider'){const p=spct(item),d=sfmt(item);r=`<div class="srow"><span class="sv">${d}</span><div class="str"><div class="sf" style="width:${p}%"></div><div class="sth" style="left:${p}%"></div></div></div>`;}
-    else if((item.type==='value'||item.type==='cv')&&item.actions)r=`<span class="cv-val">${item.val}</span>`;
-    else if(item.type==='sub'||item.type==='online')r=`<i class="ar fa-solid fa-chevron-right"></i>`;
-    else if(item.type==='button')r=FP;
-    html+=`<div class="item${sel?' sel':''}" data-i="${mi}">${iconHtml}<span class="in">${item.name}</span>${r}</div>`;
-  });
-  document.getElementById('cnt').innerHTML=html;
-  document.getElementById('fct').textContent=`${Math.min(idx+1,vis.length)}/${vis.length}`;
-  document.querySelector('.item.sel')?.scrollIntoView({block:'nearest'});
-  attachClickHandlers();
-}
+  // Items
+  cnt.innerHTML = items.map((item, i) => {
+    if(item.type === 'sep'){
+      return `<div class="sep">${item.name}</div>`;
+    }
+    const sel = i === selIdx;
+    const selClass = sel ? ' sel' : '';
+    const iconHtml = item.icon ? `<i class="ii ${item.icon}"></i>` : '';
 
-function attachClickHandlers(){
-  document.querySelectorAll('#cnt .item').forEach(el=>{
-    el.style.cursor='pointer';el.style.pointerEvents='all';
-    el.addEventListener('click',()=>{
-      const i=parseInt(el.dataset.i);if(isNaN(i))return;
-      if(onlineMode){onlineItemIdx=i;activateOnlineItem();return;}
-      const item=visItems()[i];cur().idx=i;
-      if(item?.type==='cv'){cycleVal(item,1);render();}else activate(item,1);
-    });
-    el.addEventListener('mouseenter',()=>{
-      if(onlineMode){onlineItemIdx=parseInt(el.dataset.i)||0;renderOnline();}
-      else{cur().idx=parseInt(el.dataset.i)||0;render();}
-    });
-  });
-}
+    let right = '';
+    if(item.right === 'toggle'){
+      right = `<div class="tgl${item.on?' on':''}"></div>`;
+    } else if(item.right === 'arrow'){
+      right = `<i class="ar fa-solid fa-chevron-right"></i>`;
+    } else if(item.right === 'button'){
+      right = `<i class="fp-icon fa-solid fa-play"></i>`;
+    } else if(item.right === 'slider'){
+      const pct = item.pct || 0;
+      right = `<div class="srow"><span class="sv">${item.val||0}</span><div class="str"><div class="sf" style="width:${pct}%"></div><div class="sth" style="left:${pct}%"></div></div></div>`;
+    } else if(item.right === 'value'){
+      right = `<span class="cv-val">${item.val||''}</span>`;
+    } else if(item.right === 'player'){
+      right = `<div class="pc${item.picked?' chk':''}"></div>`;
+    }
 
-// ── ACTIVATE ──
-function activate(item,dir){
-  if(!item)return;
-  const k=makeKey(item);
-  if(item.type==='toggle'){
-    toggleState[k]=!toggleState[k];const on=toggleState[k];
-    if(item.name==='Keybind List'){document.getElementById('kl').classList.toggle('open',on);renderKBList();}
-    if(item.name==='Spectator List'){document.getElementById('sl-panel').classList.toggle('open',on);renderSpecPanel();}
-    sendToLua({type:'toggle',name:item.name,state:on});
-    notify(item.name,on?'ON':'OFF');
-  }else if(item.type==='button'){
-    if(item.name==='Reset Menu'){stack=[{menu:MAIN,idx:0}];toggleState={};render();notify('Menu','Reset');return;}
-    sendToLua({type:'button',name:item.name});
-    notify(item.name,'Executed');
-  }else if(item.type==='online'){onlineMode=true;onlineTab=-1;onlineItemIdx=0;}
-  else if(item.type==='sub'){stack.push({menu:item.children,idx:0});}
-  else if(item.type==='slider'){adjSl(item,dir);sendToLua({type:'slider',name:item.name,val:item.val});}
-  else if(item.type==='cv'&&item.actions){
-    if(dir===0){sendToLua({type:'button',name:item.val});notify('Spawn',item.val);}
-    else cycleVal(item,dir);
-  }else if(item.type==='value'&&item.actions){
-    cycleVal(item,dir);
-    if(item.name==='Theme'){const m={'Pink':'pink','Grey':'grey','Yellow':'yellow','Cyan':'cyan','Dark Red':'red','Acid Green':'green','Blue':'blue'};applyTheme(m[item.val]||'pink');notify('Theme',item.val);}
-    sendToLua({type:'value',name:item.name,val:item.val});
-  }
-  render();
-}
-
-function activateOnlineItem(){
-  if(onlineTab===-1){
-    const p=ONLINE_PLAYERS[onlineItemIdx];if(!p)return;
-    if(selectedPlayers.has(p.id)){selectedPlayers.delete(p.id);notify('Deselected','['+p.id+'] '+p.name);}
-    else{selectedPlayers.add(p.id);sendToLua({type:'select',name:'selectedPlayer',val:p.id});notify('Selected','['+p.id+'] '+p.name);}
-  }else{
-    const tn=OTN[onlineTab],vis=ONLINE_TABS[tn].filter(i=>i.type!=='sep'),item=vis[onlineItemIdx];if(!item)return;
-    const k='online||'+tn+'||'+item.name;
-    if(item.type==='toggle'){toggleState[k]=!toggleState[k];const on2=toggleState[k];sendToLua({type:'toggle',name:item.name,state:on2});notify(item.name,on2?'Enabled':'Disabled');}
-    else{sendToLua({type:'button',name:item.name});notify(item.name,'Executed');}
-  }
-  renderOnline();
-}
-
-function openMenu(){
-  menuVisible=true;
-  stack=[{menu:MAIN,idx:0}];
-  onlineMode=false;
-  document.getElementById('menu').style.display='';
-  document.getElementById('kpo').classList.add('hidden');
-  render();
-}
-function closeMenu(){
-  menuVisible=false;
-  document.getElementById('menu').style.display='none';
-  stack=[{menu:MAIN,idx:0}];
-  onlineMode=false;
-}
-
-// ── KEYBIND LIST ──
-function openKbPicker(item){
-  kbMode=true;kbPending={item,key:null};
-  document.getElementById('kbpn').textContent=item.name;
-  document.getElementById('kbpw').style.display='';document.getElementById('kbpcf').style.display='none';
-  const old=document.getElementById('kbpb').querySelector('.kpp');if(old)old.remove();
-  document.getElementById('kbpo').classList.add('vis');
-}
-function closeKbPicker(){kbMode=false;kbPending=null;document.getElementById('kbpo').classList.remove('vis');}
-function confirmKbPicker(){
-  if(!kbPending?.key)return;
-  keybinds[kbPending.item.name]=kbPending.key;closeKbPicker();renderKBList();
-  notify('Keybind',kbPending.item.name+' → '+kbPending.key);
-}
-function renderKBList(){
-  const el=document.getElementById('kl-items');if(!el)return;
-  const e=Object.entries(keybinds);
-  if(!e.length){el.innerHTML='<div class="pe">Empty — F6 on item</div>';return;}
-  el.innerHTML=e.map(([nm,k])=>{
-    const mk=Object.keys(toggleState).find(k2=>k2.endsWith('||'+nm));
-    const isT=mk!==undefined,on=isT&&toggleState[mk];
-    const st=isT?(on?'<span class="pon">ON</span>':'<span class="pof">OFF</span>'):'';
-    return`<div class="pi"><span class="pin">${nm}</span><div class="pir">${st}<span class="pk">${k}</span></div></div>`;
+    return `<div class="item${selClass}">${iconHtml}<span class="in">${item.name}</span>${right}</div>`;
   }).join('');
 }
 
-// ── MAIN KEY HANDLER ──
-// Wird aufgerufen von: window.message (Lua via SendDuiMessage/SK)
-function handleKey(key){
-  // Picker aktiv: Lua schickt Key-Namen zum Anzeigen und pickerDone zum Abschliessen
-  // HTML macht hier NICHTS ausser anzeigen - Lua steuert komplett
-  if(!kpDone){
-    // Key nur anzeigen wenn Lua ihn schickt (passiert in pickerShowKey)
-    return;
-  }
+// ── MESSAGE HANDLER ──
+// Lua schickt alles hier rein
+window.addEventListener('message', ev => {
+  const d = ev.data;
+  if(!d || !d.type) return;
 
-  // Keybind-Picker (F6 auf Items)
-  if(kbMode){
-    if(key==='Escape'){closeKbPicker();return;}
-    if(key==='Backspace'){if(kbPending?.item)delete keybinds[kbPending.item.name];closeKbPicker();renderKBList();return;}
-    if(key==='Enter'){confirmKbPicker();return;}
-    if(KB_SKIP.has(key))return;
-    kbPending.key=key;
-    const box=document.getElementById('kbpb'),old=box.querySelector('.kpp');if(old)old.remove();
-    const pill=document.createElement('span');pill.className='kpp';pill.textContent=key;
-    box.insertBefore(pill,document.getElementById('kbpcf'));
-    document.getElementById('kbpw').style.display='none';
-    document.getElementById('kbpkd').textContent=key;
-    document.getElementById('kbpcf').style.display='';
-    return;
-  }
+  switch(d.type){
 
-  if(!menuVisible)return;
+    // Menu öffnen/schließen
+    case 'open':
+      kpo.classList.add('hidden');
+      menu.style.display = '';
+      break;
 
-  if(onlineMode){
-    const isL=onlineTab===-1,vis=isL?ONLINE_PLAYERS:ONLINE_TABS[OTN[onlineTab]].filter(i=>i.type!=='sep');
-    if(key==='ArrowDown'){onlineItemIdx=Math.min(onlineItemIdx+1,vis.length-1);renderOnline();}
-    else if(key==='ArrowUp'){onlineItemIdx=Math.max(onlineItemIdx-1,0);renderOnline();}
-    else if(key==='Enter'||key==='ArrowRight'){activateOnlineItem();}
-    else if(key==='Q'||key==='E'){
-      if(key==='Q')onlineTab=onlineTab===-1?2:onlineTab-1;
-      else onlineTab=onlineTab===2?-1:onlineTab+1;
-      onlineItemIdx=0;renderOnline();
+    case 'close':
+      menu.style.display = 'none';
+      break;
+
+    // Komplettes Menü rendern
+    // Lua schickt: {type:'render', items:[...], sel:N, bc:'pfad', icon:'fa-...', counter:'1/5', otabs:bool, activeTab:N}
+    case 'render':
+      renderItems(d.items, d.sel, d.bc, d.icon, d.counter, d.otabs, d.activeTab);
+      // Selektiertes Item in Sicht scrollen
+      const selEl = cnt.children[d.sel];
+      if(selEl) selEl.scrollIntoView({block:'nearest'});
+      break;
+
+    // Einzelnes Toggle-State updaten (ohne alles neu zu rendern)
+    case 'toggleState': {
+      const el = cnt.children[d.idx];
+      if(el){ const tgl = el.querySelector('.tgl'); if(tgl) tgl.classList.toggle('on', !!d.on); }
+      break;
     }
-    else if(key==='ArrowLeft'||key==='Backspace'){
-      if(!isL){onlineTab=-1;onlineItemIdx=0;renderOnline();}
-      else{onlineMode=false;render();}
-    }
-    else if(key==='Escape'){closeMenu();}
-    return;
+
+    // Key Picker: Lua schickt gewählten Key
+    case 'pickerShowKey':
+      kpw.style.display = 'none';
+      kpcf.style.display = '';
+      kpkd.textContent = d.key || '';
+      // Kpp Pill erzeugen wenn noch nicht da
+      let pill = document.querySelector('.kpp');
+      if(pill) pill.remove();
+      pill = document.createElement('span');
+      pill.className = 'kpp';
+      pill.textContent = d.key || '';
+      document.querySelector('.kpb').insertBefore(pill, kpcf);
+      break;
+
+    // Picker abgeschlossen
+    case 'pickerDone':
+      kpo.classList.add('hidden');
+      break;
+
+    // Notify
+    case 'notify':
+      notify(d.title || '', d.msg || '');
+      break;
+
+    // Theme
+    case 'theme':
+      setTheme(d.val);
+      break;
   }
-
-  const vis=visItems(),st=cur(),it=vis[st.idx];
-  if(key==='F6'&&it&&it.type!=='sep'&&it.type!=='sub'&&it.type!=='online'&&it.type!=='cv'){openKbPicker(it);return;}
-  if(key==='ArrowDown'){cur().idx=Math.min(st.idx+1,vis.length-1);render();}
-  else if(key==='ArrowUp'){cur().idx=Math.max(st.idx-1,0);render();}
-  else if(key==='Enter'){if(it?.type==='cv'){activate(it,0);}else activate(it,1);}
-  else if(key==='ArrowRight'){
-    if(it?.type==='slider'){adjSl(it,1);sendToLua({type:'slider',name:it.name,val:it.val});render();}
-    else if(it?.type==='cv'){cycleVal(it,1);render();}
-    else activate(it,1);
-  }
-  else if(key==='ArrowLeft'){
-    if(it?.type==='slider'){adjSl(it,-1);sendToLua({type:'slider',name:it.name,val:it.val});render();}
-    else if(it?.type==='cv'){cycleVal(it,-1);render();}
-    else if(it?.type==='value'&&it.actions){
-      cycleVal(it,-1);
-      if(it.name==='Theme'){const m={'Pink':'pink','Grey':'grey','Yellow':'yellow','Cyan':'cyan','Dark Red':'red','Acid Green':'green','Blue':'blue'};applyTheme(m[it.val]||'pink');}
-      sendToLua({type:'value',name:it.name,val:it.val});render();
-    }
-    else if(stack.length>1){stack.pop();render();}
-  }
-  else if(key==='Backspace'){if(stack.length>1){stack.pop();render();}else closeMenu();}
-  else if(key==='Escape'){closeMenu();}
-}
-
-// ── MESSAGES VON LUA (SendDuiMessage -> window message event) ──
-window.addEventListener('message',ev=>{
-  const d=ev.data;if(!d||!d.type)return;
-
-  if(d.type==='control'){
-    // Lua schickt Tastennamen: ArrowDown, ArrowUp, Enter, Backspace, Escape, Q, E
-    handleKey(d.key);
-    return;
-  }
-  if(d.type==='notify'){notify(d.title||'',d.msg||'');return;}
-  if(d.type==='updatePlayers'){ONLINE_PLAYERS=d.players||[];if(onlineMode&&onlineTab===-1)renderOnline();return;}
-  if(d.type==='updateSpectators'){SPEC_PLAYERS.length=0;(d.players||[]).forEach(p=>SPEC_PLAYERS.push(p));renderSpecPanel();return;}
-
-  // Lua: Key Picker zeigt gewählten Key an
-  if(d.type==='pickerShowKey'){
-    pickerShowKey(d.key);
-    return;
-  }
-  // Lua: Picker abgeschlossen, Menü öffnen
-  if(d.type==='pickerDone'){
-    pickerDone(d.hotkey);
-    return;
-  }
-
-  if(d.type==='setResourceName'){_resourceName=d.name;return;}
-  if(d.type==='luaOpen'){openMenu();return;}
-  if(d.type==='luaClose'){closeMenu();return;}
-});
-
-document.getElementById('otabs').querySelectorAll('.ot').forEach(el=>el.addEventListener('click',()=>{onlineTab=parseInt(el.dataset.tab);onlineItemIdx=0;renderOnline();}));
-
-// ── INIT ──
-updateBanner();
-document.getElementById('skip-kp').addEventListener('click',()=>{
-  kpDone=true;
-  document.getElementById('kpo').classList.add('hidden');
-  // Lua informieren dass F4 gewählt wurde
-  fetch('https://'+_resourceName+'/dui:message',{method:'POST',body:JSON.stringify({type:'skipPicker'})}).catch(()=>{});
-  notify('Hotkey','F4 — Menü öffnen/schließen');
-  openMenu();
 });
 </script>
 </body>
